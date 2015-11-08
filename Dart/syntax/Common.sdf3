@@ -1,0 +1,114 @@
+module Common
+
+lexical syntax
+
+  DIGIT          = [0-9]
+  NUMBER         = DIGIT+ ('.' DIGIT+)? EXPONENT? |
+  NUMBER         = '.' DIGIT+ EXPONENT?
+  EXPONENT       = ('e' | 'E') ('+' | '-')? DIGIT+
+  
+  HEX-DIGIT      = [a-fA-F] | DIGIT
+  HEX-NUMBER     = '0x' HEX-DIGIT+ | '0X' HEX-DIGIT+
+  
+lexical syntax
+
+	ID               = [a-zA-Z\_\$] [a-zA-Z0-9\_\$]*
+	Qualified        = ID ('.' ID)?
+	MoreQualified    = ID
+	MoreQualified    = ID '.' ID
+	MoreQualified    = ID '.' ID '.' ID
+	
+	STRING           = SingleString | DoubleString
+	SingleString     = "'" SingleStringChar* "'"
+  SingleStringChar = ~[\'\n]
+  SingleStringChar = "\\'"
+  SingleStringChar = SingleBackSlashChar
+  SingleBackSlashChar = "\\"
+  DoubleString     = "\"" DoubleStringChar* "\""
+	DoubleStringChar = ~[\"\n] 
+	DoubleStringChar = "\\\"" 
+	DoubleStringChar = DoubleBackSlashChar
+	DoubleBackSlashChar = "\\"
+	 
+	LAYOUT         = [\ \t\n\r] 
+	CommentChar    = [\*] 
+	LAYOUT         = "/*" InsideComment* "*/" 
+	InsideComment  = ~[\*] 
+	InsideComment  = CommentChar 
+	LAYOUT         = "//" ~[\n\r]* NewLineEOF 
+	NewLineEOF     = [\n\r] 
+	NewLineEOF     = EOF 
+	EOF            =  
+
+lexical restrictions
+
+	// Ensure greedy matching for lexicals
+	
+	CommentChar   -/- [\/]
+	NUMBER        -/- [0-9]
+	ID            -/- [a-zA-Z0-9\_]
+	
+	// EOF may not be followed by any char
+	
+	EOF           -/- ~[]
+	
+	// Backslash chars in strings may not be followed by " or '
+	
+	DoubleBackSlashChar -/- [\"]
+	SingleBackSlashChar -/- [\']
+
+context-free restrictions
+
+	// Ensure greedy matching for comments
+	
+	LAYOUT? -/- [\ \t\n\r]
+	LAYOUT? -/- [\/].[\/]
+	LAYOUT? -/- [\/].[\*]
+
+lexical syntax // Reserved words
+  
+	ID = "assert" {reject}
+	ID = "break" {reject}
+	ID = "case" {reject}
+	ID = "catch" {reject}
+	ID = "class" {reject}
+	ID = "const" {reject}
+	ID = "continue" {reject}
+	ID = "default" {reject}
+	ID = "do" {reject}
+	ID = "else" {reject}
+	ID = "enum" {reject}
+	ID = "extends" {reject}
+	ID = "false" {reject}
+	ID = "final" {reject}
+	ID = "finally" {reject}
+	ID = "for" {reject}
+	ID = "if" {reject}
+	ID = "in" {reject}
+	ID = "is" {reject}
+	ID = "new" {reject}
+	ID = "null" {reject}
+	ID = "rethrow" {reject}
+	ID = "return" {reject}
+	ID = "super" {reject}
+	ID = "switch" {reject}
+	ID = "this" {reject}
+	ID = "throw" {reject}
+	ID = "true" {reject}
+	ID = "try" {reject}
+	ID = "var" {reject}
+	ID = "void" {reject}
+	ID = "while" {reject}
+	ID = "with" {reject}
+	
+lexical syntax // Built-in identifiers (NOTE: non-standard Dart)
+
+  ID = "library" {reject}
+
+lexical syntax // Dart keywords
+  
+  VOID = "void"
+  STATIC = "static"
+  ABSTRACT = "abstract"
+  CONST = "const"
+  URI = STRING

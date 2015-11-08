@@ -1,0 +1,33 @@
+module Dart.main
+
+imports
+  Dart-Colorer
+  Dart-Completions
+  Dart-Folding
+  Dart-Menus
+  Dart-Refactorings
+  Dart-References
+  Dart-Syntax
+  Dart-Views
+
+language General properties
+  
+  name:          Dart
+  id:            Dart
+  extends:       Root
+  
+  description:   "Spoofax-generated editor for the Dart language"
+  url:           http://strategoxt.org
+  
+  extensions:    dart
+  table:         include/Dart.tbl
+  start symbols: Start
+  
+  provider:      include/dart.ctree
+  provider:      include/dart-java.jar
+  
+  observer:      editor-analyze (multifile)
+  
+  on save:       editor-save
+  
+  jvm opts:      -server -Xss8m -Xmx1024m

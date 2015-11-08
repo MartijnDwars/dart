@@ -1,0 +1,161 @@
+module Expression
+
+imports
+
+  Common
+  Function
+  Type
+  Argument
+  Variable
+  
+context-free syntax
+  
+  Expression.This = "this"
+  Expression.Ref = ID
+  Expression.Throw = <throw <Expression>>
+  Expression = VariableDeclaration
+  
+  // TODO: Enforce order of arguments
+  Expression.New = <new <Type> (<{Argument ", "}*>)>
+  
+  // Unary postfix
+  Expression.Property = Expression '.' Expression // TODO: this is not unary?
+  Expression.ConditionalProperty = Expression '?.' Expression // TODO: this is not unary?
+  Expression.PostInc = Expression '++'
+  Expression.PostDec = Expression '--'
+  Expression.Index = Expression '[' IndexExpression ']'
+  Expression.Call = Expression '(' Expression ')' // TODO: arg list?
+  
+  // Unary prefix
+  Expression.Min = '-' Expression
+  Expression.Neg = '!' Expression
+  Expression.BitNot = '~' Expression
+  Expression.PreInc = '++' Expression
+  Expression.PreDec = '--' Expression
+  
+  // Multiplicative
+  Expression.Mul = Expression '*' Expression {left}
+  Expression.Div = Expression '/' Expression {left}
+  Expression.Mod = Expression '%' Expression {left}
+  Expression.IntDiv = Expression '~/' Expression {left}
+  
+  // Additive
+  Expression.Add = Expression '+' Expression {left}
+  Expression.Sub = Expression '-' Expression {left}
+  
+  // Shift
+  Expression.LShift = Expression '<<' Expression {left}
+  Expression.RShift = Expression '>>' Expression {left}
+  
+  // Bitwise
+  Expression.BitAnd = Expression '&' Expression {left}
+  Expression.BitXor = Expression '^' Expression {left}
+  Expression.BitOr = Expression '|' Expression {left}
+  
+  // Relational
+  Expression.Lt = Expression '<' Expression
+  Expression.Gt = Expression '>' Expression
+  Expression.Lte = Expression '<=' Expression
+  Expression.Gte = Expression '>=' Expression
+  Expression.As = Expression 'as' Type
+  Expression.Is = Expression 'is' Type
+  Expression.IsNot = Expression 'is!' Type
+  
+  // Equality
+  Expression.Eq = Expression '==' Expression
+  Expression.Neq = Expression '!=' Expression
+  
+  // Logical
+  Expression.LogicAnd = Expression '&&' Expression {left}
+  Expression.LogicOr = Expression '||' Expression {left}
+  
+  // If-null
+  Expression.IfNull = Expression '??' Expression {left}
+  Expression.Conditional = Expression '?' Expression ':' Expression {right} // TODO: No cascades allowed
+  Expression.Cascade = Expression '..' Expression {left}
+  
+  // Assignments
+  Expression.Assign = <<AssignableExpression> = <Expression>> {right}
+  Expression.MulAssign = <<AssignableExpression> *= <Expression>> {right}
+  Expression.DivAssign = <<AssignableExpression> /= <Expression>> {right}
+  Expression.IntDivAssign = <<AssignableExpression> ~/= <Expression>> {right}
+  Expression.ModAssign = <<AssignableExpression> %= <Expression>> {right}
+  Expression.AddAssign = <<AssignableExpression> += <Expression>> {right}
+  Expression.SubAssign = <<AssignableExpression> -= <Expression>> {right}
+  Expression.LShiftAssign = <<AssignableExpression> \<\<= <Expression>> {right}
+  Expression.RShiftAssign = <<AssignableExpression> \>\>= <Expression>> {right}
+  Expression.BitAndAssign = <<AssignableExpression> &= <Expression>> {right}
+  Expression.BitXorAssign = <<AssignableExpression> ^= <Expression>> {right}
+  Expression.BitOrAssign = <<AssignableExpression> |= <Expression>> {right}
+  Expression.NullAssign = <<AssignableExpression> ??= <Expression>> {right}
+  
+  // TODO: Expression is to liberal here
+  AssignableExpression = <<Expression> <AssignableSelector+>>
+  AssignableExpression = <super <UnconditionalAssignableSelector>>
+  AssignableExpression = ID
+  
+  UnconditionalAssignableSelector = <[<Expression>]>
+  UnconditionalAssignableSelector = <.<ID>>
+  
+  AssignableSelector = UnconditionalAssignableSelector
+  AssignableSelector = <?.<ID>>
+  
+  Expression = Function
+  Expression = <( <Expression> )> {bracket}
+  
+  // Indirection to fix precedence for Expression.Index
+  IndexExpression = Expression
+  
+context-free syntax // Literals
+
+  Expression.Null = "null"
+  
+  Expression.List = <<CONST?> [<{Expression ", "}*>]>
+  Expression.List = <<CONST?> [<{Expression ", "}*>, ]>
+  Expression.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
+  
+  Expression.Map = <<CONST?> {<{MapEntry ", "}*>}>
+  Expression.Map = <<CONST?> {<{MapEntry ", "}*>, }>
+  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
+  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
+  MapEntry.MapEntry = <<Expression>: <Expression>> 
+  
+  Expression.True = "true"
+  Expression.False = "false"
+  
+  Expression.Number = NUMBER
+  Expression.HexNumber = HEX-NUMBER
+  
+  Expression.String = STRING
+  Expression.Symbol = <#<{ID "."}+>>
+
+lexical restrictions
+  
+  "+" -/- [\+]
+    
+context-free priorities
+  
+  // Unary postfix
+  {Expression.Property Expression.ConditionalProperty Expression.PostInc Expression.PostDec Expression.Index Expression.Call}
+  // Unary prefix
+> {Expression.Min Expression.Neg Expression.BitNot Expression.PreInc Expression.PreDec}
+  // Multiplicative
+> {left: Expression.Mul Expression.Div Expression.Mod Expression.IntDiv}
+  // Additive
+> {left: Expression.Add Expression.Sub}
+  // Shift
+> {left: Expression.LShift Expression.RShift}
+  // Bitwise
+> {left: Expression.BitAnd Expression.BitXor Expression.BitOr}
+  // Relational
+> {left: Expression.Lt Expression.Gt Expression.Lte Expression.Gte Expression.As Expression.Is Expression.IsNot}
+  // Equality
+> {left: Expression.Eq Expression.Neq}
+  // Logical
+> {left: Expression.LogicAnd Expression.LogicOr Expression.IfNull}
+  // Conditional
+> {right: Expression.Conditional}
+  // Cascade
+> {left: Expression.Cascade}
+  // Assignment
+> {right: Expression.Assign Expression.MulAssign Expression.DivAssign Expression.IntDivAssign Expression.ModAssign Expression.AddAssign Expression.SubAssign Expression.LShiftAssign Expression.RShiftAssign Expression.BitAndAssign Expression.BitXorAssign Expression.BitOrAssign Expression.NullAssign}

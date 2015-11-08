@@ -1,0 +1,15 @@
+module Enum
+
+imports
+
+  Common
+  Metadata
+
+context-free syntax
+
+	Enum.Enum = <<Metadata> enum <ID> {<{ID ", "}+>}>
+	Enum.Enum = <<Metadata> enum <ID> {<{ID ", "}+>, }>
+
+template options
+
+  keyword -/- [a-zA-Z]

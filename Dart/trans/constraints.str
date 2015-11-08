@@ -1,0 +1,17 @@
+module constraints
+
+imports
+  
+  include/Dart
+  lib/runtime/nabl/-
+  lib/runtime/task/-
+
+rules
+  
+  nabl-constraint(|ctx):
+    Invoke(_, arguments) -> <fail>
+    where
+      msg := "Named arguments may not occur before expression arguments"
+    ; if <not(foldl(not(?(Argument(_), NamedArgument(_, _))); Fst))> (arguments, Argument(0)) then
+        <task-create-error(|ctx, msg)> arguments
+      end

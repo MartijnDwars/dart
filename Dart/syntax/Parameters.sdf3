@@ -1,0 +1,58 @@
+module Parameters
+
+imports
+  
+  Common
+  Metadata
+  Modifier
+  Type
+  Expression
+  
+context-free syntax
+
+  Parameters.Paramters = <(<{Parameter ", "}*> <OptionalParameters?>)>
+  
+  OptionalParameters.Positional = <[<{Parameter ", "}+>]>
+  OptionalParameters.Named = <{<{NamedFormalParameter ", "}+>}>
+  
+  Parameter.Param = <<NormalFormalParameter>>
+  Parameter.InitializedParam = <<NormalFormalParameter> = <Expression>>
+  
+  // ----
+  
+  FormalParameterList = <(<{NormalFormalParameter ", "}*>)>
+  FormalParameterList = <(<{NormalFormalParameter ", "}+>, <OptionalFormalParameters>)>
+  FormalParameterList = <(<OptionalFormalParameters>)>
+  
+  // NormalFormalParameter = functionSignature
+  NormalFormalParameter = FieldFormalParameter
+  NormalFormalParameter = SimpleFormalParameter
+  
+  FieldFormalParameter = <<Metadata> <FinalConstVarOrType?> this.<ID><FormalParameterList?>>
+  
+  FinalConstVarOrType = <final <Type?>>
+  FinalConstVarOrType = <const <Type?>>
+  FinalConstVarOrType = <var>
+  FinalConstVarOrType = <<Type>>
+  
+  OptionalFormalParameters.Positional = <[<{DefaultFormalParameter ", "}+>]>
+  OptionalFormalParameters.Named = <{<{NamedFormalParameter ", "}+>}>
+  
+  SimpleFormalParameter = <<Metadata> <Modifier?> <Type?> <ID>>
+  SimpleFormalParameter = <<Metadata> var <ID>>
+  SimpleFormalParameter = <<Metadata> <ID>>
+  
+  DefaultFormalParameter.Param = <<NormalFormalParameter>>
+  DefaultFormalParameter.InitializedParam = <<NormalFormalParameter> = <Expression>>
+  
+  NamedFormalParameter.NamedParam = <<NormalFormalParameter>>
+  NamedFormalParameter.NamedInitializedParam = <<NormalFormalParameter>: <Expression>>
+
+context-free syntax // Rejections
+
+  // Reject parameters lacking both modifier and type
+  SimpleFormalParameter = <<Metadata> <ID>> {reject}
+  
+template options
+
+  tokenize : "."

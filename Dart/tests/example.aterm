@@ -1,0 +1,11 @@
+Program(
+  [ Library(
+      Some(LibraryName(Metadata([]), "x"))
+    , [Import("'dart:math'", [])]
+    , []
+    , [ DeclarationStmt(DynamicVariableDeclaration(Metadata([]), [Variable("x")]))
+      , DeclarationStmt(DynamicVariableDeclaration(Metadata([]), [Variable("y")]))
+      ]
+    )
+  ]
+)

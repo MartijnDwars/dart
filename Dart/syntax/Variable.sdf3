@@ -1,0 +1,28 @@
+module Variable
+
+imports
+
+  Common
+  Type
+  Metadata
+  Expression
+  Modifier
+  
+context-free syntax
+  
+  VariableDeclaration.VariableDeclaration = <<Metadata> <Modifier?> <Type?> <{Variable ", "}+>>
+  VariableDeclaration.DynamicVariableDeclaration = <<Metadata> var <{Variable ", "}+>>
+  
+  Dynamic.Var = <var>
+  
+  Variable.Variable = <<ID>>
+  Variable.Variable = <<ID> = <Expression>>
+
+context-free syntax // Rejections
+  
+  // Reject variable declarations that lack both a modifier and type
+  VariableDeclaration = <<Metadata> <{Variable ","}+>> {reject}
+  
+template options
+
+  keyword -/- [a-zA-Z]

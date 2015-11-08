@@ -1,0 +1,42 @@
+module CompilationUnit
+
+imports
+
+  Common
+  Import
+  Export
+  Metadata
+  Class
+  Enum
+  Function
+  Variable
+
+context-free syntax
+
+  // Enforce greedy matching of TopDefinitions. Parse at least one top definition (NOTE: more restrictive than standard)
+  CompilationUnit.Library =
+    <<LibraryName?>
+    <Header*>
+    <PartDirective*>
+    <{TopDefinition "\n\n"}+>> {longest-match}
+  
+  CompilationUnit.Part =
+    <<Metadata>
+    part of <ID>;
+    <{TopDefinition "\n\n"}*>>
+  
+  // Library name
+  LibraryName.LibraryName = <<Metadata> library <ID>;>
+  
+  // Header
+  Header = Import
+  Header = Export
+  
+  // Part
+  PartDirective.PartDirective = <<Metadata> part <URI>;>
+  
+  // Top level definition
+  TopDefinition = Class
+  TopDefinition = Enum
+  TopDefinition = Function
+  TopDefinition.DeclarationStmt = <<VariableDeclaration>;>

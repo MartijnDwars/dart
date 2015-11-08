@@ -1,0 +1,36 @@
+module Map
+
+language Dart
+start symbol Expression
+
+test empty map [[
+  {}
+]] parse succeeds
+
+test singleton map [[
+  {a: 1}
+]] parse succeeds
+
+test non-empty map [[
+  {a: 1, b: 2, c: 3}
+]] parse succeeds
+
+test constant map literal [[
+  const {a: 1, b: 2, c: 3}
+]] parse succeeds
+
+test map with trailing comma [[
+  const {a: 1, b: 2, c: 3, }
+]] parse succeeds
+
+test typed map [[
+  <int>{a: 1, b: 2, c: 3}
+]] parse succeeds
+
+test missing key [[
+  {: 1}
+]] parse fails
+
+test missing value [[
+  {a: }
+]] parse fails

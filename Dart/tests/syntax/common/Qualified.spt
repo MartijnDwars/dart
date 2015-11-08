@@ -1,0 +1,20 @@
+module Qualified
+
+language Dart
+start symbol Qualified
+
+test simple identifier [[
+  abc
+]] parse succeeds
+
+test void identifier [[
+  void
+]] parse succeeds
+
+test qualified identifier [[
+  abc.def
+]] parse succeeds
+
+test over-qualified identifier [[
+  abc.def.ghi
+]] parse fails

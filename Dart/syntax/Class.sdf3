@@ -1,0 +1,64 @@
+module Class
+
+imports
+
+  Common
+  Metadata
+  Type
+  Expression
+  Modifier
+  Statement
+  Parameters
+  Function
+  
+context-free syntax // Class
+  
+  Class.Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Parent?> <Mixins?> <Interfaces?> {
+    <{ClassMember "\n"}*>
+  }>
+  
+  Class.MixinApplication = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> =
+  	<Type> with <{Type ", "}+> <Interfaces?>;>
+  
+  Parent.Parent = <extends <Type>>
+  
+  TypeParameters.TypeParameters = [<[{TypeParameter ", "}+]>]
+  TypeParameter.TypeParameter = <<Metadata> <ID> <Parent?>>
+  
+  Mixins.Mixins = <with <{Type ", "}+>>
+  
+  Interfaces.Interfaces = <implements <{Type ", "}+>>
+  
+context-free syntax // Class members
+
+  ClassMember.FinalFields = <final <Type?> <{InitializedIdentifier ", "}+>;>
+  InitializedIdentifier = <<ID>>
+  InitializedIdentifier = <<ID> = <Expression>>
+  
+  ClassMember.StaticFinalFields = <static <Modifier> <Type?> <{StaticFinalDeclaration ", "}+>;>
+  StaticFinalDeclaration = <<ID> = <Expression>>
+  
+  ClassMember.Fields = <<STATIC?> var <{InitializedIdentifier ", "}+>;>
+  ClassMember.Fields = <<STATIC?> <Type> <{InitializedIdentifier ", "}+>;>
+  
+  ClassMember.Constructor = <<CONST?> <Qualified> <FormalParameterList>;>
+  
+  // Prefer constructor to disambiguate with regular function members
+  ClassMember.Constructor = <<Qualified> <FormalParameterList> {
+  	<{Statement "\n"}*>
+  }> {prefer}
+  
+  ClassMember.StaticFunction = <static <Function>>
+  
+  ClassMember = Function
+  
+context-free syntax // Rejections
+  
+  // Reject classes that have a mixin without parent
+  Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
+    <{ClassMember "\n"}*>
+  }> {reject}
+  
+template options
+
+  keyword -/- [a-zA-Z]

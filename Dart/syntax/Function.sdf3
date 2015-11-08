@@ -1,0 +1,20 @@
+module Function
+
+imports
+
+  Common
+  Expression
+  Statement
+  Type
+  Metadata
+  Parameters
+  
+context-free syntax
+
+  Function.Function = <<Metadata> <Type?> <ID><FormalParameterList> {
+    <Statement*>
+  }>
+  
+  Function.ShortFunction = <<Metadata> <Type?> <ID><FormalParameterList> =\>
+    <Expression>;>
+  

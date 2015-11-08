@@ -1,0 +1,33 @@
+module Metadata
+
+language Dart
+start symbol Metadata
+
+test metadata allowed to be empty [[
+  
+]] parse succeeds
+
+test single annotation [[
+  @Foo
+]] parse succeeds
+
+test qualified annotation [[
+  @Foo.bar
+]] parse succeeds
+
+test over qualified annotation [[
+  @Foo.bar.baz
+]] parse succeeds
+
+test multiple annotations [[
+  @Foo
+  @Bar
+]] parse succeeds
+
+test annotation with single argument [[
+  @Foo(bar)
+]] parse succeeds
+
+test annotation with multiple arguments [[
+  @Foo(bar, bas, bat)
+]] parse succeeds

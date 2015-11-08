@@ -1,0 +1,19 @@
+module Type
+
+imports
+
+  Common
+  Type
+  
+context-free syntax
+  
+  Type.VoidType = VOID
+  Type.Type = <<Qualified>>
+  Type.Generic = <<Qualified> <TypeArguments>>
+  
+  TypeArguments.TypeArguments = [<[{Type ","}+]>]
+
+template options
+
+  keyword -/- [a-zA-Z]
+  

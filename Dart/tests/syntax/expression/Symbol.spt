@@ -1,0 +1,28 @@
+module Expression
+
+language Dart
+start symbol Expression
+
+test symbol identifier [[
+  #abc
+]] parse succeeds
+
+test symbol identifiers [[
+  #a.b.c.d.e
+]] parse succeeds
+
+test symbol identifiers [[
+  #
+]] parse fails
+
+test symbol operator + [[
+  # +
+]] parse succeeds
+
+test symbol operator brackets [[
+  # [ ]
+]] parse succeeds
+
+test symbol operator brackets = [[
+  # [ ] =
+]] parse succeeds

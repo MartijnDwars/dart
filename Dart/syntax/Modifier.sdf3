@@ -1,0 +1,6 @@
+module Modifier
+
+context-free syntax
+
+  Modifier.Final = <final>
+  Modifier.Const = <const>

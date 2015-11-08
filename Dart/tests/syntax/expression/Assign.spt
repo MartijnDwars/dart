@@ -1,0 +1,12 @@
+module Assign
+
+language Dart
+start symbol Expression
+
+test compound assignment [[
+  x += 2
+]] parse succeeds
+
+test compound assignment with whitespace [[
+  x + = 2
+]] parse fails

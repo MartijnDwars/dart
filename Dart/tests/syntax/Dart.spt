@@ -1,0 +1,97 @@
+module Dart
+
+language Dart
+start symbol Start
+
+test library [[
+  library abc;
+  
+  int x;
+]] parse succeeds
+
+test empty main method [[
+  void main() {
+  }
+]] parse succeeds
+
+test main method with for loop [[
+  void main() {
+    for (int i = 0; i < 5; i++) {
+      print('hello ${i + 1}');
+    }
+  }
+]] parse succeeds
+
+test main method with print [[
+  void main() {
+    print('abc');
+  }
+]] parse succeeds
+
+test xyz [[
+  printNumber(num aNumber) {
+    print('The number is $aNumber.');
+  }
+]] parse succeeds
+
+test dart [[
+  printNumber(num aNumber) {
+    print('The number is $aNumber.');
+  }
+  
+  main() {
+    var answer = 42;          // The meaning of life.
+    printNumber(answer);
+  }
+]] parse succeeds
+
+test dartje [[
+	class Point {
+	  num x;
+	  num y;
+	
+	  Point(num x, num y) {
+	    // There's a better way to do this, stay tuned.
+	    this.x = x;
+	    this.y = y;
+	  }
+	}
+  
+  String say(String from) {
+    var result = '$from says $msg';
+    if (device != null) {
+      result = '$result with a $device';
+    }
+    if (mood != null) {
+      result = '$result (in a $mood mood)';
+    }
+    return result;
+  }
+]] parse succeeds
+
+test dartje 2 [[
+	import 'dart:math';
+	
+	class Point {
+	  num x;
+	  num y;
+	  Point(this.x, this.y);
+	
+	  static num distanceBetween(Point a, Point b) {
+	    var dx = a.x - b.x;
+	    // var dy = a.y - b.y;
+	    // return sqrt(dx * dx + dy * dy);
+	  }
+	}
+	// 
+	// main() {
+	//   var a = new Point(2, 2);
+	//   var b = new Point(4, 4);
+	//   var distance = Point.distanceBetween(a, b);
+	//   assert(distance < 2.9 && distance > 2.8);
+	// }
+]] parse succeeds
+
+test var decl with initializer [[
+  var int x = 1;
+]] parse fails

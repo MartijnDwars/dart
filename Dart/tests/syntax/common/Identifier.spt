@@ -1,0 +1,40 @@
+module Identifier
+
+language Dart
+start symbol ID
+
+test identifier [[
+  foo
+]] parse succeeds
+
+test identifier end with digits [[
+  foo123
+]] parse succeeds
+
+test identifier start with dollar [[
+  $abc
+]] parse succeeds
+
+test identifier start with underscore [[
+  _abc
+]] parse succeeds
+
+test identifier start with minus [[
+  -abc
+]] parse fails
+
+test identifier start with digit [[
+  123foo
+]] parse fails
+
+test reserved word assert [[
+  assert
+]] parse fails
+
+test reserved word enum [[
+  enum
+]] parse fails
+
+test reserved word return [[
+  return
+]] parse fails

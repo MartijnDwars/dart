@@ -1,0 +1,131 @@
+module Statement
+
+language Dart
+start symbol Statement
+
+test empty expression statement [[
+  ;
+]] parse succeeds
+
+test semicolon is mandatory [[
+  x
+]] parse fails
+
+test variable declaration [[
+  var x;
+]] parse succeeds
+
+test variable declaration whitespace [[
+  var x ;
+]] parse succeeds
+
+test initializing variable declaration [[
+  var x = 1;
+]] parse succeeds
+
+test if without else [[
+  if (somePredicate)
+    var v = 2;
+]] parse succeeds
+
+test if else [[
+  if (somePredicate)
+    var v = 2;
+  else
+    var v = 2;
+]] parse succeeds
+
+test for [[
+  for (int x = 0; x < 9; x++)
+    print("Hello");
+]] parse succeeds
+
+test for in [[
+  for (x in y)
+    var v = 2;
+]] parse succeeds
+
+test while [[
+  while (true)
+    var v = 1;
+]] parse succeeds
+
+test do [[
+  do var v = 1 while (true);
+]] parse succeeds
+
+test switch without default case [[
+  switch (true) {
+    case a: var v = 1;
+  }
+]] parse succeeds
+
+test switch without switch case [[
+  switch (true) {
+    default: var v = 1;
+  }
+]] parse succeeds
+
+test rethrow [[
+  rethrow;
+]] parse succeeds
+
+test rethrow with whitespace [[
+  rethrow ;
+]] parse succeeds
+
+test return without expression [[
+  return;
+]] parse succeeds
+
+test return with expression [[
+  return x;
+]] parse succeeds
+
+test break without label [[
+  break;
+]] parse succeeds
+
+test break with label [[
+  break x;
+]] parse succeeds
+
+test continue without label [[
+  continue;
+]] parse succeeds
+
+test continue with label [[
+  continue x;
+]] parse succeeds
+
+test yield [[
+  yield x;
+]] parse succeeds
+
+test invoke with whitespace [[
+  print ( ) ;
+]] parse succeeds
+
+test invoke without args [[
+  print();
+]] parse succeeds
+
+test invoke with one arg [[
+  print(1);
+]] parse succeeds
+
+test invoke with many args [[
+  print(1, 2, 3);
+]] parse succeeds
+
+test invoke only labeled args [[
+  print(label1: 1, label2: 2, label3: 3);
+]] parse succeeds
+
+test invoke end with labeled arg [[
+  print(1, 2, label3: 3);
+]] parse succeeds
+
+test invoke start with labeled arg [[
+  print(label1: 1, 2, 3);
+]] 1 error

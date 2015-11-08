@@ -1,0 +1,40 @@
+module Associativity
+
+language Dart
+start symbol Expression
+
+test prefix decrement no ambiguity [[
+  --1
+]] parse succeeds
+
+test mixed prefix and postfix [[
+  1+++1
+]] parse to [[
+  (1++)+1
+]]
+
+test repeated postfix [[
+  x++++
+]] parse fails
+
+test post inc higher than pre inc [[
+  ++x++
+]] parse to [[
+  ++(x++)
+]]
+
+test precedence index [[
+  a[1+1]
+]] parse succeeds
+
+test add left assoc [[
+  1 + 2 + 3
+]] parse to [[
+  (1 + 2) + 3
+]]
+
+test conditional right assoc [[
+  1 ? 2 : 3 ? 2 : 3
+]] parse to [[
+  1 ? 2 : (3 ? 2 : 3)
+]]

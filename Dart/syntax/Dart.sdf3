@@ -1,0 +1,38 @@
+module Dart
+
+imports
+	
+	Class
+	Common
+	Enum
+	Expression
+  Function
+  Import
+  Export
+	Statement
+	Variable
+  Metadata
+  CompilationUnit
+  
+context-free start-symbols
+  
+  // For testing
+  ID
+  Qualified
+  STRING
+  Enum
+  Expression
+  Function
+  Import
+  Statement
+  Metadata
+  VariableDeclaration
+  Class
+  CompilationUnit
+  
+  // Real start symbol
+  Start
+  
+context-free syntax
+  
+  Start.Program = CompilationUnit*

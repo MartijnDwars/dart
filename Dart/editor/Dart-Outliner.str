@@ -1,0 +1,13 @@
+module editor/Dart-Outliner
+
+imports
+  
+  include/Dart
+  lib/runtime/editor/outline-library
+  lib/runtime/editor/origins
+  editor/Dart-Outliner.generated
+
+rules
+  
+  to-outline-label = fail
+  

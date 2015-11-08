@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.imp.runtime.languageDescription">
+      <language
+            extensions="dart"
+            description="Dart"
+            language="Dart"
+            derivedFrom="DynamicRoot"
+            validator="Dart.DartValidator"
+            validatorClass="Dart.DartValidator"
+      ></language>
+   </extension>
+   <extension
+         id="Dart.parser"
+         name="Dart Parser"
+         point="org.eclipse.imp.runtime.parser">
+      <parser
+            class="Dart.DartParseController"
+            language="Dart">
+      </parser>
+   </extension>    
+</plugin>

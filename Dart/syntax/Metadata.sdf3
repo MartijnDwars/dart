@@ -1,0 +1,13 @@
+module Metadata
+
+imports
+
+  Common
+  Argument
+  
+context-free syntax
+  
+  Metadata.Metadata = <<{Annotation "\n"}*>>
+  
+  Annotation.Annotation = <@<MoreQualified>>
+  Annotation.ArgumentAnnotation = <@<MoreQualified>(<{Argument ", "}*>)>
