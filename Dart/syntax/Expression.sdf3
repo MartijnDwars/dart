@@ -3,7 +3,6 @@ module Expression
 imports
 
   Common
-  Function
   Type
   Argument
   Variable
@@ -18,22 +17,18 @@ imports
   expressions/IfNull
   expressions/Assignments
   expressions/Literals
+  expressions/Primary
   expressions/Restrictions
   
 context-free syntax
   
-  Expression.VarRef = ID
-  
   Expression.Throw = <throw <Expression>>
-  
-  Expression.NewObject = <new <Type> (<{Argument ", "}*>)> // TODO: Enforce order of arguments
-  
-  Expression.This = <this>
   
   Expression = VariableDeclaration
   
-  Expression = Function
+  Expression = Primary
   
+  // TODO: In the spec this is actually "Primary = '(' Expression ')'". What is the influence of this difference?
   Expression = <(<Expression>)> {bracket}
   
 context-free priorities

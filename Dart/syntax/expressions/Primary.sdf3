@@ -1,0 +1,33 @@
+module expressions/Primary
+
+imports
+  
+  Common
+  Type
+  Function
+  Argument
+  expressions/Literals
+  
+context-free syntax
+
+  Primary.This = <this>
+  
+  Primary.VarRef = ID
+  
+  Primary = Function
+  
+  Primary = Literal
+  
+  Primary.NewObject = <new <Type>(<{Argument ", "}*>)> // TODO: Enforce order of arguments
+  
+  Primary.NewObject = <new <Type>.<ID>(<{Argument ", "}*>)> // TODO: Enforce order of arguments
+  
+  Primary.Closurization = <new <Type>#>
+  
+  Primary.Closurization = <new <Type>#.<ID>>
+  
+  Primary.ConstObject = <const <Type>(<{Argument ", "}*>)> // // TODO: Enforce order of arguments
+  
+  Primary.ConstObject = <const <Type>.<ID>(<{Argument ", "}*>)> // // TODO: Enforce order of arguments
+  
+  // TODO: Primary.Xyz = <super <UnconditionalAssignableSelector>>

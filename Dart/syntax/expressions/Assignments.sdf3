@@ -3,7 +3,8 @@ module expressions/Assignments
 imports
 
   Common
-
+  expressions/AssignableExpression
+  
 context-free syntax
 
   Expression.Assign = <<AssignableExpression> = <Expression>> {right}
@@ -19,15 +20,3 @@ context-free syntax
   Expression.BitXorAssign = <<AssignableExpression> ^= <Expression>> {right}
   Expression.BitOrAssign = <<AssignableExpression> |= <Expression>> {right}
   Expression.NullAssign = <<AssignableExpression> ??= <Expression>> {right}
-
-  
-  // TODO: Expression is to liberal here
-  AssignableExpression = <<Expression> <AssignableSelector+>>
-  AssignableExpression = <super <UnconditionalAssignableSelector>>
-  AssignableExpression = ID
-  
-  UnconditionalAssignableSelector = <[<Expression>]>
-  UnconditionalAssignableSelector = <.<ID>>
-  
-  AssignableSelector = UnconditionalAssignableSelector
-  AssignableSelector = <?.<ID>>

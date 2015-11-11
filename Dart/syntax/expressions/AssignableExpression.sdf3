@@ -1,0 +1,20 @@
+module expressions/AssignableExpression
+
+imports
+  
+  Common
+  Expression
+  expressions/Primary
+  
+context-free syntax
+
+  // TODO: should also allow arguments (see spec)
+  AssignableExpression = <<Primary> <AssignableSelector+>>
+  AssignableExpression = <super <UnconditionalAssignableSelector>>
+  AssignableExpression = ID
+  
+  UnconditionalAssignableSelector = <[<Expression>]>
+  UnconditionalAssignableSelector = <.<ID>>
+  
+  AssignableSelector = UnconditionalAssignableSelector
+  AssignableSelector = <?.<ID>>

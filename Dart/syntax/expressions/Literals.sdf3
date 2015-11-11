@@ -4,29 +4,30 @@ imports
 
   Common
   Type
+  Expression
   
 context-free syntax
 
-  Expression.Null = "null"
+  Literal.Null = "null"
   
-  Expression.True = "true"
+  Literal.True = "true"
   
-  Expression.False = "false"
+  Literal.False = "false"
   
-  Expression.Number = NUMBER
+  Literal.Number = NUMBER
   
-  Expression.HexNumber = HEX-NUMBER
+  Literal.HexNumber = HEX-NUMBER
   
-  Expression.String = STRING
+  Literal.String = STRING
   
-  Expression.Symbol = <#<{ID "."}+>>
+  Literal.Symbol = <#<{ID "."}+>>
   
-  Expression.List = <<CONST?> [<{Expression ", "}*>]>
-  Expression.List = <<CONST?> [<{Expression ", "}*>, ]>
-  Expression.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
+  Literal.List = <<CONST?> [<{Expression ", "}*>]>
+  Literal.List = <<CONST?> [<{Expression ", "}*>, ]>
+  Literal.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
   
-  Expression.Map = <<CONST?> {<{MapEntry ", "}*>}>
-  Expression.Map = <<CONST?> {<{MapEntry ", "}*>, }>
-  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
-  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
+  Literal.Map = <<CONST?> {<{MapEntry ", "}*>}>
+  Literal.Map = <<CONST?> {<{MapEntry ", "}*>, }>
+  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
+  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
   MapEntry.MapEntry = <<Expression>: <Expression>> 

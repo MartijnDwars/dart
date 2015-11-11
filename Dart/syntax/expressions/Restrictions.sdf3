@@ -4,3 +4,6 @@ lexical restrictions
   
   // Disambiguate x+++x as (x++)+x
   "+" -/- [\+]
+  
+  // Disambiguate x---x as (x--)-x, and disambiguate between --x and -(-x)
+  "-" -/- [\-]

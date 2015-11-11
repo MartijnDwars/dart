@@ -5,5 +5,3 @@ context-free syntax
   Expression.IfNull = Expression "??" Expression {left}
   Expression.Conditional = Expression "?" Expression ":" Expression {right} // TODO: No cascades allowed
   Expression.Cascade = Expression ".." Expression {left}
-
-  // TODO: Grammar specifies these three on separate precedence levels. Is this necessary? I.e is ambiguity possible?

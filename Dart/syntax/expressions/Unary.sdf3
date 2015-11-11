@@ -3,23 +3,26 @@ module expressions/Unary
 imports
 
   Common
+  expressions/AssignableExpression
 
 context-free syntax
 
   // Unary postfix
-  Expression.Property = Expression "." Expression // TODO: this is not unary?
-  Expression.ConditionalProperty = Expression "?." Expression // TODO: this is not unary?
-  Expression.PostInc = Expression "++"
-  Expression.PostDec = Expression "--"
+  Expression.Property = Expression "." Expression 
+  Expression.ConditionalProperty = Expression "?." Expression
+  Expression.PostInc = AssignableExpression "++"
+  Expression.PostDec = AssignableExpression "--"
   Expression.Index = Expression "[" IndexExpression "]"
-  Expression.Call = Expression "(" Expression ")" // TODO: arg list? TODO: deal with precedence like in Expression.Index?
+  Expression.Call = Expression "(" Expression ")" // TODO: list of arguments (see spec?) TODO: deal with precedence like in Expression.Index?
   
   // Unary prefix
   Expression.Min = "-" Expression
   Expression.Neg = "!" Expression
   Expression.BitNot = "~" Expression
-  Expression.PreInc = "++" Expression
-  Expression.PreDec = "--" Expression
+  Expression.PreInc = "++" AssignableExpression
+  Expression.PreDec = "--" AssignableExpression
   
   // Indirection to fix precedence for Expression.Index
   IndexExpression = Expression
+
+  // TODO: not everything in this file is unary, split this

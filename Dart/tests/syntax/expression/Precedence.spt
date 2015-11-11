@@ -56,3 +56,17 @@ test cascade > assign [[
 ]] parse to [[
   (3..4) = 5
 ]]
+
+test post inc higher than pre inc [[
+  ++x++
+]] parse to [[
+  ++(x++)
+]]
+
+test precedence index [[
+  a[1+1]
+]] parse succeeds
+
+test precedence call [[
+  a(1+1)
+]] parse succeeds
