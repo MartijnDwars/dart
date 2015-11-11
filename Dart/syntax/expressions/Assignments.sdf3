@@ -1,0 +1,33 @@
+module expressions/Assignments
+
+imports
+
+  Common
+
+context-free syntax
+
+  Expression.Assign = <<AssignableExpression> = <Expression>> {right}
+  Expression.MulAssign = <<AssignableExpression> *= <Expression>> {right}
+  Expression.DivAssign = <<AssignableExpression> /= <Expression>> {right}
+  Expression.IntDivAssign = <<AssignableExpression> ~/= <Expression>> {right}
+  Expression.ModAssign = <<AssignableExpression> %= <Expression>> {right}
+  Expression.AddAssign = <<AssignableExpression> += <Expression>> {right}
+  Expression.SubAssign = <<AssignableExpression> -= <Expression>> {right}
+  Expression.LShiftAssign = <<AssignableExpression> \<\<= <Expression>> {right}
+  Expression.RShiftAssign = <<AssignableExpression> \>\>= <Expression>> {right}
+  Expression.BitAndAssign = <<AssignableExpression> &= <Expression>> {right}
+  Expression.BitXorAssign = <<AssignableExpression> ^= <Expression>> {right}
+  Expression.BitOrAssign = <<AssignableExpression> |= <Expression>> {right}
+  Expression.NullAssign = <<AssignableExpression> ??= <Expression>> {right}
+
+  
+  // TODO: Expression is to liberal here
+  AssignableExpression = <<Expression> <AssignableSelector+>>
+  AssignableExpression = <super <UnconditionalAssignableSelector>>
+  AssignableExpression = ID
+  
+  UnconditionalAssignableSelector = <[<Expression>]>
+  UnconditionalAssignableSelector = <.<ID>>
+  
+  AssignableSelector = UnconditionalAssignableSelector
+  AssignableSelector = <?.<ID>>

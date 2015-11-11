@@ -1,0 +1,32 @@
+module expressions/Literals
+
+imports
+
+  Common
+  Type
+  
+context-free syntax
+
+  Expression.Null = "null"
+  
+  Expression.True = "true"
+  
+  Expression.False = "false"
+  
+  Expression.Number = NUMBER
+  
+  Expression.HexNumber = HEX-NUMBER
+  
+  Expression.String = STRING
+  
+  Expression.Symbol = <#<{ID "."}+>>
+  
+  Expression.List = <<CONST?> [<{Expression ", "}*>]>
+  Expression.List = <<CONST?> [<{Expression ", "}*>, ]>
+  Expression.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
+  
+  Expression.Map = <<CONST?> {<{MapEntry ", "}*>}>
+  Expression.Map = <<CONST?> {<{MapEntry ", "}*>, }>
+  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
+  Expression.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
+  MapEntry.MapEntry = <<Expression>: <Expression>> 

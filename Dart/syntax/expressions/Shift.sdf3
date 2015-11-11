@@ -1,0 +1,10 @@
+module expressions/Shift
+
+imports
+
+  Common
+
+context-free syntax
+
+  Expression.LShift = Expression "<<" Expression {left}
+  Expression.RShift = Expression ">>" Expression {left}

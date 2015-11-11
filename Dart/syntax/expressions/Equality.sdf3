@@ -1,0 +1,6 @@
+module expressions/Equality
+
+context-free syntax
+
+  Expression.Eq = Expression "==" Expression
+  Expression.Neq = Expression "!=" Expression
