@@ -1,0 +1,33 @@
+module DartSpec.main
+
+imports
+  DartSpec-Colorer
+  DartSpec-Completions
+  DartSpec-Folding
+  DartSpec-Menus
+  DartSpec-Refactorings
+  DartSpec-References
+  DartSpec-Syntax
+  DartSpec-Views
+
+language General properties
+  
+  name:          DartSpec
+  id:            DartSpec
+  extends:       Root
+  
+  description:   "Spoofax-generated editor for the DartSpec language"
+  url:           http://strategoxt.org
+  
+  extensions:    tex
+  table:         include/DartSpec.tbl
+  start symbols: Start
+  
+  provider:      include/dartspec.ctree
+  provider:      include/dartspec-java.jar
+  
+  observer:      editor-analyze (multifile)
+  
+  on save:       editor-save
+  
+  jvm opts:      -server -Xss8m -Xmx1024m

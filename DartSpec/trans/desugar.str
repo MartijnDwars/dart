@@ -1,0 +1,35 @@
+module desugar
+
+imports
+  
+  include/DartSpec
+
+signature
+  
+  constructors
+    
+    Alt : List(Rhs) -> Alt
+    Conc : List(Rhs) -> Conc
+  
+rules
+  
+  // Fold Alt's of Alt's into a single list
+  desugar-alt:
+    Alt(x, Alt(ys)) -> Alt([x | ys])
+  
+  desugar-alt:
+    Alt(x, y) -> Alt([x, y])
+    
+  // Fold Conc's of Conc's into a single list
+  desugar-conc:
+    Conc(x, Conc(ys)) -> Conc([x | ys])
+  
+  desugar-conc:
+    Conc(x, y) -> Conc([x, y])
+  
+strategies
+  
+  desugar-all = innermost(desugar-alt <+ desugar-conc)
+  
+  // WTF?!
+  // desugar-all = try(desugar-spec); debug(!"AST: "); innermost(desugar-alt); debug(!"AST 2: "); !Spec([])

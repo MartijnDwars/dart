@@ -1,0 +1,1009 @@
+% A cleaned version of the Dart grammar that was extracted from the language specification (Version 1.11)
+ 
+\begin{grammar}
+{\bf variableDeclaration:}
+      declaredIdentifier (',' identifier)*
+      .
+      
+{\bf declaredIdentifier:}
+      metadata finalConstVarOrType identifier
+    .
+
+{\bf finalConstVarOrType:}'final' type?;
+           'const' type?;
+  varOrType
+    .
+    
+ {\bf varOrType:}'var';
+  type
+    .
+
+ {\bf initializedVariableDeclaration:}
+      declaredIdentifier ('=' expression)? (',' initializedIdentifier)* % could do top level here
+    .
+
+{\bf initializedIdentifier:}
+      identifier ('=' expression)? % could do top-level here
+    .
+    
+{\bf initializedIdentifierList:}
+      initializedIdentifier (',' initializedIdentifier)*
+    .
+
+
+
+
+  \end{grammar}
+\begin{grammar}
+{\bf functionSignature:}
+    metadata returnType? identifier formalParameterList
+    .
+    
+{\bf returnType:}
+      'void';
+      type
+    .
+
+{\bf functionBody:} 'async'?  '=>' expression ';';
+     ('async' ; 'async'* ; 'sync'*)? block
+    .
+
+{\bf block:}
+      '\{' statements '\}'
+    .
+
+\end{grammar}
+\begin{grammar}
+{\bf formalParameterList:}'(' ')';
+ '(' normalFormalParameters ( ','  optionalFormalParameters)? ')';
+  '(' optionalFormalParameters ')'
+   .
+\end{grammar}
+\begin{grammar}
+%formalParameterList:     
+%      '(' restFormalParameter? ')';
+%      '(' namedFormalParameters ')';
+ %     '(' normalFormalParameters normalFormalParameterTail? ')'
+  %  .
+
+{\bf normalFormalParameters:}
+      normalFormalParameter (',' normalFormalParameter)*
+    .
+
+{\bf optionalFormalParameters:}optionalPositionalFormalParameters;
+      namedFormalParameters
+    .
+
+{\bf optionalPositionalFormalParameters:}
+      '[' defaultFormalParameter (',' defaultFormalParameter)* ']'
+    .
+{\bf namedFormalParameters:}
+      '\{' defaultNamedParameter (',' defaultNamedParameter)* '\}'
+    .
+\end{grammar}
+\begin{grammar}
+{\bf normalFormalParameter:}functionSignature;
+      fieldFormalParameter;
+      simpleFormalParameter
+ .
+
+{\bf simpleFormalParameter:}declaredIdentifier;
+      metadata identifier
+    .
+
+{\bf fieldFormalParameter:}
+   metadata finalConstVarOrType? 'this' '.' identifier formalParameterList?
+   .
+\end{grammar}
+
+\begin{grammar}
+{\bf defaultFormalParameter:}
+      normalFormalParameter ('=' expression)?
+    .   
+        
+{\bf defaultNamedParameter:}
+      normalFormalParameter ( ':' expression)?
+    .   
+\end{grammar}
+\begin{grammar}
+{\bf classDefinition:}
+metadata 'abstract'?  'class' identifier typeParameters? (superclass mixins?)? interfaces?
+       '\{' (metadata classMemberDefinition)* '\}';
+       
+metadata 'abstract'?  'class' mixinApplicationClass
+    .
+    
+{\bf mixins:}
+  \WITH{} typeList
+  .
+
+{\bf classMemberDefinition:}declaration ';' ;
+       methodSignature functionBody
+    .
+
+{\bf methodSignature:}constructorSignature initializers?;
+      factoryConstructorSignature;
+      \STATIC{}? functionSignature;
+      \STATIC{}? getterSignature;
+      \STATIC{}? setterSignature;
+      operatorSignature
+    .
+
+{\bf declaration:}constantConstructorSignature (redirection ; initializers)?;
+      constructorSignature (redirection ; initializers)?;
+      'external' constantConstructorSignature;
+      'external' constructorSignature;
+      (('external' \STATIC{} ?))? getterSignature;
+      (('external' \STATIC{}?))? setterSignature;
+      'external'? operatorSignature;
+       (('external' \STATIC{}?))? functionSignature;
+      \STATIC{} ('final' ; 'const') type? staticFinalDeclarationList;
+%      'const' type? staticFinalDeclarationList;
+      'final' type? initializedIdentifierList;
+      \STATIC{}? ('var' ; type) initializedIdentifierList
+    .
+
+{\bf staticFinalDeclarationList:}
+    staticFinalDeclaration (',' staticFinalDeclaration)*
+    .
+
+{\bf staticFinalDeclaration:}
+      identifier '=' expression
+    .
+
+\end{grammar}
+\begin{grammar}
+{\bf operatorSignature:}
+       returnType? \OPERATOR{} operator formalParameterList
+       .
+       
+ {\bf operator:}'~';
+      binaryOperator;
+      '[' ']' ;
+      '[' ']' '='
+    .
+
+{\bf binaryOperator:}multiplicativeOperator;
+      additiveOperator;
+      shiftOperator;
+      relationalOperator;
+      '==';
+      bitwiseOperator
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf getterSignature:}
+       returnType? \GET{} identifier 
+.
+\end{grammar}
+\begin{grammar}
+{\bf setterSignature:}
+       returnType? \SET{} identifier formalParameterList
+.
+\end{grammar}
+\begin{grammar}
+{\bf constructorSignature:}
+      identifier ('.' identifier)? formalParameterList
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf redirection:}
+     ':' 'this' ('.' identifier)? arguments
+    .
+\end{grammar}
+\begin{grammar}
+{\bf initializers:}
+      ':' superCallOrFieldInitializer (',' superCallOrFieldInitializer)*
+    .
+
+
+{\bf superCallOrFieldInitializer:}'super' arguments;
+      'super' '.' identifier arguments;
+     fieldInitializer
+    .
+    
+   {\bf  fieldInitializer:}
+      ('this' '.')? identifier '=' conditionalExpression cascadeSection*
+    .
+
+\end{grammar}
+\begin{grammar}
+{\bf factoryConstructorSignature:}
+      \FACTORY{} identifier  ('.' identifier)?  formalParameterList
+    .
+\end{grammar}
+\begin{grammar}
+{\bf redirectingFactoryConstructorSignature:}
+      'const'? \FACTORY{} identifier ('.' identifier)? formalParameterList '=' type ('.' identifier)?
+    .
+\end{grammar}
+\begin{grammar}
+{\bf constantConstructorSignature:}
+      'const' qualified formalParameterList
+    .
+\end{grammar}
+\begin{grammar}
+{\bf superclass:}
+      \EXTENDS{} type
+    .
+\end{grammar}
+\begin{grammar}
+{\bf interfaces:}
+      \IMPLEMENTS{} typeList
+    .
+\end{grammar}
+\begin{grammar}
+{\bf  mixinApplicationClass:}
+  identifier typeParameters? '='  mixinApplication ';' .
+  
+{\bf mixinApplication:}
+     type mixins interfaces? 
+    .
+\end{grammar}
+\begin{grammar}
+{\bf enumType:}
+metadata \ENUM{} id '\{' id (',' id)* ','? '\}'
+    .
+\end{grammar}
+\begin{grammar}
+{\bf typeParameter:}
+     metadata identifier (\EXTENDS{} type)?
+    .
+{\bf typeParameters:}
+     '<' typeParameter (',' typeParameter)* '>'
+    .
+\end{grammar}
+\begin{grammar}
+{\bf metadata:}
+      ('@' qualified ('.' identifier)? (arguments)?)*
+    .
+\end{grammar}
+\begin{grammar}
+
+{\bf expression:}assignableExpression assignmentOperator expression;
+       conditionalExpression cascadeSection*;
+       throwExpression     
+    .
+     
+    
+{\bf expressionWithoutCascade:}assignableExpression assignmentOperator expressionWithoutCascade;
+      conditionalExpression;
+      throwExpressionWithoutCascade    
+    .
+
+{\bf expressionList:}
+      expression (',' expression)* %should these be top level expressions?
+    .
+\end{grammar}
+\begin{grammar}
+{\bf primary:}thisExpression;
+      'super' unconditionalAssignableSelector;
+      functionExpression;
+      literal;
+      identifier;
+      newExpression;
+      \NEW{} type '\#' ('.' identifier)?;
+      constObjectExpression;
+      '(' expression ')'
+    .
+    
+\end{grammar}
+\begin{grammar}
+{\bf literal:}nullLiteral;
+      booleanLiteral;
+      numericLiteral;
+      stringLiteral;
+      symbolLiteral;
+      mapLiteral;
+      listLiteral
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf nullLiteral:}
+      \NULL{}
+.
+\end{grammar}
+\begin{grammar}
+{\bf numericLiteral:}NUMBER;
+      HEX_NUMBER
+    .
+    
+  {\bf NUMBER:} DIGIT+ ('.' DIGIT+)? EXPONENT?;
+      '.' DIGIT+ EXPONENT?
+    .
+
+{\bf  EXPONENT:}
+      ('e' ; 'E') ('+' ; '-')? DIGIT+
+    .
+
+{\bf HEX_NUMBER:}'0x' HEX_DIGIT+;
+      '0X' HEX_DIGIT+
+    .
+
+ {\bf HEX_DIGIT:}'a'..'f';
+      'A'..'F';
+      DIGIT
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf booleanLiteral:}\TRUE{};
+        \FALSE{}
+    .
+\end{grammar}
+\begin{grammar}
+{\bf stringLiteral:}(multilineString ; singleLineString)+
+    .
+\end{grammar}
+\begin{grammar}
+ {\bf singleLineString:}'"' stringContentDQ* '"';
+       '\' stringContentSQ* '\';
+      'r' '\' (~( '\' ; NEWLINE ))* '\';
+      'r' '"' (~( '"' ; NEWLINE ))* '"'
+    .
+\end{grammar}
+\begin{grammar}
+ {\bf multilineString:}'"""' stringContentTDQ*   '"""';
+      '\'\'\'' stringContentTSQ* '\'\'\'';
+      'r' '"""'  (~ '"""')*   '"""';
+      'r' '\'\'\'' (~ '\'\'\'')* '\'\'\''
+    .
+    
+    
+    {\bf ESCAPE_SEQUENCE:} '\\n';
+    '\\r';
+   '\\f';
+   '\\b';
+  '\\t';
+   '\\v';
+  '\\x' HEX_DIGIT HEX_DIGIT;
+   '\\u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT;
+   '\\u\{' HEX_DIGIT_SEQUENCE '\}'
+  .
+  
+{\bf HEX_DIGIT_SEQUENCE:}
+     HEX_DIGIT HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? HEX_DIGIT? 
+    .
+   
+\end{grammar}
+\begin{grammar}
+ {\bf stringContentDQ:}~( '\\' ; '"' ; '\$' ; NEWLINE );
+      '\\'  ~( NEWLINE );
+     stringInterpolation
+    .
+
+ {\bf stringContentSQ:}~( '\\' ; '\'' ; '\$' ; NEWLINE );
+      '\\'  ~( NEWLINE );
+     stringInterpolation
+    .
+
+    
+ {\bf stringContentTDQ:}~( '\\' ;  '"""' ; '\$');
+     stringInterpolation
+    .    
+
+ {\bf stringContentTSQ:}~( '\\' ; '\'\'\'' ; '\$');
+     stringInterpolation
+    .
+    
+{\bf NEWLINE:}'\\n';
+      '\\r'
+    .
+
+ \end{grammar}
+\begin{grammar}
+{\bf stringInterpolation:}'\$' IDENTIFIER_NO_DOLLAR;
+      '\$' '\{' expression '\}' % could be top level expression, no?
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf symbolLiteral:}
+      '\#'  (operator ; (identifier ('.' identifier)*))  .
+\end{grammar}
+\begin{grammar}
+{\bf listLiteral:}
+     'const'? typeArguments? '[' (expressionList ','?)? ']'
+    .
+\end{grammar}
+\begin{grammar}
+{\bf mapLiteral:}
+      'const'?  typeArguments? '\{' (mapLiteralEntry (',' mapLiteralEntry)* ','?)? '\}'
+    .
+
+{\bf mapLiteralEntry:}
+        % identifier ':' expression;
+  expression ':' expression 
+    .
+\end{grammar}
+\begin{grammar}
+{\bf throwExpression:}
+     \THROW{} expression 
+    .
+    
+   {\bf throwExpressionWithoutCascade:}
+     \THROW{} expressionWithoutCascade 
+    .
+ 
+ \end{grammar}
+\begin{grammar}
+{\bf functionExpression:}
+    formalParameterList functionBody
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf thisExpression:}
+      'this'
+     .
+\end{grammar}
+\begin{grammar}
+{\bf newExpression:}
+\NEW{} type ('.' identifier)? arguments
+.
+\end{grammar}
+\begin{grammar}
+{\bf constObjectExpression:}
+'const' type ('.' identifier)? arguments
+.
+\end{grammar}
+\begin{grammar}
+{\bf arguments:}
+      '(' argumentList? ')'
+    .
+
+{\bf argumentList:}namedArgument (',' namedArgument)*;
+  %    expressionList ',' spreadArgument;
+      expressionList (',' namedArgument)*
+%      spreadArgument
+    .
+
+{\bf namedArgument:}
+      label expression % could be top level expression?
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf cascadeSection:}
+      '..' (cascadeSelector arguments*) (assignableSelector arguments*)* (assignmentOperator expressionWithoutCascade)?
+      .
+     
+{\bf cascadeSelector:}'['  expression ']';
+      identifier
+      .
+\end{grammar}
+\begin{grammar}
+{\bf assignmentOperator:}'=' ;
+      compoundAssignmentOperator
+    .
+\end{grammar}
+\begin{grammar}
+{\bf compoundAssignmentOperator:}'*=';
+      '/=';
+      '~/=';
+      '\%=';
+      '+=';
+      '-=';
+      '\lt \lt=';
+       '> >=';
+      '\&=';
+      '\^{}=';
+      ';=';
+      '??='
+    .
+\end{grammar}
+\begin{grammar}
+  {\bf conditionalExpression:}
+     ifNullExpression ('?' expressionWithoutCascade ':' expressionWithoutCascade)?
+    . % the first  branches could  top level expressions, it seems, but certainly NOT the second
+\end{grammar}
+\begin{grammar}
+{\bf ifNullExpression:}
+  logicalOrExpression ('??' logicalOrExpression)*
+  .
+\end{grammar}
+\begin{grammar}
+{\bf logicalOrExpression:}
+      logicalAndExpression ('$||$' logicalAndExpression)*
+    .
+
+
+{\bf logicalAndExpression:}
+      equalityExpression ('\&\&' equalityExpression)*
+%      bitwiseOrExpression ('\&\&' bitwiseOrExpression)*
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf equalityExpression:}relationalExpression (equalityOperator relationalExpression)?;
+      'super' equalityOperator relationalExpression
+    .
+
+{\bf equalityOperator:}'==';
+      '!='
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf relationalExpression:}bitwiseOrExpression (typeTest ; typeCast ;  relationalOperator bitwiseOrExpression)?;
+      'super' relationalOperator bitwiseOrExpression
+    .
+
+
+{\bf relationalOperator:}'>=';
+      '>';
+      '\lt=';
+      '\lt'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf bitwiseOrExpression:}bitwiseXorExpression (';' bitwiseXorExpression)*;
+      'super' (';' bitwiseXorExpression)+
+    .
+
+{\bf bitwiseXorExpression:}bitwiseAndExpression ('\^{}' bitwiseAndExpression)*;
+      'super' ('\^{}' bitwiseAndExpression)+
+    .
+
+{\bf bitwiseAndExpression:}shiftExpression ('\&' shiftExpression)*;
+      'super' ('\&' shiftExpression)+
+    .
+
+{\bf bitwiseOperator:}'\&';
+      '\^{}';
+      ';'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf shiftExpression:}additiveExpression (shiftOperator additiveExpression)*;
+      'super' (shiftOperator additiveExpression)+
+    .
+
+{\bf shiftOperator:}'\lt\lt';
+       '> >' 
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf additiveExpression:}multiplicativeExpression (additiveOperator multiplicativeExpression)*;
+      'super' (additiveOperator multiplicativeExpression)+
+    .
+
+{\bf additiveOperator:}'+';
+      '-'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf multiplicativeExpression:}unaryExpression (multiplicativeOperator unaryExpression)*;
+      'super' (multiplicativeOperator unaryExpression)+
+    .
+
+{\bf multiplicativeOperator:}'*';
+      '/';
+      '\%';
+      '~/'
+    .
+    
+ \end{grammar}
+\begin{grammar}
+{\bf unaryExpression:}prefixOperator unaryExpression;
+      awaitExpression;
+      postfixExpression;
+      (minusOperator ; tildeOperator) 'super';
+      incrementOperator assignableExpression
+    .
+ 
+ {\bf prefixOperator:}minusOperator;
+      negationOperator;
+      tildeOperator
+    .
+       
+       
+  {\bf minusOperator:}'-'
+  .
+
+
+    {\bf negationOperator:}'!'
+      .
+      
+    {\bf tildeOperator:}  '~'
+    .
+    
+    
+\end{grammar}
+\begin{grammar}
+{\bf awaitExpression:}
+      \AWAIT{} unaryExpression
+      .
+ \end{grammar}
+\begin{grammar}
+{\bf postfixExpression:}assignableExpression postfixOperator;
+      primary (selector* ; ( '\#' ( (identifier '='?) ; operator)))
+    .
+
+{\bf postfixOperator:}
+      incrementOperator
+    .
+
+{\bf selector:}assignableSelector;
+      arguments
+    .
+
+{\bf incrementOperator:}'++';
+      '-{}-'
+    .
+        
+ \end{grammar}
+\begin{grammar}
+
+{\bf assignableExpression:}primary (arguments* assignableSelector)+;
+      'super' unconditionalAssignableSelector;
+      identifier
+    .
+    
+{\bf unconditionalAssignableSelector:}'[' expression ']'; % again, could be top level
+         '.' identifier
+    .
+
+{\bf assignableSelector:}
+         unconditionalAssignableSelector;
+         '?.' identifier
+    .
+
+\end{grammar}
+\begin{grammar}
+{\bf identifier:}
+     IDENTIFIER
+     .
+     
+         
+ {\bf IDENTIFIER_NO_DOLLAR:}
+      IDENTIFIER_START_NO_DOLLAR IDENTIFIER_PART_NO_DOLLAR*
+    .
+
+{\bf IDENTIFIER:}
+      IDENTIFIER_START IDENTIFIER_PART*
+    .
+
+{\bf BUILT_IN_IDENTIFIER:} 'abstract';
+     \AS{};
+     \DEFERRED{};
+     \DYNAMIC{};
+     \EXPORT{};
+     'external';
+     \FACTORY{};
+     \GET{};
+     \IMPLEMENTS{};
+     \IMPORT{};
+     \LIBRARY{};
+     \OPERATOR{};
+     \PART{};
+      \SET{};
+      \STATIC{};
+     \TYPEDEF{}
+    .
+
+ {\bf IDENTIFIER_START:}IDENTIFIER_START_NO_DOLLAR;
+      '\$'
+    .
+
+{\bf IDENTIFIER_START_NO_DOLLAR:}LETTER;
+      '_'
+    .
+
+{\bf  IDENTIFIER_PART_NO_DOLLAR:}IDENTIFIER_START_NO_DOLLAR;
+      DIGIT
+    .
+
+
+{\bf IDENTIFIER_PART:}IDENTIFIER_START;
+      DIGIT
+    .
+
+
+
+{\bf qualified:}
+      identifier ('.' identifier)?  
+      . 
+\end{grammar}
+\begin{grammar}
+ {\bf typeTest:}
+ isOperator type
+ .
+ 
+ 
+{\bf isOperator:}
+\IS{} '!'?
+    .
+ \end{grammar}
+\begin{grammar}
+ {\bf typeCast:}
+ asOperator type
+ .
+ 
+ 
+{\bf asOperator:}
+\AS{}
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf statements:}
+      statement*
+    .
+
+
+{\bf statement:}
+      label* nonLabelledStatement
+    .
+
+{\bf nonLabelledStatement:}block; 
+      localVariableDeclaration;
+      forStatement;
+      whileStatement;
+      doStatement;
+      switchStatement;
+      ifStatement;
+      rethrowStatement;
+      tryStatement;
+      breakStatement;
+      continueStatement;
+      returnStatement;
+      yieldStatement;
+      yieldEachStatement;
+      expressionStatement;
+      assertStatement;
+      localFunctionDeclaration
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf expressionStatement:}
+  expression? ';'
+  .
+ \end{grammar}
+\begin{grammar}
+{\bf localVariableDeclaration:}
+    initializedVariableDeclaration ';'
+  .
+ \end{grammar}
+\begin{grammar}
+{\bf localFunctionDeclaration:}
+    functionSignature functionBody
+  .
+ \end{grammar}
+\begin{grammar}
+{\bf ifStatement:}
+      \IF{} '(' expression ')' statement ( \ELSE{} statement)? % we could allow top level expression
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf forStatement:}
+     \AWAIT? \FOR{} '(' forLoopParts ')' statement
+    .
+
+{\bf forLoopParts:}forInitializerStatement expression? ';' expressionList?;
+      declaredIdentifier \IN{} expression;
+      identifier \IN{} expression
+    .
+
+{\bf forInitializerStatement:}localVariableDeclaration;
+      expression? ';'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf whileStatement:}
+      \WHILE{} '(' expression ')' statement  % could do top level here, and in for
+.
+ \end{grammar}
+\begin{grammar}
+{\bf doStatement:}
+    \DO{} statement \WHILE{} '(' expression ')' ';'% could do top level here
+      .
+ \end{grammar}
+\begin{grammar}
+{\bf switchStatement:}
+      \SWITCH{} '(' expression ')' '\{' switchCase* defaultCase? '\}'% could do top level here and in cases
+    .
+
+
+{\bf switchCase:}
+      label* \CASE{} expression ':' statements
+    .
+
+{\bf defaultCase:}
+      label*  \DEFAULT{} ':' statements
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf rethrowStatement:}
+     \RETHROW{}  ';'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf tryStatement:}
+      \TRY{} block (onPart+ finallyPart? ; finallyPart)
+    .
+    
+ {\bf onPart:}catchPart block;
+    \ON{} type catchPart? block
+   .
+
+{\bf catchPart:}
+      \CATCH{} '(' identifier (',' identifier)? ')' 
+    .
+
+{\bf finallyPart:}
+      \FINALLY{} block
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf returnStatement:}
+    \RETURN{} expression? ';' % could do top level here
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf label:}
+      identifier ':'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf breakStatement:}
+     \BREAK{} identifier? ';'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf continueStatement:}
+    \CONTINUE{} identifier? ';'
+        .
+ \end{grammar}
+\begin{grammar}
+{\bf yieldStatement:}
+   \YIELD{} expression ';'
+      .
+\end{grammar}
+\begin{grammar}
+{\bf yieldEachStatement:}
+   \YIELD* expression ';'
+      .
+\end{grammar}
+\begin{grammar}
+{\bf assertStatement:}
+   assert '(' conditionalExpression ')' ';'
+      .
+\end{grammar}
+\begin{grammar}
+{\bf topLevelDefinition:}classDefinition;
+     enumType;
+%      classDefinitionOrInterfaceInjection;
+%      interfaceDefinitionOrInterfaceInjection;
+ %     mixinApplication;
+      typeAlias;
+      'external'? functionSignature ';';
+      'external'? getterSignature ';';
+      'external'? setterSignature ';';      
+      functionSignature functionBody;
+      returnType? \GET{} identifier functionBody;
+      returnType? \SET{} identifier formalParameterList functionBody;
+      % TODO: Something is wrong here! E.g. "var int x = 1, y = 2" cannot be parsed by the spec, but it should.
+      % Why are staticFinalDeclarationList and variableDeclaration distinguished? Can we merge this, e.g. by
+      % using initializedVariableDeclaration
+      ('final' ; 'const') type? staticFinalDeclarationList ';';
+      variableDeclaration ';'
+    .
+
+%    classDefinitionOrInterfaceInjection:
+ %     classDefinition;
+  %    classInterfaceInjection
+ %   .
+
+%interfaceDefinitionOrInterfaceInjection:
+ %     interfaceDefinition;
+     % interfaceInterfaceInjection
+  %  .
+
+{\bf libraryDefinition:}
+%      library '\{' libraryBody '\}'
+      scriptTag? libraryName? importOrExport* partDirective* topLevelDefinition*
+    .
+    
+    {\bf     scriptTag:}
+   '\#!' (~NEWLINE)* NEWLINE
+ .    
+
+{\bf libraryName:}
+   metadata \LIBRARY{} identifier ('.' identifier)* ';'
+   .
+
+{\bf importOrExport:}libraryImport ;
+  libraryExport
+  .   
+ \end{grammar}
+\begin{grammar}
+{\bf libraryImport:}
+   metadata importSpecification
+    .
+ 
+ {\bf importSpecification:}
+    \IMPORT{}  uri (\AS{} identifier)?  combinator* ';';
+     \IMPORT{}  uri \DEFERRED{} \AS{} identifier  combinator* ';'
+    .
+       
+{\bf combinator:}\SHOW{} identifierList;
+\HIDE{} identifierList
+    .
+    
+    {\bf identifierList:}
+      identifier (',' identifier)*
+      .
+ \end{grammar}
+\begin{grammar}
+{\bf libraryExport:}
+   metadata \EXPORT{}  uri  combinator* ';'
+    .
+ \end{grammar}
+\begin{grammar}
+{\bf partDirective:}
+   metadata \PART{}   uri ';' 
+    .
+
+{\bf partHeader:}
+      metadata \PART{} \OF{} identifier ('.' identifier)* ';'
+    .
+{\bf partDeclaration:}
+      partHeader topLevelDefinition* EOF
+    .
+\end{grammar}
+\begin{grammar}
+{\bf uri:}
+      stringLiteral
+    .
+\end{grammar}
+\begin{grammar}
+{\bf type:}
+      typeName typeArguments?
+    .
+
+{\bf typeName:}
+      qualified 
+    .
+
+{\bf typeArguments:}
+      '<' typeList '>'
+    .
+
+{\bf typeList:}
+      type (',' type)*
+    .
+ \end{grammar}
+\begin{grammar}
+
+{\bf typeAlias:}
+  metadata  \TYPEDEF{} typeAliasBody
+  .
+  
+{\bf typeAliasBody:}
+  functionTypeAlias
+  .
+
+{\bf functionTypeAlias:}
+       functionPrefix  typeParameters? formalParameterList ';'
+    .
+    
+    {\bf functionPrefix:}
+    returnType? identifier
+    .
+    
+ \end{grammar}
+\begin{grammar}
+ {\bf LETTER:}'a' .. 'z';
+     'A' ..'Z'
+    .
+
+{\bf DIGIT:}
+      '0' .. '9'
+    .
+
+{\bf WHITESPACE:}
+      ('$\backslash$t' ; ' ' ; NEWLINE)+
+    .
+\end{grammar}
+\begin{grammar}{\bf SINGLE_LINE_COMMENT:}
+      '//' ~(NEWLINE)* (NEWLINE)?
+    .
+
+{\bf MULTI_LINE_COMMENT:}
+      '/*' (MULTI_LINE_COMMENT ; ~ '*/')* '*/'
+    .
+ \end{grammar}

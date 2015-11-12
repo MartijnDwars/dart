@@ -1,0 +1,26 @@
+module generate
+
+imports
+	
+  libstratego-aterm
+	include/DartSpec
+	
+rules 
+  
+  /**
+   * Get list of unused (redundant) productions.
+   */
+  redundant-productions:
+    spec -> redundant
+    where
+      productions := <collect-all(?Production(_, _))> spec
+    ; redundant   := <filter(unused(|spec))> productions
+    ; <debug(!"Redundant")> <pp-aterm> redundant
+  
+  /**
+   * Succeeds if there are no reference to the given production.
+   */
+  unused(|spec):
+    Production(name, _) -> <id>
+    where
+      refs := <collect-all(?Ref(name)); ?[]> spec

@@ -1,0 +1,1968 @@
+Spec(
+  [ Grammar(
+      [ Production(
+          "variableDeclaration"
+        , Conc(
+            Ref("declaredIdentifier")
+          , RepAny(Conc(Lit("','"), Ref("identifier")))
+          )
+        )
+      , Production(
+          "declaredIdentifier"
+        , Conc(Conc(Ref("metadata"), Ref("finalConstVarOrType")), Ref("identifier"))
+        )
+      , Production(
+          "finalConstVarOrType"
+        , Alt(
+            Conc(Lit("'final'"), Optional(Ref("type")))
+          , Alt(
+              Conc(Lit("'const'"), Optional(Ref("type")))
+            , Ref("varOrType")
+            )
+          )
+        )
+      , Production("varOrType", Alt(Lit("'var'"), Ref("type")))
+      , Production(
+          "initializedVariableDeclaration"
+        , Conc(
+            Conc(
+              Ref("declaredIdentifier")
+            , Optional(Conc(Lit("'='"), Ref("expression")))
+            )
+          , RepAny(Conc(Lit("','"), Ref("initializedIdentifier")))
+          )
+        )
+      , Production(
+          "initializedIdentifier"
+        , Conc(
+            Ref("identifier")
+          , Optional(Conc(Lit("'='"), Ref("expression")))
+          )
+        )
+      , Production(
+          "initializedIdentifierList"
+        , Conc(
+            Ref("initializedIdentifier")
+          , RepAny(Conc(Lit("','"), Ref("initializedIdentifier")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "functionSignature"
+        , Conc(
+            Conc(
+              Conc(Ref("metadata"), Optional(Ref("returnType")))
+            , Ref("identifier")
+            )
+          , Ref("formalParameterList")
+          )
+        )
+      , Production("returnType", Alt(Lit("'void'"), Ref("type")))
+      , Production(
+          "functionBody"
+        , Alt(
+            Conc(
+              Conc(
+                Conc(Optional(Lit("'async'")), Lit("'=>'"))
+              , Ref("expression")
+              )
+            , Lit("';'")
+            )
+          , Conc(
+              Optional(
+                Alt(
+                  Lit("'async'")
+                , Alt(RepAny(Lit("'async'")), RepAny(Lit("'sync'")))
+                )
+              )
+            , Ref("block")
+            )
+          )
+        )
+      , Production(
+          "block"
+        , Conc(Conc(Lit("'\\{'"), Ref("statements")), Lit("'\\}'"))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "formalParameterList"
+        , Alt(
+            Conc(Lit("'('"), Lit("')'"))
+          , Alt(
+              Conc(
+                Conc(
+                  Conc(Lit("'('"), Ref("normalFormalParameters"))
+                , Optional(Conc(Lit("','"), Ref("optionalFormalParameters")))
+                )
+              , Lit("')'")
+              )
+            , Conc(Conc(Lit("'('"), Ref("optionalFormalParameters")), Lit("')'"))
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "normalFormalParameters"
+        , Conc(
+            Ref("normalFormalParameter")
+          , RepAny(Conc(Lit("','"), Ref("normalFormalParameter")))
+          )
+        )
+      , Production("optionalFormalParameters", Alt(Ref("optionalPositionalFormalParameters"), Ref("namedFormalParameters")))
+      , Production(
+          "optionalPositionalFormalParameters"
+        , Conc(
+            Conc(
+              Conc(Lit("'['"), Ref("defaultFormalParameter"))
+            , RepAny(Conc(Lit("','"), Ref("defaultFormalParameter")))
+            )
+          , Lit("']'")
+          )
+        )
+      , Production(
+          "namedFormalParameters"
+        , Conc(
+            Conc(
+              Conc(Lit("'\\{'"), Ref("defaultNamedParameter"))
+            , RepAny(Conc(Lit("','"), Ref("defaultNamedParameter")))
+            )
+          , Lit("'\\}'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "normalFormalParameter"
+        , Alt(Ref("functionSignature"), Alt(Ref("fieldFormalParameter"), Ref("simpleFormalParameter")))
+        )
+      , Production(
+          "simpleFormalParameter"
+        , Alt(Ref("declaredIdentifier"), Conc(Ref("metadata"), Ref("identifier")))
+        )
+      , Production(
+          "fieldFormalParameter"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(Ref("metadata"), Optional(Ref("finalConstVarOrType")))
+                , Lit("'this'")
+                )
+              , Lit("'.'")
+              )
+            , Ref("identifier")
+            )
+          , Optional(Ref("formalParameterList"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "defaultFormalParameter"
+        , Conc(
+            Ref("normalFormalParameter")
+          , Optional(Conc(Lit("'='"), Ref("expression")))
+          )
+        )
+      , Production(
+          "defaultNamedParameter"
+        , Conc(
+            Ref("normalFormalParameter")
+          , Optional(Conc(Lit("':'"), Ref("expression")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "classDefinition"
+        , Alt(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(
+                    Conc(
+                      Conc(
+                        Conc(
+                          Conc(
+                            Conc(Ref("metadata"), Optional(Lit("'abstract'")))
+                          , Lit("'class'")
+                          )
+                        , Ref("identifier")
+                        )
+                      , Optional(Ref("typeParameters"))
+                      )
+                    , Optional(Conc(Ref("superclass"), Optional(Ref("mixins"))))
+                    )
+                  , Optional(Ref("interfaces"))
+                  )
+                , Lit("'\\{'")
+                )
+              , RepAny(Conc(Ref("metadata"), Ref("classMemberDefinition")))
+              )
+            , Lit("'\\}'")
+            )
+          , Conc(
+              Conc(
+                Conc(Ref("metadata"), Optional(Lit("'abstract'")))
+              , Lit("'class'")
+              )
+            , Ref("mixinApplicationClass")
+            )
+          )
+        )
+      , Production("mixins", Conc(Token("\\WITH{}"), Ref("typeList")))
+      , Production(
+          "classMemberDefinition"
+        , Alt(
+            Conc(Ref("declaration"), Lit("';'"))
+          , Conc(Ref("methodSignature"), Ref("functionBody"))
+          )
+        )
+      , Production(
+          "methodSignature"
+        , Alt(
+            Conc(Ref("constructorSignature"), Optional(Ref("initializers")))
+          , Alt(
+              Ref("factoryConstructorSignature")
+            , Alt(
+                Conc(Optional(Token("\\STATIC{}")), Ref("functionSignature"))
+              , Alt(
+                  Conc(Optional(Token("\\STATIC{}")), Ref("getterSignature"))
+                , Alt(
+                    Conc(Optional(Token("\\STATIC{}")), Ref("setterSignature"))
+                  , Ref("operatorSignature")
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "declaration"
+        , Alt(
+            Conc(
+              Ref("constantConstructorSignature")
+            , Optional(Alt(Ref("redirection"), Ref("initializers")))
+            )
+          , Alt(
+              Conc(
+                Ref("constructorSignature")
+              , Optional(Alt(Ref("redirection"), Ref("initializers")))
+              )
+            , Alt(
+                Conc(Lit("'external'"), Ref("constantConstructorSignature"))
+              , Alt(
+                  Conc(Lit("'external'"), Ref("constructorSignature"))
+                , Alt(
+                    Conc(
+                      Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
+                    , Ref("getterSignature")
+                    )
+                  , Alt(
+                      Conc(
+                        Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
+                      , Ref("setterSignature")
+                      )
+                    , Alt(
+                        Conc(Optional(Lit("'external'")), Ref("operatorSignature"))
+                      , Alt(
+                          Conc(
+                            Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
+                          , Ref("functionSignature")
+                          )
+                        , Alt(
+                            Conc(
+                              Conc(
+                                Conc(Token("\\STATIC{}"), Alt(Lit("'final'"), Lit("'const'")))
+                              , Optional(Ref("type"))
+                              )
+                            , Ref("staticFinalDeclarationList")
+                            )
+                          , Alt(
+                              Conc(
+                                Conc(Lit("'final'"), Optional(Ref("type")))
+                              , Ref("initializedIdentifierList")
+                              )
+                            , Conc(
+                                Conc(
+                                  Optional(Token("\\STATIC{}"))
+                                , Alt(Lit("'var'"), Ref("type"))
+                                )
+                              , Ref("initializedIdentifierList")
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "staticFinalDeclarationList"
+        , Conc(
+            Ref("staticFinalDeclaration")
+          , RepAny(Conc(Lit("','"), Ref("staticFinalDeclaration")))
+          )
+        )
+      , Production(
+          "staticFinalDeclaration"
+        , Conc(Conc(Ref("identifier"), Lit("'='")), Ref("expression"))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "operatorSignature"
+        , Conc(
+            Conc(
+              Conc(Optional(Ref("returnType")), Token("\\OPERATOR{}"))
+            , Ref("operator")
+            )
+          , Ref("formalParameterList")
+          )
+        )
+      , Production(
+          "operator"
+        , Alt(
+            Lit("'~'")
+          , Alt(
+              Ref("binaryOperator")
+            , Alt(
+                Conc(Lit("'['"), Lit("']'"))
+              , Conc(Conc(Lit("'['"), Lit("']'")), Lit("'='"))
+              )
+            )
+          )
+        )
+      , Production(
+          "binaryOperator"
+        , Alt(
+            Ref("multiplicativeOperator")
+          , Alt(
+              Ref("additiveOperator")
+            , Alt(
+                Ref("shiftOperator")
+              , Alt(Ref("relationalOperator"), Alt(Lit("'=='"), Ref("bitwiseOperator")))
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "getterSignature"
+        , Conc(
+            Conc(Optional(Ref("returnType")), Token("\\GET{}"))
+          , Ref("identifier")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "setterSignature"
+        , Conc(
+            Conc(
+              Conc(Optional(Ref("returnType")), Token("\\SET{}"))
+            , Ref("identifier")
+            )
+          , Ref("formalParameterList")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "constructorSignature"
+        , Conc(
+            Conc(
+              Ref("identifier")
+            , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Ref("formalParameterList")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "redirection"
+        , Conc(
+            Conc(
+              Conc(Lit("':'"), Lit("'this'"))
+            , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Ref("arguments")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "initializers"
+        , Conc(
+            Conc(Lit("':'"), Ref("superCallOrFieldInitializer"))
+          , RepAny(Conc(Lit("','"), Ref("superCallOrFieldInitializer")))
+          )
+        )
+      , Production(
+          "superCallOrFieldInitializer"
+        , Alt(
+            Conc(Lit("'super'"), Ref("arguments"))
+          , Alt(
+              Conc(
+                Conc(Conc(Lit("'super'"), Lit("'.'")), Ref("identifier"))
+              , Ref("arguments")
+              )
+            , Ref("fieldInitializer")
+            )
+          )
+        )
+      , Production(
+          "fieldInitializer"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Optional(Conc(Lit("'this'"), Lit("'.'")))
+                , Ref("identifier")
+                )
+              , Lit("'='")
+              )
+            , Ref("conditionalExpression")
+            )
+          , RepAny(Ref("cascadeSection"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "factoryConstructorSignature"
+        , Conc(
+            Conc(
+              Conc(Token("\\FACTORY{}"), Ref("identifier"))
+            , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Ref("formalParameterList")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "redirectingFactoryConstructorSignature"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(
+                    Conc(
+                      Conc(Optional(Lit("'const'")), Token("\\FACTORY{}"))
+                    , Ref("identifier")
+                    )
+                  , Optional(Conc(Lit("'.'"), Ref("identifier")))
+                  )
+                , Ref("formalParameterList")
+                )
+              , Lit("'='")
+              )
+            , Ref("type")
+            )
+          , Optional(Conc(Lit("'.'"), Ref("identifier")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "constantConstructorSignature"
+        , Conc(Conc(Lit("'const'"), Ref("qualified")), Ref("formalParameterList"))
+        )
+      ]
+    )
+  , Grammar(
+      [Production("superclass", Conc(Token("\\EXTENDS{}"), Ref("type")))]
+    )
+  , Grammar(
+      [Production("interfaces", Conc(Token("\\IMPLEMENTS{}"), Ref("typeList")))]
+    )
+  , Grammar(
+      [ Production(
+          "mixinApplicationClass"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Ref("identifier"), Optional(Ref("typeParameters")))
+              , Lit("'='")
+              )
+            , Ref("mixinApplication")
+            )
+          , Lit("';'")
+          )
+        )
+      , Production(
+          "mixinApplication"
+        , Conc(
+            Conc(Ref("type"), Ref("mixins"))
+          , Optional(Ref("interfaces"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "enumType"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(
+                    Conc(Conc(Ref("metadata"), Token("\\ENUM{}")), Ref("id"))
+                  , Lit("'\\{'")
+                  )
+                , Ref("id")
+                )
+              , RepAny(Conc(Lit("','"), Ref("id")))
+              )
+            , Optional(Lit("','"))
+            )
+          , Lit("'\\}'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "typeParameter"
+        , Conc(
+            Conc(Ref("metadata"), Ref("identifier"))
+          , Optional(Conc(Token("\\EXTENDS{}"), Ref("type")))
+          )
+        )
+      , Production(
+          "typeParameters"
+        , Conc(
+            Conc(
+              Conc(Lit("'<'"), Ref("typeParameter"))
+            , RepAny(Conc(Lit("','"), Ref("typeParameter")))
+            )
+          , Lit("'>'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "metadata"
+        , RepAny(
+            Conc(
+              Conc(
+                Conc(Lit("'@'"), Ref("qualified"))
+              , Optional(Conc(Lit("'.'"), Ref("identifier")))
+              )
+            , Optional(Ref("arguments"))
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "expression"
+        , Alt(
+            Conc(Conc(Ref("assignableExpression"), Ref("assignmentOperator")), Ref("expression"))
+          , Alt(
+              Conc(Ref("conditionalExpression"), RepAny(Ref("cascadeSection")))
+            , Ref("throwExpression")
+            )
+          )
+        )
+      , Production(
+          "expressionWithoutCascade"
+        , Alt(
+            Conc(Conc(Ref("assignableExpression"), Ref("assignmentOperator")), Ref("expressionWithoutCascade"))
+          , Alt(Ref("conditionalExpression"), Ref("throwExpressionWithoutCascade"))
+          )
+        )
+      , Production(
+          "expressionList"
+        , Conc(
+            Ref("expression")
+          , RepAny(Conc(Lit("','"), Ref("expression")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "primary"
+        , Alt(
+            Ref("thisExpression")
+          , Alt(
+              Conc(Lit("'super'"), Ref("unconditionalAssignableSelector"))
+            , Alt(
+                Ref("functionExpression")
+              , Alt(
+                  Ref("literal")
+                , Alt(
+                    Ref("identifier")
+                  , Alt(
+                      Ref("newExpression")
+                    , Alt(
+                        Conc(
+                          Conc(Conc(Token("\\NEW{}"), Ref("type")), Lit("'\\#'"))
+                        , Optional(Conc(Lit("'.'"), Ref("identifier")))
+                        )
+                      , Alt(
+                          Ref("constObjectExpression")
+                        , Conc(Conc(Lit("'('"), Ref("expression")), Lit("')'"))
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "literal"
+        , Alt(
+            Ref("nullLiteral")
+          , Alt(
+              Ref("booleanLiteral")
+            , Alt(
+                Ref("numericLiteral")
+              , Alt(
+                  Ref("stringLiteral")
+                , Alt(Ref("symbolLiteral"), Alt(Ref("mapLiteral"), Ref("listLiteral")))
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar([Production("nullLiteral", Token("\\NULL{}"))])
+  , Grammar(
+      [ Production("numericLiteral", Alt(Ref("NUMBER"), Ref("HEX_NUMBER")))
+      , Production(
+          "NUMBER"
+        , Alt(
+            Conc(
+              Conc(
+                RepSome(Ref("DIGIT"))
+              , Optional(Conc(Lit("'.'"), RepSome(Ref("DIGIT"))))
+              )
+            , Optional(Ref("EXPONENT"))
+            )
+          , Conc(
+              Conc(Lit("'.'"), RepSome(Ref("DIGIT")))
+            , Optional(Ref("EXPONENT"))
+            )
+          )
+        )
+      , Production(
+          "EXPONENT"
+        , Conc(
+            Conc(
+              Alt(Lit("'e'"), Lit("'E'"))
+            , Optional(Alt(Lit("'+'"), Lit("'-'")))
+            )
+          , RepSome(Ref("DIGIT"))
+          )
+        )
+      , Production(
+          "HEX_NUMBER"
+        , Alt(
+            Conc(Lit("'0x'"), RepSome(Ref("HEX_DIGIT")))
+          , Conc(Lit("'0X'"), RepSome(Ref("HEX_DIGIT")))
+          )
+        )
+      , Production(
+          "HEX_DIGIT"
+        , Alt(
+            Range("'a'", "'f'")
+          , Alt(Range("'A'", "'F'"), Ref("DIGIT"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [Production("booleanLiteral", Alt(Token("\\TRUE{}"), Token("\\FALSE{}")))]
+    )
+  , Grammar(
+      [Production("stringLiteral", RepSome(Alt(Ref("multilineString"), Ref("singleLineString"))))]
+    )
+  , Grammar(
+      [ Production(
+          "singleLineString"
+        , Alt(
+            Conc(
+              Conc(Lit("'\"'"), RepAny(Ref("stringContentDQ")))
+            , Lit("'\"'")
+            )
+          , Alt(
+              Conc(
+                Conc(Lit("'\\'"), RepAny(Ref("stringContentSQ")))
+              , Lit("'\\'")
+              )
+            , Alt(
+                Conc(
+                  Conc(
+                    Conc(Lit("'r'"), Lit("'\\'"))
+                  , RepAny(Comp(Alt(Lit("'\\'"), Ref("NEWLINE"))))
+                  )
+                , Lit("'\\'")
+                )
+              , Conc(
+                  Conc(
+                    Conc(Lit("'r'"), Lit("'\"'"))
+                  , RepAny(Comp(Alt(Lit("'\"'"), Ref("NEWLINE"))))
+                  )
+                , Lit("'\"'")
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "multilineString"
+        , Alt(
+            Conc(
+              Conc(Lit("'\"\"\"'"), RepAny(Ref("stringContentTDQ")))
+            , Lit("'\"\"\"'")
+            )
+          , Alt(
+              Conc(
+                Conc(Lit("'\\'\\'\\''"), RepAny(Ref("stringContentTSQ")))
+              , Lit("'\\'\\'\\''")
+              )
+            , Alt(
+                Conc(
+                  Conc(
+                    Conc(Lit("'r'"), Lit("'\"\"\"'"))
+                  , RepAny(Comp(Lit("'\"\"\"'")))
+                  )
+                , Lit("'\"\"\"'")
+                )
+              , Conc(
+                  Conc(
+                    Conc(Lit("'r'"), Lit("'\\'\\'\\''"))
+                  , RepAny(Comp(Lit("'\\'\\'\\''")))
+                  )
+                , Lit("'\\'\\'\\''")
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "ESCAPE_SEQUENCE"
+        , Alt(
+            Lit("'\\\\n'")
+          , Alt(
+              Lit("'\\\\r'")
+            , Alt(
+                Lit("'\\\\f'")
+              , Alt(
+                  Lit("'\\\\b'")
+                , Alt(
+                    Lit("'\\\\t'")
+                  , Alt(
+                      Lit("'\\\\v'")
+                    , Alt(
+                        Conc(Conc(Lit("'\\\\x'"), Ref("HEX_DIGIT")), Ref("HEX_DIGIT"))
+                      , Alt(
+                          Conc(
+                            Conc(
+                              Conc(Conc(Lit("'\\\\u'"), Ref("HEX_DIGIT")), Ref("HEX_DIGIT"))
+                            , Ref("HEX_DIGIT")
+                            )
+                          , Ref("HEX_DIGIT")
+                          )
+                        , Conc(Conc(Lit("'\\\\u\\{'"), Ref("HEX_DIGIT_SEQUENCE")), Lit("'\\}'"))
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "HEX_DIGIT_SEQUENCE"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(Ref("HEX_DIGIT"), Optional(Ref("HEX_DIGIT")))
+                , Optional(Ref("HEX_DIGIT"))
+                )
+              , Optional(Ref("HEX_DIGIT"))
+              )
+            , Optional(Ref("HEX_DIGIT"))
+            )
+          , Optional(Ref("HEX_DIGIT"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "stringContentDQ"
+        , Alt(
+            Comp(
+              Alt(
+                Lit("'\\\\'")
+              , Alt(Lit("'\"'"), Alt(Lit("'\\$'"), Ref("NEWLINE")))
+              )
+            )
+          , Alt(
+              Conc(Lit("'\\\\'"), Comp(Ref("NEWLINE")))
+            , Ref("stringInterpolation")
+            )
+          )
+        )
+      , Production(
+          "stringContentSQ"
+        , Alt(
+            Comp(
+              Alt(
+                Lit("'\\\\'")
+              , Alt(Lit("'\\''"), Alt(Lit("'\\$'"), Ref("NEWLINE")))
+              )
+            )
+          , Alt(
+              Conc(Lit("'\\\\'"), Comp(Ref("NEWLINE")))
+            , Ref("stringInterpolation")
+            )
+          )
+        )
+      , Production(
+          "stringContentTDQ"
+        , Alt(
+            Comp(
+              Alt(Lit("'\\\\'"), Alt(Lit("'\"\"\"'"), Lit("'\\$'")))
+            )
+          , Ref("stringInterpolation")
+          )
+        )
+      , Production(
+          "stringContentTSQ"
+        , Alt(
+            Comp(
+              Alt(Lit("'\\\\'"), Alt(Lit("'\\'\\'\\''"), Lit("'\\$'")))
+            )
+          , Ref("stringInterpolation")
+          )
+        )
+      , Production("NEWLINE", Alt(Lit("'\\\\n'"), Lit("'\\\\r'")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "stringInterpolation"
+        , Alt(
+            Conc(Lit("'\\$'"), Ref("IDENTIFIER_NO_DOLLAR"))
+          , Conc(
+              Conc(Conc(Lit("'\\$'"), Lit("'\\{'")), Ref("expression"))
+            , Lit("'\\}'")
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "symbolLiteral"
+        , Conc(
+            Lit("'\\#'")
+          , Alt(
+              Ref("operator")
+            , Conc(
+                Ref("identifier")
+              , RepAny(Conc(Lit("'.'"), Ref("identifier")))
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "listLiteral"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Optional(Lit("'const'")), Optional(Ref("typeArguments")))
+              , Lit("'['")
+              )
+            , Optional(Conc(Ref("expressionList"), Optional(Lit("','"))))
+            )
+          , Lit("']'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "mapLiteral"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Optional(Lit("'const'")), Optional(Ref("typeArguments")))
+              , Lit("'\\{'")
+              )
+            , Optional(
+                Conc(
+                  Conc(
+                    Ref("mapLiteralEntry")
+                  , RepAny(Conc(Lit("','"), Ref("mapLiteralEntry")))
+                  )
+                , Optional(Lit("','"))
+                )
+              )
+            )
+          , Lit("'\\}'")
+          )
+        )
+      , Production(
+          "mapLiteralEntry"
+        , Conc(Conc(Ref("expression"), Lit("':'")), Ref("expression"))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production("throwExpression", Conc(Token("\\THROW{}"), Ref("expression")))
+      , Production("throwExpressionWithoutCascade", Conc(Token("\\THROW{}"), Ref("expressionWithoutCascade")))
+      ]
+    )
+  , Grammar(
+      [Production("functionExpression", Conc(Ref("formalParameterList"), Ref("functionBody")))]
+    )
+  , Grammar([Production("thisExpression", Lit("'this'"))])
+  , Grammar(
+      [ Production(
+          "newExpression"
+        , Conc(
+            Conc(
+              Conc(Token("\\NEW{}"), Ref("type"))
+            , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Ref("arguments")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "constObjectExpression"
+        , Conc(
+            Conc(
+              Conc(Lit("'const'"), Ref("type"))
+            , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Ref("arguments")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "arguments"
+        , Conc(
+            Conc(Lit("'('"), Optional(Ref("argumentList")))
+          , Lit("')'")
+          )
+        )
+      , Production(
+          "argumentList"
+        , Alt(
+            Conc(
+              Ref("namedArgument")
+            , RepAny(Conc(Lit("','"), Ref("namedArgument")))
+            )
+          , Conc(
+              Ref("expressionList")
+            , RepAny(Conc(Lit("','"), Ref("namedArgument")))
+            )
+          )
+        )
+      , Production("namedArgument", Conc(Ref("label"), Ref("expression")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "cascadeSection"
+        , Conc(
+            Conc(
+              Conc(
+                Lit("'..'")
+              , Conc(Ref("cascadeSelector"), RepAny(Ref("arguments")))
+              )
+            , RepAny(Conc(Ref("assignableSelector"), RepAny(Ref("arguments"))))
+            )
+          , Optional(Conc(Ref("assignmentOperator"), Ref("expressionWithoutCascade")))
+          )
+        )
+      , Production(
+          "cascadeSelector"
+        , Alt(
+            Conc(Conc(Lit("'['"), Ref("expression")), Lit("']'"))
+          , Ref("identifier")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [Production("assignmentOperator", Alt(Lit("'='"), Ref("compoundAssignmentOperator")))]
+    )
+  , Grammar(
+      [ Production(
+          "compoundAssignmentOperator"
+        , Alt(
+            Lit("'*='")
+          , Alt(
+              Lit("'/='")
+            , Alt(
+                Lit("'~/='")
+              , Alt(
+                  Lit("'\\%='")
+                , Alt(
+                    Lit("'+='")
+                  , Alt(
+                      Lit("'-='")
+                    , Alt(
+                        Lit("'\\lt \\lt='")
+                      , Alt(
+                          Lit("'> >='")
+                        , Alt(
+                            Lit("'\\&='")
+                          , Alt(Lit("'\\^{}='"), Alt(Lit("';='"), Lit("'??='")))
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "conditionalExpression"
+        , Conc(
+            Ref("ifNullExpression")
+          , Optional(
+              Conc(
+                Conc(Conc(Lit("'?'"), Ref("expressionWithoutCascade")), Lit("':'"))
+              , Ref("expressionWithoutCascade")
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "ifNullExpression"
+        , Conc(
+            Ref("logicalOrExpression")
+          , RepAny(Conc(Lit("'??'"), Ref("logicalOrExpression")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "logicalOrExpression"
+        , Conc(
+            Ref("logicalAndExpression")
+          , RepAny(Conc(Lit("'$||$'"), Ref("logicalAndExpression")))
+          )
+        )
+      , Production(
+          "logicalAndExpression"
+        , Conc(
+            Ref("equalityExpression")
+          , RepAny(Conc(Lit("'\\&\\&'"), Ref("equalityExpression")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "equalityExpression"
+        , Alt(
+            Conc(
+              Ref("relationalExpression")
+            , Optional(Conc(Ref("equalityOperator"), Ref("relationalExpression")))
+            )
+          , Conc(Conc(Lit("'super'"), Ref("equalityOperator")), Ref("relationalExpression"))
+          )
+        )
+      , Production("equalityOperator", Alt(Lit("'=='"), Lit("'!='")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "relationalExpression"
+        , Alt(
+            Conc(
+              Ref("bitwiseOrExpression")
+            , Optional(
+                Alt(
+                  Ref("typeTest")
+                , Alt(Ref("typeCast"), Conc(Ref("relationalOperator"), Ref("bitwiseOrExpression")))
+                )
+              )
+            )
+          , Conc(Conc(Lit("'super'"), Ref("relationalOperator")), Ref("bitwiseOrExpression"))
+          )
+        )
+      , Production(
+          "relationalOperator"
+        , Alt(
+            Lit("'>='")
+          , Alt(Lit("'>'"), Alt(Lit("'\\lt='"), Lit("'\\lt'")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "bitwiseOrExpression"
+        , Alt(
+            Conc(
+              Ref("bitwiseXorExpression")
+            , RepAny(Conc(Lit("';'"), Ref("bitwiseXorExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Lit("';'"), Ref("bitwiseXorExpression")))
+            )
+          )
+        )
+      , Production(
+          "bitwiseXorExpression"
+        , Alt(
+            Conc(
+              Ref("bitwiseAndExpression")
+            , RepAny(Conc(Lit("'\\^{}'"), Ref("bitwiseAndExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Lit("'\\^{}'"), Ref("bitwiseAndExpression")))
+            )
+          )
+        )
+      , Production(
+          "bitwiseAndExpression"
+        , Alt(
+            Conc(
+              Ref("shiftExpression")
+            , RepAny(Conc(Lit("'\\&'"), Ref("shiftExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Lit("'\\&'"), Ref("shiftExpression")))
+            )
+          )
+        )
+      , Production(
+          "bitwiseOperator"
+        , Alt(Lit("'\\&'"), Alt(Lit("'\\^{}'"), Lit("';'")))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "shiftExpression"
+        , Alt(
+            Conc(
+              Ref("additiveExpression")
+            , RepAny(Conc(Ref("shiftOperator"), Ref("additiveExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Ref("shiftOperator"), Ref("additiveExpression")))
+            )
+          )
+        )
+      , Production("shiftOperator", Alt(Lit("'\\lt\\lt'"), Lit("'> >'")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "additiveExpression"
+        , Alt(
+            Conc(
+              Ref("multiplicativeExpression")
+            , RepAny(Conc(Ref("additiveOperator"), Ref("multiplicativeExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Ref("additiveOperator"), Ref("multiplicativeExpression")))
+            )
+          )
+        )
+      , Production("additiveOperator", Alt(Lit("'+'"), Lit("'-'")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "multiplicativeExpression"
+        , Alt(
+            Conc(
+              Ref("unaryExpression")
+            , RepAny(Conc(Ref("multiplicativeOperator"), Ref("unaryExpression")))
+            )
+          , Conc(
+              Lit("'super'")
+            , RepSome(Conc(Ref("multiplicativeOperator"), Ref("unaryExpression")))
+            )
+          )
+        )
+      , Production(
+          "multiplicativeOperator"
+        , Alt(
+            Lit("'*'")
+          , Alt(Lit("'/'"), Alt(Lit("'\\%'"), Lit("'~/'")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "unaryExpression"
+        , Alt(
+            Conc(Ref("prefixOperator"), Ref("unaryExpression"))
+          , Alt(
+              Ref("awaitExpression")
+            , Alt(
+                Ref("postfixExpression")
+              , Alt(
+                  Conc(Alt(Ref("minusOperator"), Ref("tildeOperator")), Lit("'super'"))
+                , Conc(Ref("incrementOperator"), Ref("assignableExpression"))
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "prefixOperator"
+        , Alt(Ref("minusOperator"), Alt(Ref("negationOperator"), Ref("tildeOperator")))
+        )
+      , Production("minusOperator", Lit("'-'"))
+      , Production("negationOperator", Lit("'!'"))
+      , Production("tildeOperator", Lit("'~'"))
+      ]
+    )
+  , Grammar(
+      [Production("awaitExpression", Conc(Token("\\AWAIT{}"), Ref("unaryExpression")))]
+    )
+  , Grammar(
+      [ Production(
+          "postfixExpression"
+        , Alt(
+            Conc(Ref("assignableExpression"), Ref("postfixOperator"))
+          , Conc(
+              Ref("primary")
+            , Alt(
+                RepAny(Ref("selector"))
+              , Conc(
+                  Lit("'\\#'")
+                , Alt(
+                    Conc(Ref("identifier"), Optional(Lit("'='")))
+                  , Ref("operator")
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production("postfixOperator", Ref("incrementOperator"))
+      , Production("selector", Alt(Ref("assignableSelector"), Ref("arguments")))
+      , Production("incrementOperator", Alt(Lit("'++'"), Lit("'-{}-'")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "assignableExpression"
+        , Alt(
+            Conc(
+              Ref("primary")
+            , RepSome(Conc(RepAny(Ref("arguments")), Ref("assignableSelector")))
+            )
+          , Alt(Conc(Lit("'super'"), Ref("unconditionalAssignableSelector")), Ref("identifier"))
+          )
+        )
+      , Production(
+          "unconditionalAssignableSelector"
+        , Alt(
+            Conc(Conc(Lit("'['"), Ref("expression")), Lit("']'"))
+          , Conc(Lit("'.'"), Ref("identifier"))
+          )
+        )
+      , Production(
+          "assignableSelector"
+        , Alt(Ref("unconditionalAssignableSelector"), Conc(Lit("'?.'"), Ref("identifier")))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production("identifier", Ref("IDENTIFIER"))
+      , Production("IDENTIFIER_NO_DOLLAR", Conc(Ref("IDENTIFIER_START_NO_DOLLAR"), RepAny(Ref("IDENTIFIER_PART_NO_DOLLAR"))))
+      , Production("IDENTIFIER", Conc(Ref("IDENTIFIER_START"), RepAny(Ref("IDENTIFIER_PART"))))
+      , Production(
+          "BUILT_IN_IDENTIFIER"
+        , Alt(
+            Lit("'abstract'")
+          , Alt(
+              Token("\\AS{}")
+            , Alt(
+                Token("\\DEFERRED{}")
+              , Alt(
+                  Token("\\DYNAMIC{}")
+                , Alt(
+                    Token("\\EXPORT{}")
+                  , Alt(
+                      Lit("'external'")
+                    , Alt(
+                        Token("\\FACTORY{}")
+                      , Alt(
+                          Token("\\GET{}")
+                        , Alt(
+                            Token("\\IMPLEMENTS{}")
+                          , Alt(
+                              Token("\\IMPORT{}")
+                            , Alt(
+                                Token("\\LIBRARY{}")
+                              , Alt(
+                                  Token("\\OPERATOR{}")
+                                , Alt(
+                                    Token("\\PART{}")
+                                  , Alt(Token("\\SET{}"), Alt(Token("\\STATIC{}"), Token("\\TYPEDEF{}")))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production("IDENTIFIER_START", Alt(Ref("IDENTIFIER_START_NO_DOLLAR"), Lit("'\\$'")))
+      , Production("IDENTIFIER_START_NO_DOLLAR", Alt(Ref("LETTER"), Lit("'_'")))
+      , Production("IDENTIFIER_PART_NO_DOLLAR", Alt(Ref("IDENTIFIER_START_NO_DOLLAR"), Ref("DIGIT")))
+      , Production("IDENTIFIER_PART", Alt(Ref("IDENTIFIER_START"), Ref("DIGIT")))
+      , Production(
+          "qualified"
+        , Conc(
+            Ref("identifier")
+          , Optional(Conc(Lit("'.'"), Ref("identifier")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production("typeTest", Conc(Ref("isOperator"), Ref("type")))
+      , Production("isOperator", Conc(Token("\\IS{}"), Optional(Lit("'!'"))))
+      ]
+    )
+  , Grammar(
+      [ Production("typeCast", Conc(Ref("asOperator"), Ref("type")))
+      , Production("asOperator", Token("\\AS{}"))
+      ]
+    )
+  , Grammar(
+      [ Production("statements", RepAny(Ref("statement")))
+      , Production("statement", Conc(RepAny(Ref("label")), Ref("nonLabelledStatement")))
+      , Production(
+          "nonLabelledStatement"
+        , Alt(
+            Ref("block")
+          , Alt(
+              Ref("localVariableDeclaration")
+            , Alt(
+                Ref("forStatement")
+              , Alt(
+                  Ref("whileStatement")
+                , Alt(
+                    Ref("doStatement")
+                  , Alt(
+                      Ref("switchStatement")
+                    , Alt(
+                        Ref("ifStatement")
+                      , Alt(
+                          Ref("rethrowStatement")
+                        , Alt(
+                            Ref("tryStatement")
+                          , Alt(
+                              Ref("breakStatement")
+                            , Alt(
+                                Ref("continueStatement")
+                              , Alt(
+                                  Ref("returnStatement")
+                                , Alt(
+                                    Ref("yieldStatement")
+                                  , Alt(
+                                      Ref("yieldEachStatement")
+                                    , Alt(Ref("expressionStatement"), Alt(Ref("assertStatement"), Ref("localFunctionDeclaration")))
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [Production("expressionStatement", Conc(Optional(Ref("expression")), Lit("';'")))]
+    )
+  , Grammar(
+      [Production("localVariableDeclaration", Conc(Ref("initializedVariableDeclaration"), Lit("';'")))]
+    )
+  , Grammar(
+      [Production("localFunctionDeclaration", Conc(Ref("functionSignature"), Ref("functionBody")))]
+    )
+  , Grammar(
+      [ Production(
+          "ifStatement"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Conc(Token("\\IF{}"), Lit("'('")), Ref("expression"))
+              , Lit("')'")
+              )
+            , Ref("statement")
+            )
+          , Optional(Conc(Token("\\ELSE{}"), Ref("statement")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "forStatement"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(Optional(Token("\\AWAIT")), Token("\\FOR{}"))
+                , Lit("'('")
+                )
+              , Ref("forLoopParts")
+              )
+            , Lit("')'")
+            )
+          , Ref("statement")
+          )
+        )
+      , Production(
+          "forLoopParts"
+        , Alt(
+            Conc(
+              Conc(
+                Conc(Ref("forInitializerStatement"), Optional(Ref("expression")))
+              , Lit("';'")
+              )
+            , Optional(Ref("expressionList"))
+            )
+          , Alt(
+              Conc(Conc(Ref("declaredIdentifier"), Token("\\IN{}")), Ref("expression"))
+            , Conc(Conc(Ref("identifier"), Token("\\IN{}")), Ref("expression"))
+            )
+          )
+        )
+      , Production(
+          "forInitializerStatement"
+        , Alt(
+            Ref("localVariableDeclaration")
+          , Conc(Optional(Ref("expression")), Lit("';'"))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "whileStatement"
+        , Conc(
+            Conc(
+              Conc(Conc(Token("\\WHILE{}"), Lit("'('")), Ref("expression"))
+            , Lit("')'")
+            )
+          , Ref("statement")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "doStatement"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(Conc(Token("\\DO{}"), Ref("statement")), Token("\\WHILE{}"))
+                , Lit("'('")
+                )
+              , Ref("expression")
+              )
+            , Lit("')'")
+            )
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "switchStatement"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(
+                    Conc(Conc(Token("\\SWITCH{}"), Lit("'('")), Ref("expression"))
+                  , Lit("')'")
+                  )
+                , Lit("'\\{'")
+                )
+              , RepAny(Ref("switchCase"))
+              )
+            , Optional(Ref("defaultCase"))
+            )
+          , Lit("'\\}'")
+          )
+        )
+      , Production(
+          "switchCase"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(RepAny(Ref("label")), Token("\\CASE{}"))
+              , Ref("expression")
+              )
+            , Lit("':'")
+            )
+          , Ref("statements")
+          )
+        )
+      , Production(
+          "defaultCase"
+        , Conc(
+            Conc(
+              Conc(RepAny(Ref("label")), Token("\\DEFAULT{}"))
+            , Lit("':'")
+            )
+          , Ref("statements")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [Production("rethrowStatement", Conc(Token("\\RETHROW{}"), Lit("';'")))]
+    )
+  , Grammar(
+      [ Production(
+          "tryStatement"
+        , Conc(
+            Conc(Token("\\TRY{}"), Ref("block"))
+          , Alt(
+              Conc(RepSome(Ref("onPart")), Optional(Ref("finallyPart")))
+            , Ref("finallyPart")
+            )
+          )
+        )
+      , Production(
+          "onPart"
+        , Alt(
+            Conc(Ref("catchPart"), Ref("block"))
+          , Conc(
+              Conc(
+                Conc(Token("\\ON{}"), Ref("type"))
+              , Optional(Ref("catchPart"))
+              )
+            , Ref("block")
+            )
+          )
+        )
+      , Production(
+          "catchPart"
+        , Conc(
+            Conc(
+              Conc(Conc(Token("\\CATCH{}"), Lit("'('")), Ref("identifier"))
+            , Optional(Conc(Lit("','"), Ref("identifier")))
+            )
+          , Lit("')'")
+          )
+        )
+      , Production("finallyPart", Conc(Token("\\FINALLY{}"), Ref("block")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "returnStatement"
+        , Conc(
+            Conc(Token("\\RETURN{}"), Optional(Ref("expression")))
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [Production("label", Conc(Ref("identifier"), Lit("':'")))]
+    )
+  , Grammar(
+      [ Production(
+          "breakStatement"
+        , Conc(
+            Conc(Token("\\BREAK{}"), Optional(Ref("identifier")))
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "continueStatement"
+        , Conc(
+            Conc(Token("\\CONTINUE{}"), Optional(Ref("identifier")))
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "yieldStatement"
+        , Conc(Conc(Token("\\YIELD{}"), Ref("expression")), Lit("';'"))
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "yieldEachStatement"
+        , Conc(
+            Conc(RepAny(Token("\\YIELD")), Ref("expression"))
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "assertStatement"
+        , Conc(
+            Conc(
+              Conc(Conc(Ref("assert"), Lit("'('")), Ref("conditionalExpression"))
+            , Lit("')'")
+            )
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "topLevelDefinition"
+        , Alt(
+            Ref("classDefinition")
+          , Alt(
+              Ref("enumType")
+            , Alt(
+                Ref("typeAlias")
+              , Alt(
+                  Conc(
+                    Conc(Optional(Lit("'external'")), Ref("functionSignature"))
+                  , Lit("';'")
+                  )
+                , Alt(
+                    Conc(
+                      Conc(Optional(Lit("'external'")), Ref("getterSignature"))
+                    , Lit("';'")
+                    )
+                  , Alt(
+                      Conc(
+                        Conc(Optional(Lit("'external'")), Ref("setterSignature"))
+                      , Lit("';'")
+                      )
+                    , Alt(
+                        Conc(Ref("functionSignature"), Ref("functionBody"))
+                      , Alt(
+                          Conc(
+                            Conc(
+                              Conc(Optional(Ref("returnType")), Token("\\GET{}"))
+                            , Ref("identifier")
+                            )
+                          , Ref("functionBody")
+                          )
+                        , Alt(
+                            Conc(
+                              Conc(
+                                Conc(
+                                  Conc(Optional(Ref("returnType")), Token("\\SET{}"))
+                                , Ref("identifier")
+                                )
+                              , Ref("formalParameterList")
+                              )
+                            , Ref("functionBody")
+                            )
+                          , Alt(
+                              Conc(
+                                Conc(
+                                  Conc(
+                                    Alt(Lit("'final'"), Lit("'const'"))
+                                  , Optional(Ref("type"))
+                                  )
+                                , Ref("staticFinalDeclarationList")
+                                )
+                              , Lit("';'")
+                              )
+                            , Conc(Ref("variableDeclaration"), Lit("';'"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      , Production(
+          "libraryDefinition"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Optional(Ref("scriptTag")), Optional(Ref("libraryName")))
+              , RepAny(Ref("importOrExport"))
+              )
+            , RepAny(Ref("partDirective"))
+            )
+          , RepAny(Ref("topLevelDefinition"))
+          )
+        )
+      , Production(
+          "scriptTag"
+        , Conc(
+            Conc(Lit("'\\#!'"), RepAny(Comp(Ref("NEWLINE"))))
+          , Ref("NEWLINE")
+          )
+        )
+      , Production(
+          "libraryName"
+        , Conc(
+            Conc(
+              Conc(Conc(Ref("metadata"), Token("\\LIBRARY{}")), Ref("identifier"))
+            , RepAny(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Lit("';'")
+          )
+        )
+      , Production("importOrExport", Alt(Ref("libraryImport"), Ref("libraryExport")))
+      ]
+    )
+  , Grammar(
+      [ Production("libraryImport", Conc(Ref("metadata"), Ref("importSpecification")))
+      , Production(
+          "importSpecification"
+        , Alt(
+            Conc(
+              Conc(
+                Conc(
+                  Conc(Token("\\IMPORT{}"), Ref("uri"))
+                , Optional(Conc(Token("\\AS{}"), Ref("identifier")))
+                )
+              , RepAny(Ref("combinator"))
+              )
+            , Lit("';'")
+            )
+          , Conc(
+              Conc(
+                Conc(
+                  Conc(
+                    Conc(Conc(Token("\\IMPORT{}"), Ref("uri")), Token("\\DEFERRED{}"))
+                  , Token("\\AS{}")
+                  )
+                , Ref("identifier")
+                )
+              , RepAny(Ref("combinator"))
+              )
+            , Lit("';'")
+            )
+          )
+        )
+      , Production(
+          "combinator"
+        , Alt(
+            Conc(Token("\\SHOW{}"), Ref("identifierList"))
+          , Conc(Token("\\HIDE{}"), Ref("identifierList"))
+          )
+        )
+      , Production(
+          "identifierList"
+        , Conc(
+            Ref("identifier")
+          , RepAny(Conc(Lit("','"), Ref("identifier")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "libraryExport"
+        , Conc(
+            Conc(
+              Conc(Conc(Ref("metadata"), Token("\\EXPORT{}")), Ref("uri"))
+            , RepAny(Ref("combinator"))
+            )
+          , Lit("';'")
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "partDirective"
+        , Conc(
+            Conc(Conc(Ref("metadata"), Token("\\PART{}")), Ref("uri"))
+          , Lit("';'")
+          )
+        )
+      , Production(
+          "partHeader"
+        , Conc(
+            Conc(
+              Conc(
+                Conc(Conc(Ref("metadata"), Token("\\PART{}")), Token("\\OF{}"))
+              , Ref("identifier")
+              )
+            , RepAny(Conc(Lit("'.'"), Ref("identifier")))
+            )
+          , Lit("';'")
+          )
+        )
+      , Production(
+          "partDeclaration"
+        , Conc(
+            Conc(Ref("partHeader"), RepAny(Ref("topLevelDefinition")))
+          , Ref("EOF")
+          )
+        )
+      ]
+    )
+  , Grammar([Production("uri", Ref("stringLiteral"))])
+  , Grammar(
+      [ Production("type", Conc(Ref("typeName"), Optional(Ref("typeArguments"))))
+      , Production("typeName", Ref("qualified"))
+      , Production(
+          "typeArguments"
+        , Conc(Conc(Lit("'<'"), Ref("typeList")), Lit("'>'"))
+        )
+      , Production(
+          "typeList"
+        , Conc(
+            Ref("type")
+          , RepAny(Conc(Lit("','"), Ref("type")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "typeAlias"
+        , Conc(Conc(Ref("metadata"), Token("\\TYPEDEF{}")), Ref("typeAliasBody"))
+        )
+      , Production("typeAliasBody", Ref("functionTypeAlias"))
+      , Production(
+          "functionTypeAlias"
+        , Conc(
+            Conc(
+              Conc(Ref("functionPrefix"), Optional(Ref("typeParameters")))
+            , Ref("formalParameterList")
+            )
+          , Lit("';'")
+          )
+        )
+      , Production("functionPrefix", Conc(Optional(Ref("returnType")), Ref("identifier")))
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "LETTER"
+        , Alt(Range("'a'", "'z'"), Range("'A'", "'Z'"))
+        )
+      , Production("DIGIT", Range("'0'", "'9'"))
+      , Production(
+          "WHITESPACE"
+        , RepSome(
+            Alt(Lit("'$\\backslash$t'"), Alt(Lit("' '"), Ref("NEWLINE")))
+          )
+        )
+      ]
+    )
+  , Grammar(
+      [ Production(
+          "SINGLE_LINE_COMMENT"
+        , Conc(
+            Conc(Lit("'//'"), RepAny(Comp(Ref("NEWLINE"))))
+          , Optional(Ref("NEWLINE"))
+          )
+        )
+      , Production(
+          "MULTI_LINE_COMMENT"
+        , Conc(
+            Conc(
+              Lit("'/*'")
+            , RepAny(Alt(Ref("MULTI_LINE_COMMENT"), Comp(Lit("'*/'"))))
+            )
+          , Lit("'*/'")
+          )
+        )
+      ]
+    )
+  ]
+)

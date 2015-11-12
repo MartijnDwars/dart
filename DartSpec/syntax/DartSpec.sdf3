@@ -1,0 +1,44 @@
+module DartSpec
+
+imports
+	
+	Common
+
+context-free start-symbols
+  
+  Start
+
+context-free syntax
+  
+  Start.Spec = Grammar*
+  
+  Grammar.Grammar = "\\begin{grammar}" Production* "\\end{grammar}"
+  
+  Production.Production = "{\\bf" ID ":}" Rhs "."
+  
+  Rhs.Alt = Rhs ";" Rhs {right}
+  
+  Rhs.Conc = Rhs Rhs {left}
+  
+  Rhs.RepAny = Rhs "*"
+  
+  Rhs.RepSome = Rhs "+"
+  
+  Rhs.Optional = Rhs "?"
+  
+  Rhs.Comp = "~" Rhs
+  
+  Rhs.Ref = ID
+  
+  Rhs.Lit = STRING
+  
+  Rhs.Token = TOKEN
+  
+  Rhs.Range = STRING '..' STRING
+  
+  Rhs = "(" Rhs ")" {bracket}
+  
+context-free priorities
+
+  {left: Rhs.RepAny Rhs.RepSome Rhs.Optional Rhs.Comp} > {Rhs.Conc} > {Rhs.Alt}
+  
