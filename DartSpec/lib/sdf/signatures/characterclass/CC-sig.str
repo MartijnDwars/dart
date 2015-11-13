@@ -1,0 +1,10 @@
+module lib/sdf/signatures/characterclass/CC-sig
+
+imports
+  lib/sdf/signatures/characterclass/Character-Class-sig
+  lib/sdf/signatures/kernel/Kernel-sig
+
+
+signature
+  constructors
+    CharClass : CharClass -> Symbol

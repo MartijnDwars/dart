@@ -3,13 +3,7 @@ module desugar
 imports
   
   include/DartSpec
-
-signature
-  
-  constructors
-    
-    Alt : List(Rhs) -> Alt
-    Conc : List(Rhs) -> Conc
+  signatures
   
 rules
   
@@ -29,7 +23,7 @@ rules
   
 strategies
   
-  desugar-all = innermost(desugar-alt <+ desugar-conc)
+  desugar-all = innermost(desugar-alt /*<+ desugar-conc*/)
   
   // WTF?!
   // desugar-all = try(desugar-spec); debug(!"AST: "); innermost(desugar-alt); debug(!"AST 2: "); !Spec([])

@@ -1,0 +1,12 @@
+module lib/sdf/signatures/sdf2-core/Sdf2-sig
+
+imports
+  lib/sdf/signatures/sdf2-core/Sdf2-Syntax-sig
+  lib/sdf/signatures/constants/StrCon-sig
+  lib/sdf/signatures/constants/NatCon-sig
+  lib/sdf/signatures/priority/Priority-sig
+  lib/sdf/signatures/characterclass/Character-sig
+  lib/sdf/signatures/modules/Modules-sig
+
+
+signature

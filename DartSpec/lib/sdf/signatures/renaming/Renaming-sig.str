@@ -1,0 +1,12 @@
+module lib/sdf/signatures/renaming/Renaming-sig
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/symbols/Symbols-sig
+
+
+signature
+  constructors
+    Renamings  : List(Renaming) -> Renamings
+    Symbol     : Symbol * Symbol -> Renaming
+    Production : Production * Production -> Renaming

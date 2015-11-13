@@ -1,0 +1,40 @@
+module(
+  unparameterized("minimal"{ Def(
+                               URI(
+                                 Language("TemplateLang")
+                               , [ID(NablNsModule(), "minimal", Unique("/Users/martijn/Projects/sdf/org.strategoxt.imp.editors.template/tests/normalization/unity/minimal.sdf3/0"))]
+                               )
+                             )
+                           })
+, []
+, [ exports(
+      [ context-free-start-symbols([sort("Start")])
+      , [ context-free-syntax(
+            [ prod(
+                []
+              , sort("Start")
+              , attrs(
+                  [term(
+                     default(appl(unquoted("cons"), [fun(quoted("\"Dummy\""))]))
+                   )]
+                )
+              )
+            ]
+          )
+        , context-free-syntax(
+            [ prod(
+                [sort("CONTENTCOMPLETE")]
+              , sort("Start")
+              , attrs(
+                  [term(
+                     default(appl(unquoted("cons"), [fun(quoted("\"COMPLETION-Start\""))]))
+                   )]
+                )
+              )
+            ]
+          )
+        ]
+      ]
+    )
+  ]
+)

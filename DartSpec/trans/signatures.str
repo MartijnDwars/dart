@@ -1,0 +1,9 @@
+module signatures
+
+signature
+  
+  constructors
+    
+    Alt : List(Rhs) -> Alt
+    Conc : List(Rhs) -> Conc
+  

@@ -20,6 +20,10 @@ imports
 	generate
 	pp
 	desugar
+	
+imports // TemplateLang
+  
+  lib/sdf/TemplateLang-pp
 
 rules // Analysis
 	
@@ -32,7 +36,22 @@ rules // Analysis
 	
 	editor-save = analysis-save-default(|<language>)
 
-rules // Custom rules
+rules // Generate SDF
+  
+  gen-sdf:
+    (selected, _, _, path, _) -> (filename, result)
+    with
+      ext      := <get-extension> path;
+      filename := <guarantee-extension(|$[generated.sdf3])> path;
+      <debug(!"Start desugaring..")> selected;
+      ast      := <desugar-all> selected;
+      <debug(!"Start generating..")> ast;
+      sdf      := <gen-sdf-any> ast;
+      <debug(!"SDF ")> sdf;
+      result   := <pp-SDF> selected;
+      <debug(!"pp-SDF ")> result
+  
+rules // Misc rules
   
   redundant-productions:
     (selected, position, ast, path, project-path) -> (filename, result)

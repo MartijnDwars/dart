@@ -1,0 +1,13 @@
+module minimal
+exports
+  context-free start-symbols
+    Start
+
+  lexical syntax
+    [a-z] -> ID 
+
+  context-free syntax
+    ID "()" ";" -> Exp 
+
+  context-free syntax
+    CONTENTCOMPLETE -> Exp {cons("COMPLETION-Exp")}

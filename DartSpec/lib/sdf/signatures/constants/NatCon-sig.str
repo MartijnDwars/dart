@@ -1,0 +1,5 @@
+module lib/sdf/signatures/constants/NatCon-sig
+
+signature
+  constructors
+     : String -> NatCon

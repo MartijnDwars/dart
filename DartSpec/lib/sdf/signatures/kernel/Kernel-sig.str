@@ -1,0 +1,24 @@
+module lib/sdf/signatures/kernel/Kernel-sig
+
+imports
+  lib/sdf/signatures/aterms/Aterms-sig
+  lib/sdf/signatures/symbols/Symbols-sig
+  lib/sdf/signatures/grammar/Grammars-sig
+  lib/sdf/signatures/constants/StrCon-sig
+
+
+signature
+  constructors
+    Default         : ATerm -> ATermAttribute
+    Term            : ATermAttribute -> Attribute
+    Attrs           : List(Attribute) -> Attributes
+    NoAttrs         : Attributes
+    Deprecated      : Attribute
+    Deprecated      : StrCon -> Attribute
+    Constructor     : StrCon -> Attribute
+                    : QuotedConstructor -> Attribute
+    CaseInsensitive : Attribute
+    Constructor     : StrCon -> QuotedConstructor
+    Prod            : Symbols * Symbol * Attributes -> Production
+                    : List(Production) -> Productions
+    Syntax          : Productions -> Grammar

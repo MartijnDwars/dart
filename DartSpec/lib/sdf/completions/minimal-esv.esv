@@ -1,0 +1,5 @@
+module lib/sdf/completions/minimal-esv
+
+completions
+  completion template Exp : "ID();" =
+    <ID:ID> "();"  

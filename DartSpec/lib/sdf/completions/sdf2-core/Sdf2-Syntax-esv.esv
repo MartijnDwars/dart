@@ -1,0 +1,30 @@
+module lib/sdf/completions/sdf2-core/Sdf2-Syntax-esv
+
+imports
+  lib/sdf/completions/kernel/Kernel-esv
+  lib/sdf/completions/basic/Basic-esv
+  lib/sdf/completions/modules/Modules-esv
+  lib/sdf/completions/regular/Regular-esv
+  lib/sdf/completions/lifting/Lifting-esv
+  lib/sdf/completions/priority/Priority-esv
+  lib/sdf/completions/characterclass/CC-esv
+  lib/sdf/completions/sorts/Sorts-esv
+  lib/sdf/completions/symbols/Start-Symbols-esv
+  lib/sdf/completions/literals/Literals-esv
+  lib/sdf/completions/labels/Labels-esv
+  lib/sdf/completions/restrictions/Restrictions-esv
+  lib/sdf/completions/aliases/Aliases-esv
+
+completions
+  completion template Symbol : "<START>" =
+    "<START>"                        
+  completion template Symbol : "<Start>" =
+    "<Start>"                        
+  completion template Grammar : "lexical priorities Priorities " =
+    "lexical priorities\n\n\t" <Priorities:Priorities> "\n" (blank)  
+  completion template Grammar : "context-free priorities Priorities " =
+    "context-free priorities\n\n\t" <Priorities:Priorities> "\n" (blank)  
+  completion template Grammar : "lexical restrictions Restrictions " =
+    "lexical restrictions\n\n\t" <Restrictions:Restrictions> "\n" (blank)  
+  completion template Grammar : "context-free restrictions Restrictions " =
+    "context-free restrictions\n\n\t" <Restrictions:Restrictions> "\n" (blank)  

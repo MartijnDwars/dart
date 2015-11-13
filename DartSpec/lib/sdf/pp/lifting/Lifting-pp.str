@@ -1,0 +1,14 @@
+module lib/sdf/pp/lifting/Lifting-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  lib/sdf/signatures/lifting/Lifting-sig
+
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+
+
+imports
+  lib/sdf/pp/kernel/Kernel-pp

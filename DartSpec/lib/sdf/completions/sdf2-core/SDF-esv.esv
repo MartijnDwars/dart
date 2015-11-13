@@ -1,0 +1,9 @@
+module lib/sdf/completions/sdf2-core/SDF-esv
+
+imports
+  lib/sdf/completions/sdf2-core/Sdf2-esv
+  lib/sdf/completions/modules/Modules-esv
+
+completions
+  completion template Group : "Group." =
+    <Group:Group> "."  

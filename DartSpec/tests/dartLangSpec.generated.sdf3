@@ -1,0 +1,1 @@
+\begin{grammar} {\bf variableDeclaration :} declaredIdentifier ',' identifier * . {\bf declaredIdentifier :} metadata finalConstVarOrType identifier . \end{grammar}

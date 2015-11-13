@@ -1,0 +1,10 @@
+module lib/sdf/signatures/sdf2-core/SDF-sig
+
+imports
+  lib/sdf/signatures/sdf2-core/Sdf2-sig
+  lib/sdf/signatures/modules/Modules-sig
+
+
+signature
+  constructors
+    NonTransitive : Group -> Group

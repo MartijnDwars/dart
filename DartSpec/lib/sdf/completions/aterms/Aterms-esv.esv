@@ -1,0 +1,21 @@
+module lib/sdf/completions/aterms/Aterms-esv
+
+imports
+  lib/sdf/completions/constants/IntCon-esv
+  lib/sdf/completions/constants/RealCon-esv
+  lib/sdf/completions/constants/StrCon-esv
+  lib/sdf/completions/constants/IdentifierCon-esv
+
+completions
+  completion template ATerm : "AFun(ATerm)" =
+    <AFun:AFun> "(" <ATerm:ATerm> ")"  
+  completion template ATerm : "<ATerm>" =
+    "<" <ATerm:ATerm> ">"  
+  completion template ATerm : "[]" =
+    "[" <:ATerm> "]"  
+  completion template ATerm : "ATermAnnotation" =
+    <ATerm:ATerm> <Annotation:Annotation>  
+
+completions
+  completion template Annotation : "{ATerm}" =
+    "{" <ATerm:ATerm> "}"  

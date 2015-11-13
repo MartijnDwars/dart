@@ -1,0 +1,11 @@
+module lib/sdf/completions/aliases/Aliases-esv
+
+imports
+  lib/sdf/completions/kernel/Kernel-esv
+  lib/sdf/completions/symbols/Symbols-esv
+
+completions
+  completion template Grammar : "aliases Aliases " =
+    "aliases\n\n\t" <Aliases:Aliases> "\n" (blank)  
+  completion template Alias : "Symbol -> Symbol" =
+    <Symbol:Symbol> " -> " <Symbol:Symbol>  

@@ -1,0 +1,12 @@
+module lib/sdf/signatures/constants/RealCon-sig
+
+imports
+  lib/sdf/signatures/constants/IntCon-sig
+  lib/sdf/signatures/constants/NatCon-sig
+
+
+signature
+  constructors
+    Present : IntCon -> OptExp
+    Absent  : OptExp
+    RealCon : IntCon * NatCon * OptExp -> RealCon

@@ -1,0 +1,14 @@
+module lib/sdf/pp/constants/IdentifierCon-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  lib/sdf/signatures/constants/IdentifierCon-sig
+
+
+strategies
+  prettyprint-IdCon =
+    ![S(<is-string>)]
+
+  prettyprint-example =
+    prettyprint-IdCon

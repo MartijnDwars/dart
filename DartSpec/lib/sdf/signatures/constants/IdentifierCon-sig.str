@@ -1,0 +1,5 @@
+module lib/sdf/signatures/constants/IdentifierCon-sig
+
+signature
+  constructors
+     : String -> IdCon

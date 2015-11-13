@@ -3,19 +3,20 @@ Spec(
       [ Production(
           "variableDeclaration"
         , Conc(
-            Ref("declaredIdentifier")
-          , RepAny(Conc(Lit("','"), Ref("identifier")))
+            [Ref("declaredIdentifier"), RepAny(Conc([Lit("','"), Ref("identifier")]))]
           )
         )
       , Production(
           "declaredIdentifier"
-        , Conc(Conc(Ref("metadata"), Ref("finalConstVarOrType")), Ref("identifier"))
+        , Conc(
+            [Conc([Ref("metadata"), Ref("finalConstVarOrType")]), Ref("identifier")]
+          )
         )
       , Production(
           "finalConstVarOrType"
         , Alt(
-            [ Conc(Lit("'final'"), Optional(Ref("type")))
-            , Conc(Lit("'const'"), Optional(Ref("type")))
+            [ Conc([Lit("'final'"), Optional(Ref("type"))])
+            , Conc([Lit("'const'"), Optional(Ref("type"))])
             , Ref("varOrType")
             ]
           )
@@ -24,25 +25,23 @@ Spec(
       , Production(
           "initializedVariableDeclaration"
         , Conc(
-            Conc(
-              Ref("declaredIdentifier")
-            , Optional(Conc(Lit("'='"), Ref("expression")))
-            )
-          , RepAny(Conc(Lit("','"), Ref("initializedIdentifier")))
+            [ Conc(
+                [Ref("declaredIdentifier"), Optional(Conc([Lit("'='"), Ref("expression")]))]
+              )
+            , RepAny(Conc([Lit("','"), Ref("initializedIdentifier")]))
+            ]
           )
         )
       , Production(
           "initializedIdentifier"
         , Conc(
-            Ref("identifier")
-          , Optional(Conc(Lit("'='"), Ref("expression")))
+            [Ref("identifier"), Optional(Conc([Lit("'='"), Ref("expression")]))]
           )
         )
       , Production(
           "initializedIdentifierList"
         , Conc(
-            Ref("initializedIdentifier")
-          , RepAny(Conc(Lit("','"), Ref("initializedIdentifier")))
+            [Ref("initializedIdentifier"), RepAny(Conc([Lit("','"), Ref("initializedIdentifier")]))]
           )
         )
       ]
@@ -51,11 +50,11 @@ Spec(
       [ Production(
           "functionSignature"
         , Conc(
-            Conc(
-              Conc(Ref("metadata"), Optional(Ref("returnType")))
-            , Ref("identifier")
-            )
-          , Ref("formalParameterList")
+            [ Conc(
+                [Conc([Ref("metadata"), Optional(Ref("returnType"))]), Ref("identifier")]
+              )
+            , Ref("formalParameterList")
+            ]
           )
         )
       , Production("returnType", Alt([Lit("'void'"), Ref("type")]))
@@ -63,26 +62,29 @@ Spec(
           "functionBody"
         , Alt(
             [ Conc(
-                Conc(
-                  Conc(Optional(Lit("'async'")), Lit("'=>'"))
-                , Ref("expression")
-                )
-              , Lit("';'")
+                [ Conc(
+                    [Conc([Optional(Lit("'async'")), Lit("'=>'")]), Ref("expression")]
+                  )
+                , Lit("';'")
+                ]
               )
             , Conc(
-                Optional(
-                  Alt(
-                    [Lit("'async'"), RepAny(Lit("'async'")), RepAny(Lit("'sync'"))]
+                [ Optional(
+                    Alt(
+                      [Lit("'async'"), RepAny(Lit("'async'")), RepAny(Lit("'sync'"))]
+                    )
                   )
-                )
-              , Ref("block")
+                , Ref("block")
+                ]
               )
             ]
           )
         )
       , Production(
           "block"
-        , Conc(Conc(Lit("'\\{'"), Ref("statements")), Lit("'\\}'"))
+        , Conc(
+            [Conc([Lit("'\\{'"), Ref("statements")]), Lit("'\\}'")]
+          )
         )
       ]
     )
@@ -90,15 +92,19 @@ Spec(
       [ Production(
           "formalParameterList"
         , Alt(
-            [ Conc(Lit("'('"), Lit("')'"))
+            [ Conc([Lit("'('"), Lit("')'")])
             , Conc(
-                Conc(
-                  Conc(Lit("'('"), Ref("normalFormalParameters"))
-                , Optional(Conc(Lit("','"), Ref("optionalFormalParameters")))
-                )
-              , Lit("')'")
+                [ Conc(
+                    [ Conc([Lit("'('"), Ref("normalFormalParameters")])
+                    , Optional(Conc([Lit("','"), Ref("optionalFormalParameters")]))
+                    ]
+                  )
+                , Lit("')'")
+                ]
               )
-            , Conc(Conc(Lit("'('"), Ref("optionalFormalParameters")), Lit("')'"))
+            , Conc(
+                [Conc([Lit("'('"), Ref("optionalFormalParameters")]), Lit("')'")]
+              )
             ]
           )
         )
@@ -108,29 +114,32 @@ Spec(
       [ Production(
           "normalFormalParameters"
         , Conc(
-            Ref("normalFormalParameter")
-          , RepAny(Conc(Lit("','"), Ref("normalFormalParameter")))
+            [Ref("normalFormalParameter"), RepAny(Conc([Lit("','"), Ref("normalFormalParameter")]))]
           )
         )
       , Production("optionalFormalParameters", Alt([Ref("optionalPositionalFormalParameters"), Ref("namedFormalParameters")]))
       , Production(
           "optionalPositionalFormalParameters"
         , Conc(
-            Conc(
-              Conc(Lit("'['"), Ref("defaultFormalParameter"))
-            , RepAny(Conc(Lit("','"), Ref("defaultFormalParameter")))
-            )
-          , Lit("']'")
+            [ Conc(
+                [ Conc([Lit("'['"), Ref("defaultFormalParameter")])
+                , RepAny(Conc([Lit("','"), Ref("defaultFormalParameter")]))
+                ]
+              )
+            , Lit("']'")
+            ]
           )
         )
       , Production(
           "namedFormalParameters"
         , Conc(
-            Conc(
-              Conc(Lit("'\\{'"), Ref("defaultNamedParameter"))
-            , RepAny(Conc(Lit("','"), Ref("defaultNamedParameter")))
-            )
-          , Lit("'\\}'")
+            [ Conc(
+                [ Conc([Lit("'\\{'"), Ref("defaultNamedParameter")])
+                , RepAny(Conc([Lit("','"), Ref("defaultNamedParameter")]))
+                ]
+              )
+            , Lit("'\\}'")
+            ]
           )
         )
       ]
@@ -143,23 +152,25 @@ Spec(
       , Production(
           "simpleFormalParameter"
         , Alt(
-            [Ref("declaredIdentifier"), Conc(Ref("metadata"), Ref("identifier"))]
+            [Ref("declaredIdentifier"), Conc([Ref("metadata"), Ref("identifier")])]
           )
         )
       , Production(
           "fieldFormalParameter"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(Ref("metadata"), Optional(Ref("finalConstVarOrType")))
-                , Lit("'this'")
-                )
-              , Lit("'.'")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [Conc([Ref("metadata"), Optional(Ref("finalConstVarOrType"))]), Lit("'this'")]
+                      )
+                    , Lit("'.'")
+                    ]
+                  )
+                , Ref("identifier")
+                ]
               )
-            , Ref("identifier")
-            )
-          , Optional(Ref("formalParameterList"))
+            , Optional(Ref("formalParameterList"))
+            ]
           )
         )
       ]
@@ -168,15 +179,13 @@ Spec(
       [ Production(
           "defaultFormalParameter"
         , Conc(
-            Ref("normalFormalParameter")
-          , Optional(Conc(Lit("'='"), Ref("expression")))
+            [Ref("normalFormalParameter"), Optional(Conc([Lit("'='"), Ref("expression")]))]
           )
         )
       , Production(
           "defaultNamedParameter"
         , Conc(
-            Ref("normalFormalParameter")
-          , Optional(Conc(Lit("':'"), Ref("expression")))
+            [Ref("normalFormalParameter"), Optional(Conc([Lit("':'"), Ref("expression")]))]
           )
         )
       ]
@@ -186,57 +195,63 @@ Spec(
           "classDefinition"
         , Alt(
             [ Conc(
-                Conc(
-                  Conc(
-                    Conc(
-                      Conc(
-                        Conc(
-                          Conc(
-                            Conc(
-                              Conc(Ref("metadata"), Optional(Lit("'abstract'")))
-                            , Lit("'class'")
-                            )
-                          , Ref("identifier")
+                [ Conc(
+                    [ Conc(
+                        [ Conc(
+                            [ Conc(
+                                [ Conc(
+                                    [ Conc(
+                                        [ Conc(
+                                            [Conc([Ref("metadata"), Optional(Lit("'abstract'"))]), Lit("'class'")]
+                                          )
+                                        , Ref("identifier")
+                                        ]
+                                      )
+                                    , Optional(Ref("typeParameters"))
+                                    ]
+                                  )
+                                , Optional(Conc([Ref("superclass"), Optional(Ref("mixins"))]))
+                                ]
+                              )
+                            , Optional(Ref("interfaces"))
+                            ]
                           )
-                        , Optional(Ref("typeParameters"))
-                        )
-                      , Optional(Conc(Ref("superclass"), Optional(Ref("mixins"))))
+                        , Lit("'\\{'")
+                        ]
                       )
-                    , Optional(Ref("interfaces"))
-                    )
-                  , Lit("'\\{'")
+                    , RepAny(Conc([Ref("metadata"), Ref("classMemberDefinition")]))
+                    ]
                   )
-                , RepAny(Conc(Ref("metadata"), Ref("classMemberDefinition")))
-                )
-              , Lit("'\\}'")
+                , Lit("'\\}'")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(Ref("metadata"), Optional(Lit("'abstract'")))
-                , Lit("'class'")
-                )
-              , Ref("mixinApplicationClass")
+                [ Conc(
+                    [Conc([Ref("metadata"), Optional(Lit("'abstract'"))]), Lit("'class'")]
+                  )
+                , Ref("mixinApplicationClass")
+                ]
               )
             ]
           )
         )
-      , Production("mixins", Conc(Token("\\WITH{}"), Ref("typeList")))
+      , Production("mixins", Conc([Token("\\WITH{}"), Ref("typeList")]))
       , Production(
           "classMemberDefinition"
         , Alt(
-            [ Conc(Ref("declaration"), Lit("';'"))
-            , Conc(Ref("methodSignature"), Ref("functionBody"))
+            [ Conc([Ref("declaration"), Lit("';'")])
+            , Conc([Ref("methodSignature"), Ref("functionBody")])
             ]
           )
         )
       , Production(
           "methodSignature"
         , Alt(
-            [ Conc(Ref("constructorSignature"), Optional(Ref("initializers")))
+            [ Conc([Ref("constructorSignature"), Optional(Ref("initializers"))])
             , Ref("factoryConstructorSignature")
-            , Conc(Optional(Token("\\STATIC{}")), Ref("functionSignature"))
-            , Conc(Optional(Token("\\STATIC{}")), Ref("getterSignature"))
-            , Conc(Optional(Token("\\STATIC{}")), Ref("setterSignature"))
+            , Conc([Optional(Token("\\STATIC{}")), Ref("functionSignature")])
+            , Conc([Optional(Token("\\STATIC{}")), Ref("getterSignature")])
+            , Conc([Optional(Token("\\STATIC{}")), Ref("setterSignature")])
             , Ref("operatorSignature")
             ]
           )
@@ -245,48 +260,49 @@ Spec(
           "declaration"
         , Alt(
             [ Conc(
-                Ref("constantConstructorSignature")
-              , Optional(Alt([Ref("redirection"), Ref("initializers")]))
+                [Ref("constantConstructorSignature"), Optional(Alt([Ref("redirection"), Ref("initializers")]))]
               )
             , Conc(
-                Ref("constructorSignature")
-              , Optional(Alt([Ref("redirection"), Ref("initializers")]))
+                [Ref("constructorSignature"), Optional(Alt([Ref("redirection"), Ref("initializers")]))]
               )
-            , Conc(Lit("'external'"), Ref("constantConstructorSignature"))
-            , Conc(Lit("'external'"), Ref("constructorSignature"))
+            , Conc([Lit("'external'"), Ref("constantConstructorSignature")])
+            , Conc([Lit("'external'"), Ref("constructorSignature")])
             , Conc(
-                Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
-              , Ref("getterSignature")
-              )
-            , Conc(
-                Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
-              , Ref("setterSignature")
-              )
-            , Conc(Optional(Lit("'external'")), Ref("operatorSignature"))
-            , Conc(
-                Optional(Conc(Lit("'external'"), Optional(Token("\\STATIC{}"))))
-              , Ref("functionSignature")
+                [ Optional(Conc([Lit("'external'"), Optional(Token("\\STATIC{}"))]))
+                , Ref("getterSignature")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(
-                    Token("\\STATIC{}")
-                  , Alt([Lit("'final'"), Lit("'const'")])
+                [ Optional(Conc([Lit("'external'"), Optional(Token("\\STATIC{}"))]))
+                , Ref("setterSignature")
+                ]
+              )
+            , Conc([Optional(Lit("'external'")), Ref("operatorSignature")])
+            , Conc(
+                [ Optional(Conc([Lit("'external'"), Optional(Token("\\STATIC{}"))]))
+                , Ref("functionSignature")
+                ]
+              )
+            , Conc(
+                [ Conc(
+                    [ Conc(
+                        [Token("\\STATIC{}"), Alt([Lit("'final'"), Lit("'const'")])]
+                      )
+                    , Optional(Ref("type"))
+                    ]
                   )
-                , Optional(Ref("type"))
-                )
-              , Ref("staticFinalDeclarationList")
+                , Ref("staticFinalDeclarationList")
+                ]
               )
             , Conc(
-                Conc(Lit("'final'"), Optional(Ref("type")))
-              , Ref("initializedIdentifierList")
+                [Conc([Lit("'final'"), Optional(Ref("type"))]), Ref("initializedIdentifierList")]
               )
             , Conc(
-                Conc(
-                  Optional(Token("\\STATIC{}"))
-                , Alt([Lit("'var'"), Ref("type")])
-                )
-              , Ref("initializedIdentifierList")
+                [ Conc(
+                    [Optional(Token("\\STATIC{}")), Alt([Lit("'var'"), Ref("type")])]
+                  )
+                , Ref("initializedIdentifierList")
+                ]
               )
             ]
           )
@@ -294,13 +310,14 @@ Spec(
       , Production(
           "staticFinalDeclarationList"
         , Conc(
-            Ref("staticFinalDeclaration")
-          , RepAny(Conc(Lit("','"), Ref("staticFinalDeclaration")))
+            [Ref("staticFinalDeclaration"), RepAny(Conc([Lit("','"), Ref("staticFinalDeclaration")]))]
           )
         )
       , Production(
           "staticFinalDeclaration"
-        , Conc(Conc(Ref("identifier"), Lit("'='")), Ref("expression"))
+        , Conc(
+            [Conc([Ref("identifier"), Lit("'='")]), Ref("expression")]
+          )
         )
       ]
     )
@@ -308,11 +325,11 @@ Spec(
       [ Production(
           "operatorSignature"
         , Conc(
-            Conc(
-              Conc(Optional(Ref("returnType")), Token("\\OPERATOR{}"))
-            , Ref("operator")
-            )
-          , Ref("formalParameterList")
+            [ Conc(
+                [Conc([Optional(Ref("returnType")), Token("\\OPERATOR{}")]), Ref("operator")]
+              )
+            , Ref("formalParameterList")
+            ]
           )
         )
       , Production(
@@ -320,8 +337,10 @@ Spec(
         , Alt(
             [ Lit("'~'")
             , Ref("binaryOperator")
-            , Conc(Lit("'['"), Lit("']'"))
-            , Conc(Conc(Lit("'['"), Lit("']'")), Lit("'='"))
+            , Conc([Lit("'['"), Lit("']'")])
+            , Conc(
+                [Conc([Lit("'['"), Lit("']'")]), Lit("'='")]
+              )
             ]
           )
         )
@@ -343,8 +362,7 @@ Spec(
       [ Production(
           "getterSignature"
         , Conc(
-            Conc(Optional(Ref("returnType")), Token("\\GET{}"))
-          , Ref("identifier")
+            [Conc([Optional(Ref("returnType")), Token("\\GET{}")]), Ref("identifier")]
           )
         )
       ]
@@ -353,11 +371,11 @@ Spec(
       [ Production(
           "setterSignature"
         , Conc(
-            Conc(
-              Conc(Optional(Ref("returnType")), Token("\\SET{}"))
-            , Ref("identifier")
-            )
-          , Ref("formalParameterList")
+            [ Conc(
+                [Conc([Optional(Ref("returnType")), Token("\\SET{}")]), Ref("identifier")]
+              )
+            , Ref("formalParameterList")
+            ]
           )
         )
       ]
@@ -366,11 +384,11 @@ Spec(
       [ Production(
           "constructorSignature"
         , Conc(
-            Conc(
-              Ref("identifier")
-            , Optional(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Ref("formalParameterList")
+            [ Conc(
+                [Ref("identifier"), Optional(Conc([Lit("'.'"), Ref("identifier")]))]
+              )
+            , Ref("formalParameterList")
+            ]
           )
         )
       ]
@@ -379,11 +397,13 @@ Spec(
       [ Production(
           "redirection"
         , Conc(
-            Conc(
-              Conc(Lit("':'"), Lit("'this'"))
-            , Optional(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Ref("arguments")
+            [ Conc(
+                [ Conc([Lit("':'"), Lit("'this'")])
+                , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
+              )
+            , Ref("arguments")
+            ]
           )
         )
       ]
@@ -392,17 +412,21 @@ Spec(
       [ Production(
           "initializers"
         , Conc(
-            Conc(Lit("':'"), Ref("superCallOrFieldInitializer"))
-          , RepAny(Conc(Lit("','"), Ref("superCallOrFieldInitializer")))
+            [ Conc([Lit("':'"), Ref("superCallOrFieldInitializer")])
+            , RepAny(Conc([Lit("','"), Ref("superCallOrFieldInitializer")]))
+            ]
           )
         )
       , Production(
           "superCallOrFieldInitializer"
         , Alt(
-            [ Conc(Lit("'super'"), Ref("arguments"))
+            [ Conc([Lit("'super'"), Ref("arguments")])
             , Conc(
-                Conc(Conc(Lit("'super'"), Lit("'.'")), Ref("identifier"))
-              , Ref("arguments")
+                [ Conc(
+                    [Conc([Lit("'super'"), Lit("'.'")]), Ref("identifier")]
+                  )
+                , Ref("arguments")
+                ]
               )
             , Ref("fieldInitializer")
             ]
@@ -411,17 +435,19 @@ Spec(
       , Production(
           "fieldInitializer"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Optional(Conc(Lit("'this'"), Lit("'.'")))
-                , Ref("identifier")
-                )
-              , Lit("'='")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [Optional(Conc([Lit("'this'"), Lit("'.'")])), Ref("identifier")]
+                      )
+                    , Lit("'='")
+                    ]
+                  )
+                , Ref("conditionalExpression")
+                ]
               )
-            , Ref("conditionalExpression")
-            )
-          , RepAny(Ref("cascadeSection"))
+            , RepAny(Ref("cascadeSection"))
+            ]
           )
         )
       ]
@@ -430,36 +456,13 @@ Spec(
       [ Production(
           "factoryConstructorSignature"
         , Conc(
-            Conc(
-              Conc(Token("\\FACTORY{}"), Ref("identifier"))
-            , Optional(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Ref("formalParameterList")
-          )
-        )
-      ]
-    )
-  , Grammar(
-      [ Production(
-          "redirectingFactoryConstructorSignature"
-        , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(
-                    Conc(
-                      Conc(Optional(Lit("'const'")), Token("\\FACTORY{}"))
-                    , Ref("identifier")
-                    )
-                  , Optional(Conc(Lit("'.'"), Ref("identifier")))
-                  )
-                , Ref("formalParameterList")
-                )
-              , Lit("'='")
+            [ Conc(
+                [ Conc([Token("\\FACTORY{}"), Ref("identifier")])
+                , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
               )
-            , Ref("type")
-            )
-          , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            , Ref("formalParameterList")
+            ]
           )
         )
       ]
@@ -467,35 +470,37 @@ Spec(
   , Grammar(
       [ Production(
           "constantConstructorSignature"
-        , Conc(Conc(Lit("'const'"), Ref("qualified")), Ref("formalParameterList"))
+        , Conc(
+            [Conc([Lit("'const'"), Ref("qualified")]), Ref("formalParameterList")]
+          )
         )
       ]
     )
   , Grammar(
-      [Production("superclass", Conc(Token("\\EXTENDS{}"), Ref("type")))]
+      [Production("superclass", Conc([Token("\\EXTENDS{}"), Ref("type")]))]
     )
   , Grammar(
-      [Production("interfaces", Conc(Token("\\IMPLEMENTS{}"), Ref("typeList")))]
+      [Production("interfaces", Conc([Token("\\IMPLEMENTS{}"), Ref("typeList")]))]
     )
   , Grammar(
       [ Production(
           "mixinApplicationClass"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Ref("identifier"), Optional(Ref("typeParameters")))
-              , Lit("'='")
+            [ Conc(
+                [ Conc(
+                    [Conc([Ref("identifier"), Optional(Ref("typeParameters"))]), Lit("'='")]
+                  )
+                , Ref("mixinApplication")
+                ]
               )
-            , Ref("mixinApplication")
-            )
-          , Lit("';'")
+            , Lit("';'")
+            ]
           )
         )
       , Production(
           "mixinApplication"
         , Conc(
-            Conc(Ref("type"), Ref("mixins"))
-          , Optional(Ref("interfaces"))
+            [Conc([Ref("type"), Ref("mixins")]), Optional(Ref("interfaces"))]
           )
         )
       ]
@@ -504,20 +509,27 @@ Spec(
       [ Production(
           "enumType"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(
-                    Conc(Conc(Ref("metadata"), Token("\\ENUM{}")), Ref("id"))
-                  , Lit("'\\{'")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [ Conc(
+                            [ Conc(
+                                [Conc([Ref("metadata"), Token("\\ENUM{}")]), Ref("id")]
+                              )
+                            , Lit("'\\{'")
+                            ]
+                          )
+                        , Ref("id")
+                        ]
+                      )
+                    , RepAny(Conc([Lit("','"), Ref("id")]))
+                    ]
                   )
-                , Ref("id")
-                )
-              , RepAny(Conc(Lit("','"), Ref("id")))
+                , Optional(Lit("','"))
+                ]
               )
-            , Optional(Lit("','"))
-            )
-          , Lit("'\\}'")
+            , Lit("'\\}'")
+            ]
           )
         )
       ]
@@ -526,18 +538,21 @@ Spec(
       [ Production(
           "typeParameter"
         , Conc(
-            Conc(Ref("metadata"), Ref("identifier"))
-          , Optional(Conc(Token("\\EXTENDS{}"), Ref("type")))
+            [ Conc([Ref("metadata"), Ref("identifier")])
+            , Optional(Conc([Token("\\EXTENDS{}"), Ref("type")]))
+            ]
           )
         )
       , Production(
           "typeParameters"
         , Conc(
-            Conc(
-              Conc(Lit("'<'"), Ref("typeParameter"))
-            , RepAny(Conc(Lit("','"), Ref("typeParameter")))
-            )
-          , Lit("'>'")
+            [ Conc(
+                [ Conc([Lit("'<'"), Ref("typeParameter")])
+                , RepAny(Conc([Lit("','"), Ref("typeParameter")]))
+                ]
+              )
+            , Lit("'>'")
+            ]
           )
         )
       ]
@@ -547,11 +562,13 @@ Spec(
           "metadata"
         , RepAny(
             Conc(
-              Conc(
-                Conc(Lit("'@'"), Ref("qualified"))
-              , Optional(Conc(Lit("'.'"), Ref("identifier")))
-              )
-            , Optional(Ref("arguments"))
+              [ Conc(
+                  [ Conc([Lit("'@'"), Ref("qualified")])
+                  , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                  ]
+                )
+              , Optional(Ref("arguments"))
+              ]
             )
           )
         )
@@ -561,8 +578,10 @@ Spec(
       [ Production(
           "expression"
         , Alt(
-            [ Conc(Conc(Ref("assignableExpression"), Ref("assignmentOperator")), Ref("expression"))
-            , Conc(Ref("conditionalExpression"), RepAny(Ref("cascadeSection")))
+            [ Conc(
+                [Conc([Ref("assignableExpression"), Ref("assignmentOperator")]), Ref("expression")]
+              )
+            , Conc([Ref("conditionalExpression"), RepAny(Ref("cascadeSection"))])
             , Ref("throwExpression")
             ]
           )
@@ -570,7 +589,9 @@ Spec(
       , Production(
           "expressionWithoutCascade"
         , Alt(
-            [ Conc(Conc(Ref("assignableExpression"), Ref("assignmentOperator")), Ref("expressionWithoutCascade"))
+            [ Conc(
+                [Conc([Ref("assignableExpression"), Ref("assignmentOperator")]), Ref("expressionWithoutCascade")]
+              )
             , Ref("conditionalExpression")
             , Ref("throwExpressionWithoutCascade")
             ]
@@ -579,8 +600,7 @@ Spec(
       , Production(
           "expressionList"
         , Conc(
-            Ref("expression")
-          , RepAny(Conc(Lit("','"), Ref("expression")))
+            [Ref("expression"), RepAny(Conc([Lit("','"), Ref("expression")]))]
           )
         )
       ]
@@ -590,17 +610,22 @@ Spec(
           "primary"
         , Alt(
             [ Ref("thisExpression")
-            , Conc(Lit("'super'"), Ref("unconditionalAssignableSelector"))
+            , Conc([Lit("'super'"), Ref("unconditionalAssignableSelector")])
             , Ref("functionExpression")
             , Ref("literal")
             , Ref("identifier")
             , Ref("newExpression")
             , Conc(
-                Conc(Conc(Token("\\NEW{}"), Ref("type")), Lit("'\\#'"))
-              , Optional(Conc(Lit("'.'"), Ref("identifier")))
+                [ Conc(
+                    [Conc([Token("\\NEW{}"), Ref("type")]), Lit("'\\#'")]
+                  )
+                , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
               )
             , Ref("constObjectExpression")
-            , Conc(Conc(Lit("'('"), Ref("expression")), Lit("')'"))
+            , Conc(
+                [Conc([Lit("'('"), Ref("expression")]), Lit("')'")]
+              )
             ]
           )
         )
@@ -629,15 +654,18 @@ Spec(
           "NUMBER"
         , Alt(
             [ Conc(
-                Conc(
-                  RepSome(Ref("DIGIT"))
-                , Optional(Conc(Lit("'.'"), RepSome(Ref("DIGIT"))))
-                )
-              , Optional(Ref("EXPONENT"))
+                [ Conc(
+                    [ RepSome(Ref("DIGIT"))
+                    , Optional(Conc([Lit("'.'"), RepSome(Ref("DIGIT"))]))
+                    ]
+                  )
+                , Optional(Ref("EXPONENT"))
+                ]
               )
             , Conc(
-                Conc(Lit("'.'"), RepSome(Ref("DIGIT")))
-              , Optional(Ref("EXPONENT"))
+                [ Conc([Lit("'.'"), RepSome(Ref("DIGIT"))])
+                , Optional(Ref("EXPONENT"))
+                ]
               )
             ]
           )
@@ -645,18 +673,20 @@ Spec(
       , Production(
           "EXPONENT"
         , Conc(
-            Conc(
-              Alt([Lit("'e'"), Lit("'E'")])
-            , Optional(Alt([Lit("'+'"), Lit("'-'")]))
-            )
-          , RepSome(Ref("DIGIT"))
+            [ Conc(
+                [ Alt([Lit("'e'"), Lit("'E'")])
+                , Optional(Alt([Lit("'+'"), Lit("'-'")]))
+                ]
+              )
+            , RepSome(Ref("DIGIT"))
+            ]
           )
         )
       , Production(
           "HEX_NUMBER"
         , Alt(
-            [ Conc(Lit("'0x'"), RepSome(Ref("HEX_DIGIT")))
-            , Conc(Lit("'0X'"), RepSome(Ref("HEX_DIGIT")))
+            [ Conc([Lit("'0x'"), RepSome(Ref("HEX_DIGIT"))])
+            , Conc([Lit("'0X'"), RepSome(Ref("HEX_DIGIT"))])
             ]
           )
         )
@@ -682,26 +712,28 @@ Spec(
           "singleLineString"
         , Alt(
             [ Conc(
-                Conc(Lit("'\"'"), RepAny(Ref("stringContentDQ")))
-              , Lit("'\"'")
+                [Conc([Lit("'\"'"), RepAny(Ref("stringContentDQ"))]), Lit("'\"'")]
               )
             , Conc(
-                Conc(Lit("'\\'"), RepAny(Ref("stringContentSQ")))
-              , Lit("'\\'")
+                [Conc([Lit("'\\'"), RepAny(Ref("stringContentSQ"))]), Lit("'\\'")]
               )
             , Conc(
-                Conc(
-                  Conc(Lit("'r'"), Lit("'\\'"))
-                , RepAny(Comp(Alt([Lit("'\\'"), Ref("NEWLINE")])))
-                )
-              , Lit("'\\'")
+                [ Conc(
+                    [ Conc([Lit("'r'"), Lit("'\\'")])
+                    , RepAny(Comp(Alt([Lit("'\\'"), Ref("NEWLINE")])))
+                    ]
+                  )
+                , Lit("'\\'")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(Lit("'r'"), Lit("'\"'"))
-                , RepAny(Comp(Alt([Lit("'\"'"), Ref("NEWLINE")])))
-                )
-              , Lit("'\"'")
+                [ Conc(
+                    [ Conc([Lit("'r'"), Lit("'\"'")])
+                    , RepAny(Comp(Alt([Lit("'\"'"), Ref("NEWLINE")])))
+                    ]
+                  )
+                , Lit("'\"'")
+                ]
               )
             ]
           )
@@ -713,26 +745,28 @@ Spec(
           "multilineString"
         , Alt(
             [ Conc(
-                Conc(Lit("'\"\"\"'"), RepAny(Ref("stringContentTDQ")))
-              , Lit("'\"\"\"'")
+                [Conc([Lit("'\"\"\"'"), RepAny(Ref("stringContentTDQ"))]), Lit("'\"\"\"'")]
               )
             , Conc(
-                Conc(Lit("'\\'\\'\\''"), RepAny(Ref("stringContentTSQ")))
-              , Lit("'\\'\\'\\''")
+                [Conc([Lit("'\\'\\'\\''"), RepAny(Ref("stringContentTSQ"))]), Lit("'\\'\\'\\''")]
               )
             , Conc(
-                Conc(
-                  Conc(Lit("'r'"), Lit("'\"\"\"'"))
-                , RepAny(Comp(Lit("'\"\"\"'")))
-                )
-              , Lit("'\"\"\"'")
+                [ Conc(
+                    [ Conc([Lit("'r'"), Lit("'\"\"\"'")])
+                    , RepAny(Comp(Lit("'\"\"\"'")))
+                    ]
+                  )
+                , Lit("'\"\"\"'")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(Lit("'r'"), Lit("'\\'\\'\\''"))
-                , RepAny(Comp(Lit("'\\'\\'\\''")))
-                )
-              , Lit("'\\'\\'\\''")
+                [ Conc(
+                    [ Conc([Lit("'r'"), Lit("'\\'\\'\\''")])
+                    , RepAny(Comp(Lit("'\\'\\'\\''")))
+                    ]
+                  )
+                , Lit("'\\'\\'\\''")
+                ]
               )
             ]
           )
@@ -746,32 +780,44 @@ Spec(
             , Lit("'\\\\b'")
             , Lit("'\\\\t'")
             , Lit("'\\\\v'")
-            , Conc(Conc(Lit("'\\\\x'"), Ref("HEX_DIGIT")), Ref("HEX_DIGIT"))
             , Conc(
-                Conc(
-                  Conc(Conc(Lit("'\\\\u'"), Ref("HEX_DIGIT")), Ref("HEX_DIGIT"))
-                , Ref("HEX_DIGIT")
-                )
-              , Ref("HEX_DIGIT")
+                [Conc([Lit("'\\\\x'"), Ref("HEX_DIGIT")]), Ref("HEX_DIGIT")]
               )
-            , Conc(Conc(Lit("'\\\\u\\{'"), Ref("HEX_DIGIT_SEQUENCE")), Lit("'\\}'"))
+            , Conc(
+                [ Conc(
+                    [ Conc(
+                        [Conc([Lit("'\\\\u'"), Ref("HEX_DIGIT")]), Ref("HEX_DIGIT")]
+                      )
+                    , Ref("HEX_DIGIT")
+                    ]
+                  )
+                , Ref("HEX_DIGIT")
+                ]
+              )
+            , Conc(
+                [Conc([Lit("'\\\\u\\{'"), Ref("HEX_DIGIT_SEQUENCE")]), Lit("'\\}'")]
+              )
             ]
           )
         )
       , Production(
           "HEX_DIGIT_SEQUENCE"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(Ref("HEX_DIGIT"), Optional(Ref("HEX_DIGIT")))
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [ Conc([Ref("HEX_DIGIT"), Optional(Ref("HEX_DIGIT"))])
+                        , Optional(Ref("HEX_DIGIT"))
+                        ]
+                      )
+                    , Optional(Ref("HEX_DIGIT"))
+                    ]
+                  )
                 , Optional(Ref("HEX_DIGIT"))
-                )
-              , Optional(Ref("HEX_DIGIT"))
+                ]
               )
             , Optional(Ref("HEX_DIGIT"))
-            )
-          , Optional(Ref("HEX_DIGIT"))
+            ]
           )
         )
       ]
@@ -785,7 +831,7 @@ Spec(
                   [Lit("'\\\\'"), Lit("'\"'"), Lit("'\\$'"), Ref("NEWLINE")]
                 )
               )
-            , Conc(Lit("'\\\\'"), Comp(Ref("NEWLINE")))
+            , Conc([Lit("'\\\\'"), Comp(Ref("NEWLINE"))])
             , Ref("stringInterpolation")
             ]
           )
@@ -798,7 +844,7 @@ Spec(
                   [Lit("'\\\\'"), Lit("'\\''"), Lit("'\\$'"), Ref("NEWLINE")]
                 )
               )
-            , Conc(Lit("'\\\\'"), Comp(Ref("NEWLINE")))
+            , Conc([Lit("'\\\\'"), Comp(Ref("NEWLINE"))])
             , Ref("stringInterpolation")
             ]
           )
@@ -830,10 +876,13 @@ Spec(
       [ Production(
           "stringInterpolation"
         , Alt(
-            [ Conc(Lit("'\\$'"), Ref("IDENTIFIER_NO_DOLLAR"))
+            [ Conc([Lit("'\\$'"), Ref("IDENTIFIER_NO_DOLLAR")])
             , Conc(
-                Conc(Conc(Lit("'\\$'"), Lit("'\\{'")), Ref("expression"))
-              , Lit("'\\}'")
+                [ Conc(
+                    [Conc([Lit("'\\$'"), Lit("'\\{'")]), Ref("expression")]
+                  )
+                , Lit("'\\}'")
+                ]
               )
             ]
           )
@@ -844,15 +893,15 @@ Spec(
       [ Production(
           "symbolLiteral"
         , Conc(
-            Lit("'\\#'")
-          , Alt(
-              [ Ref("operator")
-              , Conc(
-                  Ref("identifier")
-                , RepAny(Conc(Lit("'.'"), Ref("identifier")))
-                )
-              ]
-            )
+            [ Lit("'\\#'")
+            , Alt(
+                [ Ref("operator")
+                , Conc(
+                    [Ref("identifier"), RepAny(Conc([Lit("'.'"), Ref("identifier")]))]
+                  )
+                ]
+              )
+            ]
           )
         )
       ]
@@ -861,14 +910,17 @@ Spec(
       [ Production(
           "listLiteral"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Optional(Lit("'const'")), Optional(Ref("typeArguments")))
-              , Lit("'['")
+            [ Conc(
+                [ Conc(
+                    [ Conc([Optional(Lit("'const'")), Optional(Ref("typeArguments"))])
+                    , Lit("'['")
+                    ]
+                  )
+                , Optional(Conc([Ref("expressionList"), Optional(Lit("','"))]))
+                ]
               )
-            , Optional(Conc(Ref("expressionList"), Optional(Lit("','"))))
-            )
-          , Lit("']'")
+            , Lit("']'")
+            ]
           )
         )
       ]
@@ -877,48 +929,55 @@ Spec(
       [ Production(
           "mapLiteral"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Optional(Lit("'const'")), Optional(Ref("typeArguments")))
-              , Lit("'\\{'")
-              )
-            , Optional(
-                Conc(
-                  Conc(
-                    Ref("mapLiteralEntry")
-                  , RepAny(Conc(Lit("','"), Ref("mapLiteralEntry")))
+            [ Conc(
+                [ Conc(
+                    [ Conc([Optional(Lit("'const'")), Optional(Ref("typeArguments"))])
+                    , Lit("'\\{'")
+                    ]
                   )
-                , Optional(Lit("','"))
-                )
+                , Optional(
+                    Conc(
+                      [ Conc(
+                          [Ref("mapLiteralEntry"), RepAny(Conc([Lit("','"), Ref("mapLiteralEntry")]))]
+                        )
+                      , Optional(Lit("','"))
+                      ]
+                    )
+                  )
+                ]
               )
-            )
-          , Lit("'\\}'")
+            , Lit("'\\}'")
+            ]
           )
         )
       , Production(
           "mapLiteralEntry"
-        , Conc(Conc(Ref("expression"), Lit("':'")), Ref("expression"))
+        , Conc(
+            [Conc([Ref("expression"), Lit("':'")]), Ref("expression")]
+          )
         )
       ]
     )
   , Grammar(
-      [ Production("throwExpression", Conc(Token("\\THROW{}"), Ref("expression")))
-      , Production("throwExpressionWithoutCascade", Conc(Token("\\THROW{}"), Ref("expressionWithoutCascade")))
+      [ Production("throwExpression", Conc([Token("\\THROW{}"), Ref("expression")]))
+      , Production("throwExpressionWithoutCascade", Conc([Token("\\THROW{}"), Ref("expressionWithoutCascade")]))
       ]
     )
   , Grammar(
-      [Production("functionExpression", Conc(Ref("formalParameterList"), Ref("functionBody")))]
+      [Production("functionExpression", Conc([Ref("formalParameterList"), Ref("functionBody")]))]
     )
   , Grammar([Production("thisExpression", Lit("'this'"))])
   , Grammar(
       [ Production(
           "newExpression"
         , Conc(
-            Conc(
-              Conc(Token("\\NEW{}"), Ref("type"))
-            , Optional(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Ref("arguments")
+            [ Conc(
+                [ Conc([Token("\\NEW{}"), Ref("type")])
+                , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
+              )
+            , Ref("arguments")
+            ]
           )
         )
       ]
@@ -927,11 +986,13 @@ Spec(
       [ Production(
           "constObjectExpression"
         , Conc(
-            Conc(
-              Conc(Lit("'const'"), Ref("type"))
-            , Optional(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Ref("arguments")
+            [ Conc(
+                [ Conc([Lit("'const'"), Ref("type")])
+                , Optional(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
+              )
+            , Ref("arguments")
+            ]
           )
         )
       ]
@@ -940,45 +1001,45 @@ Spec(
       [ Production(
           "arguments"
         , Conc(
-            Conc(Lit("'('"), Optional(Ref("argumentList")))
-          , Lit("')'")
+            [Conc([Lit("'('"), Optional(Ref("argumentList"))]), Lit("')'")]
           )
         )
       , Production(
           "argumentList"
         , Alt(
             [ Conc(
-                Ref("namedArgument")
-              , RepAny(Conc(Lit("','"), Ref("namedArgument")))
+                [Ref("namedArgument"), RepAny(Conc([Lit("','"), Ref("namedArgument")]))]
               )
             , Conc(
-                Ref("expressionList")
-              , RepAny(Conc(Lit("','"), Ref("namedArgument")))
+                [Ref("expressionList"), RepAny(Conc([Lit("','"), Ref("namedArgument")]))]
               )
             ]
           )
         )
-      , Production("namedArgument", Conc(Ref("label"), Ref("expression")))
+      , Production("namedArgument", Conc([Ref("label"), Ref("expression")]))
       ]
     )
   , Grammar(
       [ Production(
           "cascadeSection"
         , Conc(
-            Conc(
-              Conc(
-                Lit("'..'")
-              , Conc(Ref("cascadeSelector"), RepAny(Ref("arguments")))
+            [ Conc(
+                [ Conc(
+                    [Lit("'..'"), Ref("cascadeSelector"), RepAny(Ref("arguments"))]
+                  )
+                , RepAny(Conc([Ref("assignableSelector"), RepAny(Ref("arguments"))]))
+                ]
               )
-            , RepAny(Conc(Ref("assignableSelector"), RepAny(Ref("arguments"))))
-            )
-          , Optional(Conc(Ref("assignmentOperator"), Ref("expressionWithoutCascade")))
+            , Optional(Conc([Ref("assignmentOperator"), Ref("expressionWithoutCascade")]))
+            ]
           )
         )
       , Production(
           "cascadeSelector"
         , Alt(
-            [ Conc(Conc(Lit("'['"), Ref("expression")), Lit("']'"))
+            [ Conc(
+                [Conc([Lit("'['"), Ref("expression")]), Lit("']'")]
+              )
             , Ref("identifier")
             ]
           )
@@ -1013,13 +1074,17 @@ Spec(
       [ Production(
           "conditionalExpression"
         , Conc(
-            Ref("ifNullExpression")
-          , Optional(
-              Conc(
-                Conc(Conc(Lit("'?'"), Ref("expressionWithoutCascade")), Lit("':'"))
-              , Ref("expressionWithoutCascade")
+            [ Ref("ifNullExpression")
+            , Optional(
+                Conc(
+                  [ Conc(
+                      [Conc([Lit("'?'"), Ref("expressionWithoutCascade")]), Lit("':'")]
+                    )
+                  , Ref("expressionWithoutCascade")
+                  ]
+                )
               )
-            )
+            ]
           )
         )
       ]
@@ -1028,8 +1093,7 @@ Spec(
       [ Production(
           "ifNullExpression"
         , Conc(
-            Ref("logicalOrExpression")
-          , RepAny(Conc(Lit("'??'"), Ref("logicalOrExpression")))
+            [Ref("logicalOrExpression"), RepAny(Conc([Lit("'??'"), Ref("logicalOrExpression")]))]
           )
         )
       ]
@@ -1038,15 +1102,13 @@ Spec(
       [ Production(
           "logicalOrExpression"
         , Conc(
-            Ref("logicalAndExpression")
-          , RepAny(Conc(Lit("'$||$'"), Ref("logicalAndExpression")))
+            [Ref("logicalAndExpression"), RepAny(Conc([Lit("'$||$'"), Ref("logicalAndExpression")]))]
           )
         )
       , Production(
           "logicalAndExpression"
         , Conc(
-            Ref("equalityExpression")
-          , RepAny(Conc(Lit("'\\&\\&'"), Ref("equalityExpression")))
+            [Ref("equalityExpression"), RepAny(Conc([Lit("'\\&\\&'"), Ref("equalityExpression")]))]
           )
         )
       ]
@@ -1056,10 +1118,11 @@ Spec(
           "equalityExpression"
         , Alt(
             [ Conc(
-                Ref("relationalExpression")
-              , Optional(Conc(Ref("equalityOperator"), Ref("relationalExpression")))
+                [Ref("relationalExpression"), Optional(Conc([Ref("equalityOperator"), Ref("relationalExpression")]))]
               )
-            , Conc(Conc(Lit("'super'"), Ref("equalityOperator")), Ref("relationalExpression"))
+            , Conc(
+                [Conc([Lit("'super'"), Ref("equalityOperator")]), Ref("relationalExpression")]
+              )
             ]
           )
         )
@@ -1071,14 +1134,20 @@ Spec(
           "relationalExpression"
         , Alt(
             [ Conc(
-                Ref("bitwiseOrExpression")
-              , Optional(
-                  Alt(
-                    [Ref("typeTest"), Ref("typeCast"), Conc(Ref("relationalOperator"), Ref("bitwiseOrExpression"))]
+                [ Ref("bitwiseOrExpression")
+                , Optional(
+                    Alt(
+                      [ Ref("typeTest")
+                      , Ref("typeCast")
+                      , Conc([Ref("relationalOperator"), Ref("bitwiseOrExpression")])
+                      ]
+                    )
                   )
-                )
+                ]
               )
-            , Conc(Conc(Lit("'super'"), Ref("relationalOperator")), Ref("bitwiseOrExpression"))
+            , Conc(
+                [Conc([Lit("'super'"), Ref("relationalOperator")]), Ref("bitwiseOrExpression")]
+              )
             ]
           )
         )
@@ -1095,12 +1164,10 @@ Spec(
           "bitwiseOrExpression"
         , Alt(
             [ Conc(
-                Ref("bitwiseXorExpression")
-              , RepAny(Conc(Lit("';'"), Ref("bitwiseXorExpression")))
+                [Ref("bitwiseXorExpression"), RepAny(Conc([Lit("';'"), Ref("bitwiseXorExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Lit("';'"), Ref("bitwiseXorExpression")))
+                [Lit("'super'"), RepSome(Conc([Lit("';'"), Ref("bitwiseXorExpression")]))]
               )
             ]
           )
@@ -1109,12 +1176,10 @@ Spec(
           "bitwiseXorExpression"
         , Alt(
             [ Conc(
-                Ref("bitwiseAndExpression")
-              , RepAny(Conc(Lit("'\\^{}'"), Ref("bitwiseAndExpression")))
+                [Ref("bitwiseAndExpression"), RepAny(Conc([Lit("'\\^{}'"), Ref("bitwiseAndExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Lit("'\\^{}'"), Ref("bitwiseAndExpression")))
+                [Lit("'super'"), RepSome(Conc([Lit("'\\^{}'"), Ref("bitwiseAndExpression")]))]
               )
             ]
           )
@@ -1123,12 +1188,10 @@ Spec(
           "bitwiseAndExpression"
         , Alt(
             [ Conc(
-                Ref("shiftExpression")
-              , RepAny(Conc(Lit("'\\&'"), Ref("shiftExpression")))
+                [Ref("shiftExpression"), RepAny(Conc([Lit("'\\&'"), Ref("shiftExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Lit("'\\&'"), Ref("shiftExpression")))
+                [Lit("'super'"), RepSome(Conc([Lit("'\\&'"), Ref("shiftExpression")]))]
               )
             ]
           )
@@ -1144,12 +1207,10 @@ Spec(
           "shiftExpression"
         , Alt(
             [ Conc(
-                Ref("additiveExpression")
-              , RepAny(Conc(Ref("shiftOperator"), Ref("additiveExpression")))
+                [Ref("additiveExpression"), RepAny(Conc([Ref("shiftOperator"), Ref("additiveExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Ref("shiftOperator"), Ref("additiveExpression")))
+                [Lit("'super'"), RepSome(Conc([Ref("shiftOperator"), Ref("additiveExpression")]))]
               )
             ]
           )
@@ -1162,12 +1223,10 @@ Spec(
           "additiveExpression"
         , Alt(
             [ Conc(
-                Ref("multiplicativeExpression")
-              , RepAny(Conc(Ref("additiveOperator"), Ref("multiplicativeExpression")))
+                [Ref("multiplicativeExpression"), RepAny(Conc([Ref("additiveOperator"), Ref("multiplicativeExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Ref("additiveOperator"), Ref("multiplicativeExpression")))
+                [Lit("'super'"), RepSome(Conc([Ref("additiveOperator"), Ref("multiplicativeExpression")]))]
               )
             ]
           )
@@ -1180,12 +1239,10 @@ Spec(
           "multiplicativeExpression"
         , Alt(
             [ Conc(
-                Ref("unaryExpression")
-              , RepAny(Conc(Ref("multiplicativeOperator"), Ref("unaryExpression")))
+                [Ref("unaryExpression"), RepAny(Conc([Ref("multiplicativeOperator"), Ref("unaryExpression")]))]
               )
             , Conc(
-                Lit("'super'")
-              , RepSome(Conc(Ref("multiplicativeOperator"), Ref("unaryExpression")))
+                [Lit("'super'"), RepSome(Conc([Ref("multiplicativeOperator"), Ref("unaryExpression")]))]
               )
             ]
           )
@@ -1202,14 +1259,13 @@ Spec(
       [ Production(
           "unaryExpression"
         , Alt(
-            [ Conc(Ref("prefixOperator"), Ref("unaryExpression"))
+            [ Conc([Ref("prefixOperator"), Ref("unaryExpression")])
             , Ref("awaitExpression")
             , Ref("postfixExpression")
             , Conc(
-                Alt([Ref("minusOperator"), Ref("tildeOperator")])
-              , Lit("'super'")
+                [Alt([Ref("minusOperator"), Ref("tildeOperator")]), Lit("'super'")]
               )
-            , Conc(Ref("incrementOperator"), Ref("assignableExpression"))
+            , Conc([Ref("incrementOperator"), Ref("assignableExpression")])
             ]
           )
         )
@@ -1223,25 +1279,27 @@ Spec(
       ]
     )
   , Grammar(
-      [Production("awaitExpression", Conc(Token("\\AWAIT{}"), Ref("unaryExpression")))]
+      [Production("awaitExpression", Conc([Token("\\AWAIT{}"), Ref("unaryExpression")]))]
     )
   , Grammar(
       [ Production(
           "postfixExpression"
         , Alt(
-            [ Conc(Ref("assignableExpression"), Ref("postfixOperator"))
+            [ Conc([Ref("assignableExpression"), Ref("postfixOperator")])
             , Conc(
-                Ref("primary")
-              , Alt(
-                  [ RepAny(Ref("selector"))
-                  , Conc(
-                      Lit("'\\#'")
-                    , Alt(
-                        [Conc(Ref("identifier"), Optional(Lit("'='"))), Ref("operator")]
+                [ Ref("primary")
+                , Alt(
+                    [ RepAny(Ref("selector"))
+                    , Conc(
+                        [ Lit("'\\#'")
+                        , Alt(
+                            [Conc([Ref("identifier"), Optional(Lit("'='"))]), Ref("operator")]
+                          )
+                        ]
                       )
-                    )
-                  ]
-                )
+                    ]
+                  )
+                ]
               )
             ]
           )
@@ -1256,10 +1314,11 @@ Spec(
           "assignableExpression"
         , Alt(
             [ Conc(
-                Ref("primary")
-              , RepSome(Conc(RepAny(Ref("arguments")), Ref("assignableSelector")))
+                [ Ref("primary")
+                , RepSome(Conc([RepAny(Ref("arguments")), Ref("assignableSelector")]))
+                ]
               )
-            , Conc(Lit("'super'"), Ref("unconditionalAssignableSelector"))
+            , Conc([Lit("'super'"), Ref("unconditionalAssignableSelector")])
             , Ref("identifier")
             ]
           )
@@ -1267,23 +1326,31 @@ Spec(
       , Production(
           "unconditionalAssignableSelector"
         , Alt(
-            [ Conc(Conc(Lit("'['"), Ref("expression")), Lit("']'"))
-            , Conc(Lit("'.'"), Ref("identifier"))
+            [ Conc(
+                [Conc([Lit("'['"), Ref("expression")]), Lit("']'")]
+              )
+            , Conc([Lit("'.'"), Ref("identifier")])
             ]
           )
         )
       , Production(
           "assignableSelector"
         , Alt(
-            [Ref("unconditionalAssignableSelector"), Conc(Lit("'?.'"), Ref("identifier"))]
+            [Ref("unconditionalAssignableSelector"), Conc([Lit("'?.'"), Ref("identifier")])]
           )
         )
       ]
     )
   , Grammar(
       [ Production("identifier", Ref("IDENTIFIER"))
-      , Production("IDENTIFIER_NO_DOLLAR", Conc(Ref("IDENTIFIER_START_NO_DOLLAR"), RepAny(Ref("IDENTIFIER_PART_NO_DOLLAR"))))
-      , Production("IDENTIFIER", Conc(Ref("IDENTIFIER_START"), RepAny(Ref("IDENTIFIER_PART"))))
+      , Production(
+          "IDENTIFIER_NO_DOLLAR"
+        , Conc([Ref("IDENTIFIER_START_NO_DOLLAR"), RepAny(Ref("IDENTIFIER_PART_NO_DOLLAR"))])
+        )
+      , Production(
+          "IDENTIFIER"
+        , Conc([Ref("IDENTIFIER_START"), RepAny(Ref("IDENTIFIER_PART"))])
+        )
       , Production(
           "BUILT_IN_IDENTIFIER"
         , Alt(
@@ -1313,25 +1380,30 @@ Spec(
       , Production(
           "qualified"
         , Conc(
-            Ref("identifier")
-          , Optional(Conc(Lit("'.'"), Ref("identifier")))
+            [Ref("identifier"), Optional(Conc([Lit("'.'"), Ref("identifier")]))]
           )
         )
       ]
     )
   , Grammar(
-      [ Production("typeTest", Conc(Ref("isOperator"), Ref("type")))
-      , Production("isOperator", Conc(Token("\\IS{}"), Optional(Lit("'!'"))))
+      [ Production("typeTest", Conc([Ref("isOperator"), Ref("type")]))
+      , Production(
+          "isOperator"
+        , Conc([Token("\\IS{}"), Optional(Lit("'!'"))])
+        )
       ]
     )
   , Grammar(
-      [ Production("typeCast", Conc(Ref("asOperator"), Ref("type")))
+      [ Production("typeCast", Conc([Ref("asOperator"), Ref("type")]))
       , Production("asOperator", Token("\\AS{}"))
       ]
     )
   , Grammar(
       [ Production("statements", RepAny(Ref("statement")))
-      , Production("statement", Conc(RepAny(Ref("label")), Ref("nonLabelledStatement")))
+      , Production(
+          "statement"
+        , Conc([RepAny(Ref("label")), Ref("nonLabelledStatement")])
+        )
       , Production(
           "nonLabelledStatement"
         , Alt(
@@ -1358,26 +1430,34 @@ Spec(
       ]
     )
   , Grammar(
-      [Production("expressionStatement", Conc(Optional(Ref("expression")), Lit("';'")))]
+      [Production(
+         "expressionStatement"
+       , Conc([Optional(Ref("expression")), Lit("';'")])
+       )]
     )
   , Grammar(
-      [Production("localVariableDeclaration", Conc(Ref("initializedVariableDeclaration"), Lit("';'")))]
+      [Production("localVariableDeclaration", Conc([Ref("initializedVariableDeclaration"), Lit("';'")]))]
     )
   , Grammar(
-      [Production("localFunctionDeclaration", Conc(Ref("functionSignature"), Ref("functionBody")))]
+      [Production("localFunctionDeclaration", Conc([Ref("functionSignature"), Ref("functionBody")]))]
     )
   , Grammar(
       [ Production(
           "ifStatement"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Conc(Token("\\IF{}"), Lit("'('")), Ref("expression"))
-              , Lit("')'")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [Conc([Token("\\IF{}"), Lit("'('")]), Ref("expression")]
+                      )
+                    , Lit("')'")
+                    ]
+                  )
+                , Ref("statement")
+                ]
               )
-            , Ref("statement")
-            )
-          , Optional(Conc(Token("\\ELSE{}"), Ref("statement")))
+            , Optional(Conc([Token("\\ELSE{}"), Ref("statement")]))
+            ]
           )
         )
       ]
@@ -1386,38 +1466,44 @@ Spec(
       [ Production(
           "forStatement"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(Optional(Token("\\AWAIT")), Token("\\FOR{}"))
-                , Lit("'('")
-                )
-              , Ref("forLoopParts")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [Conc([Optional(Token("\\AWAIT")), Token("\\FOR{}")]), Lit("'('")]
+                      )
+                    , Ref("forLoopParts")
+                    ]
+                  )
+                , Lit("')'")
+                ]
               )
-            , Lit("')'")
-            )
-          , Ref("statement")
+            , Ref("statement")
+            ]
           )
         )
       , Production(
           "forLoopParts"
         , Alt(
             [ Conc(
-                Conc(
-                  Conc(Ref("forInitializerStatement"), Optional(Ref("expression")))
-                , Lit("';'")
-                )
-              , Optional(Ref("expressionList"))
+                [ Conc(
+                    [Conc([Ref("forInitializerStatement"), Optional(Ref("expression"))]), Lit("';'")]
+                  )
+                , Optional(Ref("expressionList"))
+                ]
               )
-            , Conc(Conc(Ref("declaredIdentifier"), Token("\\IN{}")), Ref("expression"))
-            , Conc(Conc(Ref("identifier"), Token("\\IN{}")), Ref("expression"))
+            , Conc(
+                [Conc([Ref("declaredIdentifier"), Token("\\IN{}")]), Ref("expression")]
+              )
+            , Conc(
+                [Conc([Ref("identifier"), Token("\\IN{}")]), Ref("expression")]
+              )
             ]
           )
         )
       , Production(
           "forInitializerStatement"
         , Alt(
-            [Ref("localVariableDeclaration"), Conc(Optional(Ref("expression")), Lit("';'"))]
+            [Ref("localVariableDeclaration"), Conc([Optional(Ref("expression")), Lit("';'")])]
           )
         )
       ]
@@ -1426,11 +1512,15 @@ Spec(
       [ Production(
           "whileStatement"
         , Conc(
-            Conc(
-              Conc(Conc(Token("\\WHILE{}"), Lit("'('")), Ref("expression"))
-            , Lit("')'")
-            )
-          , Ref("statement")
+            [ Conc(
+                [ Conc(
+                    [Conc([Token("\\WHILE{}"), Lit("'('")]), Ref("expression")]
+                  )
+                , Lit("')'")
+                ]
+              )
+            , Ref("statement")
+            ]
           )
         )
       ]
@@ -1439,17 +1529,23 @@ Spec(
       [ Production(
           "doStatement"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(Conc(Token("\\DO{}"), Ref("statement")), Token("\\WHILE{}"))
-                , Lit("'('")
-                )
-              , Ref("expression")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [ Conc(
+                            [Conc([Token("\\DO{}"), Ref("statement")]), Token("\\WHILE{}")]
+                          )
+                        , Lit("'('")
+                        ]
+                      )
+                    , Ref("expression")
+                    ]
+                  )
+                , Lit("')'")
+                ]
               )
-            , Lit("')'")
-            )
-          , Lit("';'")
+            , Lit("';'")
+            ]
           )
         )
       ]
@@ -1458,70 +1554,81 @@ Spec(
       [ Production(
           "switchStatement"
         , Conc(
-            Conc(
-              Conc(
-                Conc(
-                  Conc(
-                    Conc(Conc(Token("\\SWITCH{}"), Lit("'('")), Ref("expression"))
-                  , Lit("')'")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [ Conc(
+                            [ Conc(
+                                [Conc([Token("\\SWITCH{}"), Lit("'('")]), Ref("expression")]
+                              )
+                            , Lit("')'")
+                            ]
+                          )
+                        , Lit("'\\{'")
+                        ]
+                      )
+                    , RepAny(Ref("switchCase"))
+                    ]
                   )
-                , Lit("'\\{'")
-                )
-              , RepAny(Ref("switchCase"))
+                , Optional(Ref("defaultCase"))
+                ]
               )
-            , Optional(Ref("defaultCase"))
-            )
-          , Lit("'\\}'")
+            , Lit("'\\}'")
+            ]
           )
         )
       , Production(
           "switchCase"
         , Conc(
-            Conc(
-              Conc(
-                Conc(RepAny(Ref("label")), Token("\\CASE{}"))
-              , Ref("expression")
+            [ Conc(
+                [ Conc(
+                    [Conc([RepAny(Ref("label")), Token("\\CASE{}")]), Ref("expression")]
+                  )
+                , Lit("':'")
+                ]
               )
-            , Lit("':'")
-            )
-          , Ref("statements")
+            , Ref("statements")
+            ]
           )
         )
       , Production(
           "defaultCase"
         , Conc(
-            Conc(
-              Conc(RepAny(Ref("label")), Token("\\DEFAULT{}"))
-            , Lit("':'")
-            )
-          , Ref("statements")
+            [ Conc(
+                [Conc([RepAny(Ref("label")), Token("\\DEFAULT{}")]), Lit("':'")]
+              )
+            , Ref("statements")
+            ]
           )
         )
       ]
     )
   , Grammar(
-      [Production("rethrowStatement", Conc(Token("\\RETHROW{}"), Lit("';'")))]
+      [Production("rethrowStatement", Conc([Token("\\RETHROW{}"), Lit("';'")]))]
     )
   , Grammar(
       [ Production(
           "tryStatement"
         , Conc(
-            Conc(Token("\\TRY{}"), Ref("block"))
-          , Alt(
-              [Conc(RepSome(Ref("onPart")), Optional(Ref("finallyPart"))), Ref("finallyPart")]
-            )
+            [ Conc([Token("\\TRY{}"), Ref("block")])
+            , Alt(
+                [ Conc([RepSome(Ref("onPart")), Optional(Ref("finallyPart"))])
+                , Ref("finallyPart")
+                ]
+              )
+            ]
           )
         )
       , Production(
           "onPart"
         , Alt(
-            [ Conc(Ref("catchPart"), Ref("block"))
+            [ Conc([Ref("catchPart"), Ref("block")])
             , Conc(
-                Conc(
-                  Conc(Token("\\ON{}"), Ref("type"))
-                , Optional(Ref("catchPart"))
-                )
-              , Ref("block")
+                [ Conc(
+                    [Conc([Token("\\ON{}"), Ref("type")]), Optional(Ref("catchPart"))]
+                  )
+                , Ref("block")
+                ]
               )
             ]
           )
@@ -1529,35 +1636,37 @@ Spec(
       , Production(
           "catchPart"
         , Conc(
-            Conc(
-              Conc(Conc(Token("\\CATCH{}"), Lit("'('")), Ref("identifier"))
-            , Optional(Conc(Lit("','"), Ref("identifier")))
-            )
-          , Lit("')'")
+            [ Conc(
+                [ Conc(
+                    [Conc([Token("\\CATCH{}"), Lit("'('")]), Ref("identifier")]
+                  )
+                , Optional(Conc([Lit("','"), Ref("identifier")]))
+                ]
+              )
+            , Lit("')'")
+            ]
           )
         )
-      , Production("finallyPart", Conc(Token("\\FINALLY{}"), Ref("block")))
+      , Production("finallyPart", Conc([Token("\\FINALLY{}"), Ref("block")]))
       ]
     )
   , Grammar(
       [ Production(
           "returnStatement"
         , Conc(
-            Conc(Token("\\RETURN{}"), Optional(Ref("expression")))
-          , Lit("';'")
+            [Conc([Token("\\RETURN{}"), Optional(Ref("expression"))]), Lit("';'")]
           )
         )
       ]
     )
   , Grammar(
-      [Production("label", Conc(Ref("identifier"), Lit("':'")))]
+      [Production("label", Conc([Ref("identifier"), Lit("':'")]))]
     )
   , Grammar(
       [ Production(
           "breakStatement"
         , Conc(
-            Conc(Token("\\BREAK{}"), Optional(Ref("identifier")))
-          , Lit("';'")
+            [Conc([Token("\\BREAK{}"), Optional(Ref("identifier"))]), Lit("';'")]
           )
         )
       ]
@@ -1566,8 +1675,7 @@ Spec(
       [ Production(
           "continueStatement"
         , Conc(
-            Conc(Token("\\CONTINUE{}"), Optional(Ref("identifier")))
-          , Lit("';'")
+            [Conc([Token("\\CONTINUE{}"), Optional(Ref("identifier"))]), Lit("';'")]
           )
         )
       ]
@@ -1575,7 +1683,9 @@ Spec(
   , Grammar(
       [ Production(
           "yieldStatement"
-        , Conc(Conc(Token("\\YIELD{}"), Ref("expression")), Lit("';'"))
+        , Conc(
+            [Conc([Token("\\YIELD{}"), Ref("expression")]), Lit("';'")]
+          )
         )
       ]
     )
@@ -1583,8 +1693,7 @@ Spec(
       [ Production(
           "yieldEachStatement"
         , Conc(
-            Conc(RepAny(Token("\\YIELD")), Ref("expression"))
-          , Lit("';'")
+            [Conc([RepAny(Token("\\YIELD")), Ref("expression")]), Lit("';'")]
           )
         )
       ]
@@ -1593,11 +1702,15 @@ Spec(
       [ Production(
           "assertStatement"
         , Conc(
-            Conc(
-              Conc(Conc(Ref("assert"), Lit("'('")), Ref("conditionalExpression"))
-            , Lit("')'")
-            )
-          , Lit("';'")
+            [ Conc(
+                [ Conc(
+                    [Conc([Ref("assert"), Lit("'('")]), Ref("conditionalExpression")]
+                  )
+                , Lit("')'")
+                ]
+              )
+            , Lit("';'")
+            ]
           )
         )
       ]
@@ -1610,109 +1723,125 @@ Spec(
             , Ref("enumType")
             , Ref("typeAlias")
             , Conc(
-                Conc(Optional(Lit("'external'")), Ref("functionSignature"))
-              , Lit("';'")
+                [Conc([Optional(Lit("'external'")), Ref("functionSignature")]), Lit("';'")]
               )
             , Conc(
-                Conc(Optional(Lit("'external'")), Ref("getterSignature"))
-              , Lit("';'")
+                [Conc([Optional(Lit("'external'")), Ref("getterSignature")]), Lit("';'")]
               )
             , Conc(
-                Conc(Optional(Lit("'external'")), Ref("setterSignature"))
-              , Lit("';'")
+                [Conc([Optional(Lit("'external'")), Ref("setterSignature")]), Lit("';'")]
               )
-            , Conc(Ref("functionSignature"), Ref("functionBody"))
+            , Conc([Ref("functionSignature"), Ref("functionBody")])
             , Conc(
-                Conc(
-                  Conc(Optional(Ref("returnType")), Token("\\GET{}"))
-                , Ref("identifier")
-                )
-              , Ref("functionBody")
-              )
-            , Conc(
-                Conc(
-                  Conc(
-                    Conc(Optional(Ref("returnType")), Token("\\SET{}"))
-                  , Ref("identifier")
+                [ Conc(
+                    [Conc([Optional(Ref("returnType")), Token("\\GET{}")]), Ref("identifier")]
                   )
-                , Ref("formalParameterList")
-                )
-              , Ref("functionBody")
+                , Ref("functionBody")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(
-                    Alt([Lit("'final'"), Lit("'const'")])
-                  , Optional(Ref("type"))
+                [ Conc(
+                    [ Conc(
+                        [Conc([Optional(Ref("returnType")), Token("\\SET{}")]), Ref("identifier")]
+                      )
+                    , Ref("formalParameterList")
+                    ]
                   )
-                , Ref("staticFinalDeclarationList")
-                )
-              , Lit("';'")
+                , Ref("functionBody")
+                ]
               )
-            , Conc(Ref("variableDeclaration"), Lit("';'"))
+            , Conc(
+                [ Conc(
+                    [ Conc(
+                        [Alt([Lit("'final'"), Lit("'const'")]), Optional(Ref("type"))]
+                      )
+                    , Ref("staticFinalDeclarationList")
+                    ]
+                  )
+                , Lit("';'")
+                ]
+              )
+            , Conc([Ref("variableDeclaration"), Lit("';'")])
             ]
           )
         )
       , Production(
           "libraryDefinition"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Optional(Ref("scriptTag")), Optional(Ref("libraryName")))
-              , RepAny(Ref("importOrExport"))
+            [ Conc(
+                [ Conc(
+                    [ Conc([Optional(Ref("scriptTag")), Optional(Ref("libraryName"))])
+                    , RepAny(Ref("importOrExport"))
+                    ]
+                  )
+                , RepAny(Ref("partDirective"))
+                ]
               )
-            , RepAny(Ref("partDirective"))
-            )
-          , RepAny(Ref("topLevelDefinition"))
+            , RepAny(Ref("topLevelDefinition"))
+            ]
           )
         )
       , Production(
           "scriptTag"
         , Conc(
-            Conc(Lit("'\\#!'"), RepAny(Comp(Ref("NEWLINE"))))
-          , Ref("NEWLINE")
+            [ Conc([Lit("'\\#!'"), RepAny(Comp(Ref("NEWLINE")))])
+            , Ref("NEWLINE")
+            ]
           )
         )
       , Production(
           "libraryName"
         , Conc(
-            Conc(
-              Conc(Conc(Ref("metadata"), Token("\\LIBRARY{}")), Ref("identifier"))
-            , RepAny(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Lit("';'")
+            [ Conc(
+                [ Conc(
+                    [Conc([Ref("metadata"), Token("\\LIBRARY{}")]), Ref("identifier")]
+                  )
+                , RepAny(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
+              )
+            , Lit("';'")
+            ]
           )
         )
       , Production("importOrExport", Alt([Ref("libraryImport"), Ref("libraryExport")]))
       ]
     )
   , Grammar(
-      [ Production("libraryImport", Conc(Ref("metadata"), Ref("importSpecification")))
+      [ Production("libraryImport", Conc([Ref("metadata"), Ref("importSpecification")]))
       , Production(
           "importSpecification"
         , Alt(
             [ Conc(
-                Conc(
-                  Conc(
-                    Conc(Token("\\IMPORT{}"), Ref("uri"))
-                  , Optional(Conc(Token("\\AS{}"), Ref("identifier")))
+                [ Conc(
+                    [ Conc(
+                        [ Conc([Token("\\IMPORT{}"), Ref("uri")])
+                        , Optional(Conc([Token("\\AS{}"), Ref("identifier")]))
+                        ]
+                      )
+                    , RepAny(Ref("combinator"))
+                    ]
                   )
-                , RepAny(Ref("combinator"))
-                )
-              , Lit("';'")
+                , Lit("';'")
+                ]
               )
             , Conc(
-                Conc(
-                  Conc(
-                    Conc(
-                      Conc(Conc(Token("\\IMPORT{}"), Ref("uri")), Token("\\DEFERRED{}"))
-                    , Token("\\AS{}")
-                    )
-                  , Ref("identifier")
+                [ Conc(
+                    [ Conc(
+                        [ Conc(
+                            [ Conc(
+                                [Conc([Token("\\IMPORT{}"), Ref("uri")]), Token("\\DEFERRED{}")]
+                              )
+                            , Token("\\AS{}")
+                            ]
+                          )
+                        , Ref("identifier")
+                        ]
+                      )
+                    , RepAny(Ref("combinator"))
+                    ]
                   )
-                , RepAny(Ref("combinator"))
-                )
-              , Lit("';'")
+                , Lit("';'")
+                ]
               )
             ]
           )
@@ -1720,16 +1849,15 @@ Spec(
       , Production(
           "combinator"
         , Alt(
-            [ Conc(Token("\\SHOW{}"), Ref("identifierList"))
-            , Conc(Token("\\HIDE{}"), Ref("identifierList"))
+            [ Conc([Token("\\SHOW{}"), Ref("identifierList")])
+            , Conc([Token("\\HIDE{}"), Ref("identifierList")])
             ]
           )
         )
       , Production(
           "identifierList"
         , Conc(
-            Ref("identifier")
-          , RepAny(Conc(Lit("','"), Ref("identifier")))
+            [Ref("identifier"), RepAny(Conc([Lit("','"), Ref("identifier")]))]
           )
         )
       ]
@@ -1738,11 +1866,15 @@ Spec(
       [ Production(
           "libraryExport"
         , Conc(
-            Conc(
-              Conc(Conc(Ref("metadata"), Token("\\EXPORT{}")), Ref("uri"))
-            , RepAny(Ref("combinator"))
-            )
-          , Lit("';'")
+            [ Conc(
+                [ Conc(
+                    [Conc([Ref("metadata"), Token("\\EXPORT{}")]), Ref("uri")]
+                  )
+                , RepAny(Ref("combinator"))
+                ]
+              )
+            , Lit("';'")
+            ]
           )
         )
       ]
@@ -1751,45 +1883,56 @@ Spec(
       [ Production(
           "partDirective"
         , Conc(
-            Conc(Conc(Ref("metadata"), Token("\\PART{}")), Ref("uri"))
-          , Lit("';'")
+            [ Conc(
+                [Conc([Ref("metadata"), Token("\\PART{}")]), Ref("uri")]
+              )
+            , Lit("';'")
+            ]
           )
         )
       , Production(
           "partHeader"
         , Conc(
-            Conc(
-              Conc(
-                Conc(Conc(Ref("metadata"), Token("\\PART{}")), Token("\\OF{}"))
-              , Ref("identifier")
+            [ Conc(
+                [ Conc(
+                    [ Conc(
+                        [Conc([Ref("metadata"), Token("\\PART{}")]), Token("\\OF{}")]
+                      )
+                    , Ref("identifier")
+                    ]
+                  )
+                , RepAny(Conc([Lit("'.'"), Ref("identifier")]))
+                ]
               )
-            , RepAny(Conc(Lit("'.'"), Ref("identifier")))
-            )
-          , Lit("';'")
+            , Lit("';'")
+            ]
           )
         )
       , Production(
           "partDeclaration"
         , Conc(
-            Conc(Ref("partHeader"), RepAny(Ref("topLevelDefinition")))
-          , Ref("EOF")
+            [Conc([Ref("partHeader"), RepAny(Ref("topLevelDefinition"))]), Ref("EOF")]
           )
         )
       ]
     )
   , Grammar([Production("uri", Ref("stringLiteral"))])
   , Grammar(
-      [ Production("type", Conc(Ref("typeName"), Optional(Ref("typeArguments"))))
+      [ Production(
+          "type"
+        , Conc([Ref("typeName"), Optional(Ref("typeArguments"))])
+        )
       , Production("typeName", Ref("qualified"))
       , Production(
           "typeArguments"
-        , Conc(Conc(Lit("'<'"), Ref("typeList")), Lit("'>'"))
+        , Conc(
+            [Conc([Lit("'<'"), Ref("typeList")]), Lit("'>'")]
+          )
         )
       , Production(
           "typeList"
         , Conc(
-            Ref("type")
-          , RepAny(Conc(Lit("','"), Ref("type")))
+            [Ref("type"), RepAny(Conc([Lit("','"), Ref("type")]))]
           )
         )
       ]
@@ -1797,20 +1940,25 @@ Spec(
   , Grammar(
       [ Production(
           "typeAlias"
-        , Conc(Conc(Ref("metadata"), Token("\\TYPEDEF{}")), Ref("typeAliasBody"))
+        , Conc(
+            [Conc([Ref("metadata"), Token("\\TYPEDEF{}")]), Ref("typeAliasBody")]
+          )
         )
       , Production("typeAliasBody", Ref("functionTypeAlias"))
       , Production(
           "functionTypeAlias"
         , Conc(
-            Conc(
-              Conc(Ref("functionPrefix"), Optional(Ref("typeParameters")))
-            , Ref("formalParameterList")
-            )
-          , Lit("';'")
+            [ Conc(
+                [Conc([Ref("functionPrefix"), Optional(Ref("typeParameters"))]), Ref("formalParameterList")]
+              )
+            , Lit("';'")
+            ]
           )
         )
-      , Production("functionPrefix", Conc(Optional(Ref("returnType")), Ref("identifier")))
+      , Production(
+          "functionPrefix"
+        , Conc([Optional(Ref("returnType")), Ref("identifier")])
+        )
       ]
     )
   , Grammar(
@@ -1831,18 +1979,21 @@ Spec(
       [ Production(
           "SINGLE_LINE_COMMENT"
         , Conc(
-            Conc(Lit("'//'"), RepAny(Comp(Ref("NEWLINE"))))
-          , Optional(Ref("NEWLINE"))
+            [ Conc([Lit("'//'"), RepAny(Comp(Ref("NEWLINE")))])
+            , Optional(Ref("NEWLINE"))
+            ]
           )
         )
       , Production(
           "MULTI_LINE_COMMENT"
         , Conc(
-            Conc(
-              Lit("'/*'")
-            , RepAny(Alt([Ref("MULTI_LINE_COMMENT"), Comp(Lit("'*/'"))]))
-            )
-          , Lit("'*/'")
+            [ Conc(
+                [ Lit("'/*'")
+                , RepAny(Alt([Ref("MULTI_LINE_COMMENT"), Comp(Lit("'*/'"))]))
+                ]
+              )
+            , Lit("'*/'")
+            ]
           )
         )
       ]

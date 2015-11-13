@@ -1,0 +1,92 @@
+module lib/sdf/pp/literals/Literals-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  lib/sdf/signatures/literals/Literals-sig
+
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/constants/StrCon-sig
+  lib/sdf/signatures/constants/IdentifierCon-sig
+
+
+imports
+  lib/sdf/pp/kernel/Kernel-pp
+  lib/sdf/pp/constants/StrCon-pp
+  lib/sdf/pp/constants/IdentifierCon-pp
+
+
+strategies
+  prettyprint-SingleQuotedStrChar =
+    ![S(<is-string>)]
+
+  prettyprint-SingleQuotedStrCon =
+    ![S(<is-string>)]
+
+  prettyprint-example =
+    prettyprint-SingleQuotedStrChar
+
+  prettyprint-example =
+    prettyprint-SingleQuotedStrCon
+
+
+strategies
+  prettyprint-example =
+    prettyprint-FunctionName
+
+  prettyprint-FunctionName :
+    UnquotedFun(t1__) -> [ H(
+                             [SOpt(HS(), "0")]
+                           , [t1__']
+                           )
+                         ]
+    with t1__' := <pp-one-Z(prettyprint-IdCon)> t1__
+
+  is-FunctionName =
+    ?UnquotedFun(_)
+
+  prettyprint-FunctionName :
+    QuotedFun(t1__) -> [ H(
+                           [SOpt(HS(), "0")]
+                         , [t1__']
+                         )
+                       ]
+    with t1__' := <pp-one-Z(prettyprint-StrCon)> t1__
+
+  is-FunctionName =
+    ?QuotedFun(_)
+
+  is-FunctionName =
+    fail
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Symbol
+
+  prettyprint-Symbol :
+    Lit(string__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [string__']
+                       )
+                     ]
+    with string__' := <pp-one-Z(prettyprint-StrCon)> string__
+
+  is-Symbol =
+    ?Lit(_)
+
+  prettyprint-Symbol :
+    CiLit(ci-string__) -> [ H(
+                              [SOpt(HS(), "0")]
+                            , [ci-string__']
+                            )
+                          ]
+    with ci-string__' := <pp-one-Z(prettyprint-SingleQuotedStrCon)> ci-string__
+
+  is-Symbol =
+    ?CiLit(_)
+
+  is-Symbol =
+    fail

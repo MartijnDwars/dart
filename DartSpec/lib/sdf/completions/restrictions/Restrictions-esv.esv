@@ -1,0 +1,27 @@
+module lib/sdf/completions/restrictions/Restrictions-esv
+
+imports
+  lib/sdf/completions/characterclass/CC-esv
+  lib/sdf/completions/characterclass/Character-Class-esv
+  lib/sdf/completions/symbols/Symbols-esv
+  lib/sdf/completions/constants/StrCon-esv
+
+completions
+  completion template Lookahead : "CharClass.Lookaheads" =
+    <CharClass:CharClass> "." <Lookaheads:Lookaheads>  
+  completion template Lookaheads : "Lookaheads | Lookaheads" =
+    <Lookaheads:Lookaheads> " | " <Lookaheads:Lookaheads>  
+  completion template Lookaheads : "(Lookaheads)" =
+    "(" <Lookaheads:Lookaheads> ")"  
+  completion template Lookaheads : "[[]]" =
+    "[[" <:Lookahead> "]]"       
+  completion template Restriction : "RestrictionSymbols -/- Lookaheads" =
+    <RestrictionSymbols:RestrictionSymbols> " -/- " <Lookaheads:Lookaheads>  
+  completion template Grammar : "restrictions Restrictions " =
+    "restrictions\n\n\t" <Restrictions:Restrictions> "\n" (blank)  
+  completion template Attribute : "reject" =
+    "reject"                    
+  completion template Attribute : "prefer" =
+    "prefer"                    
+  completion template Attribute : "avoid" =
+    "avoid"                      

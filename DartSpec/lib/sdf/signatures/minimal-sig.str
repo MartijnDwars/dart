@@ -1,0 +1,8 @@
+module lib/sdf/signatures/minimal-sig
+
+signature
+  constructors
+     : String -> ID
+
+  constructors
+     : ID -> Exp

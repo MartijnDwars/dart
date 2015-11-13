@@ -1,0 +1,5 @@
+module lib/sdf/completions/characterclass/CC-esv
+
+imports
+  lib/sdf/completions/characterclass/Character-Class-esv
+  lib/sdf/completions/kernel/Kernel-esv

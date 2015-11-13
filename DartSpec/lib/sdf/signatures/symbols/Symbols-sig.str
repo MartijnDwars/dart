@@ -1,0 +1,10 @@
+module lib/sdf/signatures/symbols/Symbols-sig
+
+imports
+  lib/sdf/signatures/layout/Comments-sig
+
+
+signature
+  constructors
+     : List(Symbol) -> Symbols
+     : Symbol -> SymbolDef

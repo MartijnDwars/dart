@@ -1,0 +1,13 @@
+module lib/sdf/completions/renaming/Renaming-esv
+
+imports
+  lib/sdf/completions/kernel/Kernel-esv
+  lib/sdf/completions/symbols/Symbols-esv
+
+completions
+  completion template Renamings : "[]" =
+    "[" <:Renaming> "]"  
+  completion template Renaming : "Symbol => Symbol" =
+    <Symbol:Symbol> " => " <Symbol:Symbol>  
+  completion template Renaming : "Production => Production" =
+    <Production:Production> " => " <Production:Production>  

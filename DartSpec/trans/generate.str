@@ -4,8 +4,45 @@ imports
 	
   libstratego-aterm
 	include/DartSpec
+	signatures
 	
-rules 
+imports
+  
+  lib/sdf/TemplateLang
+  lib/sdf/TemplateLang-pp
+  lib/sdf/pp/TemplateLang-pp
+	
+strategies
+  
+  gen-sdf-any =
+    ?[_|_] < map(gen-sdf-any) + (gen-sdf-spec <+ gen-sdf-grammar <+ gen-sdf-production <+ gen-sdf-rhs)
+  
+rules // SDF
+  	
+	gen-sdf-spec:
+	  Spec(grammars) -> <map(gen-sdf-grammar)> grammars
+	
+	gen-sdf-grammar:
+	  Grammar(productions) -> ContextFreeSyntax(<map(gen-sdf-production)> productions)
+  
+  gen-sdf-production:
+    Production(name, rhs) -> SdfProduction(SortDef(name), Rhs(symbols), NoAttrs())
+    where
+    	symbols := <gen-sdf-rhs> rhs
+  
+  gen-sdf-rhs:
+  	Conc(x, y) -> <flatten-list> [<gen-sdf-rhs> x, <gen-sdf-rhs> y]
+  	
+	gen-sdf-rhs:
+		Ref(name) -> Sort(name)
+	
+	gen-sdf-rhs:
+		Lit(value) -> Lit(value)
+	
+	gen-sdf-rhs:
+	  RepAny(rhs) -> IterStar(<gen-sdf-rhs> rhs)
+	
+rules // Misc
   
   /**
    * Get list of unused (redundant) productions.

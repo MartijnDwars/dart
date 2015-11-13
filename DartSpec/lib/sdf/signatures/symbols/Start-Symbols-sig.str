@@ -1,0 +1,12 @@
+module lib/sdf/signatures/symbols/Start-Symbols-sig
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/symbols/Symbols-sig
+
+
+signature
+  constructors
+    KernelStartSymbols      : Symbols -> Grammar
+    LexicalStartSymbols     : Symbols -> Grammar
+    ContextFreeStartSymbols : Symbols -> Grammar

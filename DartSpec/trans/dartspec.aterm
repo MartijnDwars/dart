@@ -1,0 +1,496 @@
+Module(
+  "dartspec"
+, [ Imports(
+      [ Import("libstratego-lib")
+      , Import("libstratego-gpp")
+      , Import("libstratego-aterm")
+      , Import("include/DartSpec")
+      , Import("editor/DartSpec-Outliner")
+      , Import("lib/editor-common.generated")
+      , ImportWildcard("lib/runtime/index")
+      , ImportWildcard("lib/runtime/nabl")
+      , ImportWildcard("lib/runtime/properties")
+      , ImportWildcard("lib/runtime/types")
+      , ImportWildcard("lib/runtime/task")
+      , ImportWildcard("lib/runtime/analysis")
+      , ImportWildcard("lib/runtime/editor")
+      , Import("names")
+      , Import("check")
+      , Import("generate")
+      , Import("pp")
+      , Import("desugar")
+      ]
+    )
+  , Imports([Import("lib/sdf/TemplateLang-pp")])
+  , Rules(
+      [ SDefNoArgs("editor-analyze", CallNoArgs(SVar("analysis-default-editor")))
+      , SDefNoArgs(
+          "analysis-single-default-interface"
+        , CallT(
+            SVar("analysis-single-default")
+          , [CallNoArgs(SVar("desugar-all")), Id(), Id()]
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "analysis-multiple-default-interface"
+        , CallT(
+            SVar("analysis-multiple-default")
+          , [ LChoice(CallNoArgs(SVar("parse-file")), Build(NoAnnoList(Tuple([]))))
+            , CallNoArgs(SVar("desugar-all"))
+            , Id()
+            , Id()
+            ]
+          , [RootApp(CallNoArgs(SVar("language"))), RootApp(CallNoArgs(SVar("project-path")))]
+          )
+        )
+      , SDefNoArgs(
+          "editor-save"
+        , CallT(
+            SVar("analysis-save-default")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "gen-sdf"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+          , [ WithClause(
+                Seq(
+                  Assign(
+                    Var("ext")
+                  , App(CallNoArgs(SVar("get-extension")), Var("path"))
+                  )
+                , Seq(
+                    Assign(
+                      Var("filename")
+                    , App(
+                        CallT(
+                          SVar("guarantee-extension")
+                        , []
+                        , [NoAnnoList(StringQuotation1("                                          ", [QStr("generated.sdf3")]))]
+                        )
+                      , Var("path")
+                      )
+                    )
+                  , Seq(
+                      BA(
+                        Call(SVar("debug"), [Build(NoAnnoList(Str("\"Start migrating..\"")))])
+                      , NoAnnoList(Int("1"))
+                      )
+                    , Seq(
+                        Assign(
+                          Var("sdf")
+                        , App(CallNoArgs(SVar("gen-sdf-any")), Var("selected"))
+                        )
+                      , Seq(
+                          BA(
+                            Call(SVar("debug"), [Build(NoAnnoList(Str("\"SDF \"")))])
+                          , Var("sdf")
+                          )
+                        , Seq(
+                            Assign(
+                              Var("result")
+                            , App(CallNoArgs(SVar("pp-SDF")), Var("selected"))
+                            )
+                          , BA(
+                              Call(SVar("debug"), [Build(NoAnnoList(Str("\"pp-SDF \"")))])
+                            , Var("result")
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "redundant-productions"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+          , [ WithClause(
+                Seq(
+                  Assign(
+                    Var("ext")
+                  , App(CallNoArgs(SVar("get-extension")), Var("path"))
+                  )
+                , Seq(
+                    Assign(
+                      Var("filename")
+                    , App(
+                        CallT(
+                          SVar("guarantee-extension")
+                        , []
+                        , [ NoAnnoList(
+                              StringQuotation1(
+                                "                                          "
+                              , [QStr("redundant."), StringEscape1("                                                    ", Var("ext"))]
+                              )
+                            )
+                          ]
+                        )
+                      , Var("path")
+                      )
+                    )
+                  , Assign(
+                      Var("result")
+                    , App(CallNoArgs(SVar("redundant-productions")), Var("selected"))
+                    )
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "editor-resolve"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("node")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , Var("definition")
+          , Assign(
+              Var("definition")
+            , App(
+                CallT(
+                  SVar("analysis-resolve")
+                , []
+                , [RootApp(CallNoArgs(SVar("language"))), Var("project-path")]
+                )
+              , Var("node")
+              )
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-hover"
+        , RuleNoCond(
+            NoAnnoList(
+              Tuple(
+                [ Var("target")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              Seq(
+                CallT(
+                  SVar("get-editor-properties")
+                , [CallNoArgs(SVar("pp-partial-DartSpec-string"))]
+                , [RootApp(CallNoArgs(SVar("language"))), Var("project-path")]
+                )
+              , CallNoArgs(SVar("properties-to-html"))
+              )
+            , Var("target")
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-outline"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("node")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , Var("outline")
+          , Assign(
+              Var("outline")
+            , App(
+                Call(SVar("simple-label-outline"), [CallNoArgs(SVar("to-outline-label"))])
+              , Var("ast")
+              )
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-properties"
+        , RuleNoCond(
+            NoAnnoList(
+              Tuple(
+                [ Var("target")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("get-all-editor-properties")
+              , [CallNoArgs(SVar("pp-partial-DartSpec-string"))]
+              , [RootApp(CallNoArgs(SVar("language"))), Var("project-path")]
+              )
+            , Var("target")
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-complete"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("node")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , Var("proposals")
+          , Assign(
+              Var("proposals")
+            , App(
+                CallT(
+                  SVar("analysis-propose-completions")
+                , []
+                , [RootApp(CallNoArgs(SVar("language"))), Var("project-path")]
+                )
+              , Var("ast")
+              )
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-format"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+          , [ WithClause(
+                Seq(
+                  Assign(
+                    Var("ext")
+                  , App(CallNoArgs(SVar("get-extension")), Var("path"))
+                  )
+                , Seq(
+                    Assign(
+                      Var("filename")
+                    , App(
+                        CallT(
+                          SVar("guarantee-extension")
+                        , []
+                        , [ NoAnnoList(
+                              StringQuotation1(
+                                "                                          "
+                              , [QStr("pp."), StringEscape1("                                             ", Var("ext"))]
+                              )
+                            )
+                          ]
+                        )
+                      , Var("path")
+                      )
+                    )
+                  , Assign(
+                      Var("result")
+                    , App(CallNoArgs(SVar("pp-debug")), Var("selected"))
+                    )
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "debug-show-aterm"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+          , [ WithClause(
+                Seq(
+                  Assign(
+                    Var("filename")
+                  , App(
+                      CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"aterm\""))])
+                    , Var("path")
+                    )
+                  )
+                , Assign(Var("result"), Var("selected"))
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-show-analyzed"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+          , [ WithClause(
+                Seq(
+                  Assign(
+                    Var("filename")
+                  , App(
+                      CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"analyzed.aterm\""))])
+                    , Var("path")
+                    )
+                  )
+                , Assign(Var("result"), Var("ast"))
+                )
+              )
+            ]
+          )
+        )
+      , SDefNoArgs(
+          "debug-index-project"
+        , CallT(
+            SVar("analysis-debug-index-project")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-index-project-resolve"
+        , CallT(
+            SVar("analysis-debug-index-project-resolve")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-index-partition"
+        , CallT(
+            SVar("analysis-debug-index-partition")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-task-project"
+        , CallT(
+            SVar("analysis-debug-task-project")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-task-partition"
+        , CallT(
+            SVar("analysis-debug-task-partition")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-task-selection"
+        , CallT(
+            SVar("analysis-debug-task-selection")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-index-partition-resolve"
+        , CallT(
+            SVar("analysis-debug-index-partition-resolve")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-project"
+        , CallT(
+            SVar("analysis-debug-project")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-partition"
+        , CallT(
+            SVar("analysis-debug-partition")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      , SDefNoArgs(
+          "debug-reanalyze"
+        , CallT(
+            SVar("analysis-debug-reanalyze")
+          , []
+          , [RootApp(CallNoArgs(SVar("language")))]
+          )
+        )
+      ]
+    )
+  ]
+)

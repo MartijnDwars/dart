@@ -1,0 +1,44 @@
+module lib/sdf/pp/minimal-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  libstratego-sglr
+  trans/pp
+  lib/sdf/signatures/minimal-sig
+
+
+strategies
+  prettyprint-SDF-start-symbols =
+    prettyprint-Start
+
+
+strategies
+  prettyprint-ID =
+    ![S(<is-string>)]
+
+  prettyprint-example =
+    prettyprint-ID
+
+  prettyprint-ID :
+    amb([h|hs]) -> <prettyprint-ID> h
+
+
+strategies
+  prettyprint-example =
+    prettyprint-Exp
+
+  prettyprint-Exp :
+    t1__ -> [ H(
+                [SOpt(HS(), "0")]
+              , [t1__', S("();")]
+              )
+            ]
+    where not(is-Exp)
+    where t1__' := <pp-one-Z(prettyprint-ID)> t1__
+
+  is-Exp =
+    fail
+
+  prettyprint-Exp :
+    amb([h|hs]) -> <prettyprint-Exp> h

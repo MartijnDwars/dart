@@ -1,0 +1,11 @@
+module lib/sdf/completions/constants/IntCon-esv
+
+imports
+  lib/sdf/completions/layout/Whitespace-esv
+  lib/sdf/completions/constants/NatCon-esv
+
+completions
+  completion template IntCon : "+NatCon" =
+    "+" <NatCon:NatCon>  
+  completion template IntCon : "-NatCon" =
+    "-" <NatCon:NatCon>  

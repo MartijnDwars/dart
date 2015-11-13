@@ -1,0 +1,11 @@
+module lib/sdf/completions/constants/RealCon-esv
+
+imports
+  lib/sdf/completions/constants/IntCon-esv
+  lib/sdf/completions/constants/NatCon-esv
+
+completions
+  completion template OptExp : "eIntCon" =
+    "e" <IntCon:IntCon>  
+  completion template RealCon : "IntCon.NatConOptExp" =
+    <IntCon:IntCon> "." <NatCon:NatCon> <OptExp:OptExp>  

@@ -1,0 +1,57 @@
+module lib/sdf/pp/constants/IntCon-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  lib/sdf/signatures/constants/IntCon-sig
+
+
+imports
+  lib/sdf/signatures/layout/Whitespace-sig
+  lib/sdf/signatures/constants/NatCon-sig
+
+
+imports
+  lib/sdf/pp/layout/Whitespace-pp
+  lib/sdf/pp/constants/NatCon-pp
+
+
+strategies
+  prettyprint-example =
+    prettyprint-IntCon
+
+  prettyprint-IntCon :
+    Natural(t1__) -> [ H(
+                         [SOpt(HS(), "0")]
+                       , [t1__']
+                       )
+                     ]
+    with t1__' := <pp-one-Z(prettyprint-NatCon)> t1__
+
+  is-IntCon =
+    ?Natural(_)
+
+  prettyprint-IntCon :
+    Positive(t1__) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("+"), t1__']
+                        )
+                      ]
+    with t1__' := <pp-one-Z(prettyprint-NatCon)> t1__
+
+  is-IntCon =
+    ?Positive(_)
+
+  prettyprint-IntCon :
+    Negative(t1__) -> [ H(
+                          [SOpt(HS(), "0")]
+                        , [S("-"), t1__']
+                        )
+                      ]
+    with t1__' := <pp-one-Z(prettyprint-NatCon)> t1__
+
+  is-IntCon =
+    ?Negative(_)
+
+  is-IntCon =
+    fail

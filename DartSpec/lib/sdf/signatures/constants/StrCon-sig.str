@@ -1,0 +1,6 @@
+module lib/sdf/signatures/constants/StrCon-sig
+
+signature
+  constructors
+     : String -> StrChar
+     : String -> StrCon

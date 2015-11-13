@@ -1,0 +1,20 @@
+module lib/sdf/signatures/basic/Basic-sig
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/sorts/Sorts-sig
+  lib/sdf/signatures/TemplateLang-sig
+
+
+signature
+  constructors
+    Lexical                : Productions -> Grammar
+    Contextfree            : Productions -> Grammar
+    Variables              : Productions -> Grammar
+    VariablesProductive    : List(SdfProduction) -> Grammar
+    LexVariables           : Productions -> Grammar
+    LexVariablesProductive : List(SdfProduction) -> Grammar
+    Cf                     : Symbol -> Symbol
+    Lex                    : Symbol -> Symbol
+    Varsym                 : Symbol -> Symbol
+    Layout                 : Symbol

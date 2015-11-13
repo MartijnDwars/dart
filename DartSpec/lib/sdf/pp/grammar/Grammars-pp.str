@@ -1,0 +1,14 @@
+module lib/sdf/pp/grammar/Grammars-pp
+
+imports
+  libstratego-gpp
+  runtime/tmpl/pp
+  lib/sdf/signatures/grammar/Grammars-sig
+
+
+imports
+  lib/sdf/signatures/layout/Comments-sig
+
+
+imports
+  lib/sdf/pp/layout/Comments-pp

@@ -1,0 +1,8 @@
+module lib/sdf/completions/symbols/Symbols-esv
+
+imports
+  lib/sdf/completions/layout/Comments-esv
+
+completions
+  completion template Symbol : "(Symbol)" =
+    "(" <Symbol:Symbol> ")"  

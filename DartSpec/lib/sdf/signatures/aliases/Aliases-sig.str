@@ -1,0 +1,12 @@
+module lib/sdf/signatures/aliases/Aliases-sig
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/symbols/Symbols-sig
+
+
+signature
+  constructors
+    Aliases : Aliases -> Grammar
+    Alias   : Symbol * Symbol -> Alias
+            : List(Alias) -> Aliases

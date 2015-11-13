@@ -1,0 +1,35 @@
+module lib/sdf/completions/regular/Regular-esv
+
+imports
+  lib/sdf/completions/kernel/Kernel-esv
+  lib/sdf/completions/constants/IntCon-esv
+  lib/sdf/completions/symbols/Symbols-esv
+  lib/sdf/completions/constants/StrCon-esv
+  lib/sdf/completions/labels/Labels-esv
+  lib/sdf/completions/sorts/Sorts-esv
+
+completions
+  completion template Symbol : "(Symbol Symbol)" =
+    "(" <Symbol:Symbol> " " <Symbol:Symbol> ")"  
+  completion template Symbol : "Symbol?" =
+    <Symbol:Symbol> "?"  
+  completion template Symbol : "Symbol+" =
+    <Symbol:Symbol> "+"  
+  completion template Symbol : "Symbol*" =
+    <Symbol:Symbol> "*"  
+  completion template Symbol : "{Symbol Separator}+" =
+    "{" <Symbol:Symbol> " " <Separator:Separator> "}+"  
+  completion template Symbol : "{Symbol Separator}*" =
+    "{" <Symbol:Symbol> " " <Separator:Separator> "}*"  
+  completion template SortSymbol : "Sort?" =
+    <Sort:Sort> "?"  
+  completion template SortSymbol : "Sort+" =
+    <Sort:Sort> "+"  
+  completion template SortSymbol : "Sort*" =
+    <Sort:Sort> "*"  
+  completion template SortSymbol : "{Sort Separator}+" =
+    "{" <Sort:Sort> " " <Separator:Separator> "}+"  
+  completion template SortSymbol : "{Sort Separator}*" =
+    "{" <Sort:Sort> " " <Separator:Separator> "}*"  
+  completion template Symbol : "Symbol | Symbol" =
+    <Symbol:Symbol> " | " <Symbol:Symbol>  

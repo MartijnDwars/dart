@@ -1,0 +1,10 @@
+module lib/sdf/completions/labels/Labels-esv
+
+imports
+  lib/sdf/completions/kernel/Kernel-esv
+  lib/sdf/completions/constants/StrCon-esv
+  lib/sdf/completions/constants/IdentifierCon-esv
+
+completions
+  completion template Symbol : "Label:Symbol" =
+    <Label:Label> ":" <Symbol:Symbol>  

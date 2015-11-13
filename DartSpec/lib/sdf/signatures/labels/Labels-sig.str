@@ -1,0 +1,13 @@
+module lib/sdf/signatures/labels/Labels-sig
+
+imports
+  lib/sdf/signatures/kernel/Kernel-sig
+  lib/sdf/signatures/constants/StrCon-sig
+  lib/sdf/signatures/constants/IdentifierCon-sig
+
+
+signature
+  constructors
+    Quoted   : StrCon -> Label
+    Unquoted : IdCon -> Label
+    Label    : Label * Symbol -> Symbol
