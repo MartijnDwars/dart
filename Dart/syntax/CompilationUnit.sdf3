@@ -26,7 +26,7 @@ context-free syntax
     <{TopDefinition "\n\n"}*>>
   
   // Library name
-  LibraryName.LibraryName = <<Metadata> library <ID>;>
+  LibraryName.LibraryName = <<Metadata> library <{ID "."}+>;>
   
   // Header
   Header = Import
