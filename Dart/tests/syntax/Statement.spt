@@ -3,6 +3,14 @@ module Statement
 language Dart
 start symbol Statement
 
+test empty block [[
+  { }
+]] parse succeeds
+
+test non-empty block [[
+  { var x; var y; var z; }
+]] parse succeeds
+
 test empty expression statement [[
   ;
 ]] parse succeeds

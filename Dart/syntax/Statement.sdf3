@@ -10,7 +10,7 @@ imports
 context-free syntax
   
   Statement.Block = <{
-    <Statement+>
+    <Statement*>
   }>
   
   Statement.Nop = <;>
