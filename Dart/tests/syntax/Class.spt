@@ -123,3 +123,11 @@ test constructor with two initializers [[
 	  Point(x, y) : x = 1, y = 2;
 	}
 ]] parse succeeds
+
+test x [[
+	class Bunny {
+	  Bunny() {
+	    print('in bunny');
+	  }
+	}
+]] parse succeeds

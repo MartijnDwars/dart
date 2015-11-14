@@ -104,6 +104,10 @@ lexical syntax // Reserved words
 lexical syntax // Built-in identifiers (NOTE: non-standard Dart)
 
   ID = "library" {reject}
+  
+lexical syntax // Limited reserved words (NOTE: non-standard Dart)
+
+  ID = "yield" {reject}
 
 lexical syntax // Dart keywords
   

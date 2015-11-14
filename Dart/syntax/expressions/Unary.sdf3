@@ -1,7 +1,8 @@
 module expressions/Unary
 
 imports
-
+  
+  Arguments
   Common
   expressions/AssignableExpression
 
@@ -10,17 +11,17 @@ context-free syntax
   // Unary postfix
   // Expression.Selector = Expression "." ID
   // Expression.ConditionalSelector = Expression "?." ID
-  Expression.PostInc = AssignableExpression "++"
-  Expression.PostDec = AssignableExpression "--"
-  Expression.Index = Expression "[" IndexExpression "]"
-  Expression.Call = Expression "(" Expression ")" // TODO: list of arguments (see spec?) TODO: deal with precedence like in Expression.Index?
+  Expression.PostInc = <<AssignableExpression>++>
+  Expression.PostDec = <<AssignableExpression>-->
+  Expression.Index = <<Expression>[<IndexExpression>]>
+  Expression.Call = <<Expression>(<Arguments>)> // TODO: deal with precedence like in Expression.Index?
   
   // Unary prefix
-  Expression.Min = "-" Expression
-  Expression.Neg = "!" Expression
-  Expression.BitNot = "~" Expression
-  Expression.PreInc = "++" AssignableExpression
-  Expression.PreDec = "--" AssignableExpression
+  Expression.Min = <-<Expression>>
+  Expression.Neg = <!<Expression>>
+  Expression.BitNot = <~<Expression>>
+  Expression.PreInc = <++<AssignableExpression>>
+  Expression.PreDec = <--<AssignableExpression>>
   
   // Indirection to fix precedence for Expression.Index
   IndexExpression = Expression
