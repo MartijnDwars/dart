@@ -38,3 +38,19 @@ test conditional right assoc [[
 ]] parse to [[
   1 ? 2 : (3 ? 2 : 3)
 ]]
+
+test property access [[
+  x.y
+]] parse succeeds
+
+test property access left assoc [[
+  x.y.z
+]] parse to [[
+  (x.y).z
+]]
+
+test null-safe property access [[
+  x?.y?.z
+]] parse to [[
+  (x?.y)?.z
+]]

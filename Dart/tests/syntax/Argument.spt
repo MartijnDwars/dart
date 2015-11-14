@@ -1,0 +1,24 @@
+module Argument
+
+language Dart
+start symbol Arguments
+
+test no arguments [[
+  
+]] parse succeeds
+
+test single expression argument [[
+  1
+]] parse succeeds
+
+test single named argument [[
+  age: 1
+]] parse succeeds
+
+test multiple arguments (expression/named) [[
+  1, 2, 3, age: 22, year: 2015
+]] parse succeeds
+
+test named before expression arguments [[
+  age: 22, year: 2015, 1, 2, 3
+]] parse fails

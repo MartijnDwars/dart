@@ -8,8 +8,8 @@ imports
 context-free syntax
 
   // Unary postfix
-  Expression.Property = Expression "." Expression 
-  Expression.ConditionalProperty = Expression "?." Expression
+  // Expression.Selector = Expression "." ID
+  // Expression.ConditionalSelector = Expression "?." ID
   Expression.PostInc = AssignableExpression "++"
   Expression.PostDec = AssignableExpression "--"
   Expression.Index = Expression "[" IndexExpression "]"

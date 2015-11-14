@@ -2,17 +2,20 @@ module Dart
 
 imports
 	
+	Arguments
 	Class
 	Common
+	CompilationUnit
+	lexical/Operator
 	Enum
+	Export
 	Expression
   Function
   Import
-  Export
+  Metadata
+  Parameters
 	Statement
 	Variable
-  Metadata
-  CompilationUnit
   
 context-free start-symbols
   
@@ -20,15 +23,18 @@ context-free start-symbols
   ID
   Qualified
   STRING
-  Enum
-  Expression
-  Function
-  Import
-  Statement
-  Metadata
-  VariableDeclaration
+  Arguments
   Class
   CompilationUnit
+  Enum
+  Expression
+  Parameters
+  Function
+  Import
+  Metadata
+  Operator
+  Statement
+  VariableDeclaration
   
   // Real start symbol
   Start

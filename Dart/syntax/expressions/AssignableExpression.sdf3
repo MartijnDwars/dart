@@ -8,13 +8,15 @@ imports
   
 context-free syntax
 
-  // TODO: should also allow arguments (see spec)
-  AssignableExpression = <<Primary> <AssignableSelector+>>
-  AssignableExpression = <super <UnconditionalAssignableSelector>>
-  AssignableExpression = ID
+  LiftPrimary = AssignableExpression
+  LiftPrimary = Primary
   
-  UnconditionalAssignableSelector = <[<Expression>]>
-  UnconditionalAssignableSelector = <.<ID>>
+  // TODO: these 3 should also allow arguments (see spec)
+  AssignableExpression.Field = <<LiftPrimary>.<ID>>
+  AssignableExpression.Index = <<LiftPrimary>[<Expression>]>
+  AssignableExpression.ConditionalField = <<LiftPrimary>?.<ID>>
   
-  AssignableSelector = UnconditionalAssignableSelector
-  AssignableSelector = <?.<ID>>
+  AssignableExpression.SuperField = <super.<ID>>
+  AssignableExpression.SuperIndex = <super[<Expression>]>
+  
+  AssignableExpression.VarRef = ID

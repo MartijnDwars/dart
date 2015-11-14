@@ -3,11 +3,11 @@ module Metadata
 imports
 
   Common
-  Argument
+  Arguments
   
 context-free syntax
   
   Metadata.Metadata = <<{Annotation "\n"}*>>
   
   Annotation.Annotation = <@<MoreQualified>>
-  Annotation.ArgumentAnnotation = <@<MoreQualified>(<{Argument ", "}*>)>
+  Annotation.ArgumentAnnotation = <@<MoreQualified>(<Arguments>)>

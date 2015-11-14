@@ -5,8 +5,10 @@ imports
   Common
   Type
   Function
-  Argument
+  Arguments
+  Expression
   expressions/Literals
+  expressions/AssignableExpression
   
 context-free syntax
 
@@ -18,16 +20,18 @@ context-free syntax
   
   Primary = Literal
   
-  Primary.NewObject = <new <Type>(<{Argument ", "}*>)> // TODO: Enforce order of arguments
+  Primary.NewObject = <new <Type>(<Arguments>)>
   
-  Primary.NewObject = <new <Type>.<ID>(<{Argument ", "}*>)> // TODO: Enforce order of arguments
+  Primary.NewObject = <new <Type>.<ID>(<Arguments>)>
   
   Primary.Closurization = <new <Type>#>
   
   Primary.Closurization = <new <Type>#.<ID>>
   
-  Primary.ConstObject = <const <Type>(<{Argument ", "}*>)> // // TODO: Enforce order of arguments
+  Primary.ConstObject = <const <Type>(<Arguments>)>
   
-  Primary.ConstObject = <const <Type>.<ID>(<{Argument ", "}*>)> // // TODO: Enforce order of arguments
+  Primary.ConstObject = <const <Type>.<ID>(<Arguments>)>
   
-  // TODO: Primary.Xyz = <super <UnconditionalAssignableSelector>>
+  Primary.SuperIndex = <super[<Expression>]>
+  
+  Primary.SuperField = <super.<ID>>

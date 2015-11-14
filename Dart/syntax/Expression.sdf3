@@ -2,9 +2,6 @@ module Expression
 
 imports
 
-  Common
-  Type
-  Argument
   Variable
   expressions/Unary
   expressions/Multiplicative
@@ -28,13 +25,12 @@ context-free syntax
   
   Expression = Primary
   
-  // TODO: In the spec this is actually "Primary = '(' Expression ')'". What is the influence of this difference?
   Expression = <(<Expression>)> {bracket}
   
 context-free priorities
   
   // Unary postfix
-  {Expression.Property Expression.ConditionalProperty Expression.PostInc Expression.PostDec Expression.Index Expression.Call}
+  {/*Expression.Property Expression.ConditionalProperty*/ Expression.PostInc Expression.PostDec Expression.Index Expression.Call}
   // Unary prefix
 > {Expression.Min Expression.Neg Expression.BitNot Expression.PreInc Expression.PreDec}
   // Multiplicative

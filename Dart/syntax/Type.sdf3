@@ -3,16 +3,24 @@ module Type
 imports
 
   Common
+  Metadata
   Type
   
 context-free syntax
   
+  // Type
   Type.VoidType = VOID
   Type.Type = <<Qualified>>
   Type.Generic = <<Qualified> <TypeArguments>>
   
   TypeArguments.TypeArguments = [<[{Type ","}+]>]
-
+  
+  // Type parameters
+  TypeParameters.TypeParameters = [<[{TypeParameter ", "}+]>]
+  
+  TypeParameter.TypeParameter = <<Metadata> <ID>>
+  TypeParameter.BoundedTypeParameter = <<Metadata> <ID> extends <Type>>
+  
 template options
 
   keyword -/- [a-zA-Z]

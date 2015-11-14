@@ -1,7 +1,20 @@
-library x;
+class Bunny {
+  Bunny() {
+    print('in bunny');
+  }
+}
 
-import 'dart:math';
+// class FluffyBunny extends Bunny {
+//   FluffyBunny() {
+//     print('in fluffy');
+//   }
+// }
 
-var x;
+/*
+main() {
+  var floppy = new FluffyBunny();
 
-var y;
+  // in bunny
+  // in fluffy
+}
+*/

@@ -10,11 +10,27 @@ imports
   Parameters
   
 context-free syntax
-
-  Function.Function = <<Metadata> <Type?> <ID><FormalParameterList> {
+  
+  // TODO: Replace this by the rules below
+  
+  Function.Function = <<Metadata> <Type?> <ID><Parameters> {
     <Statement*>
   }>
   
-  Function.ShortFunction = <<Metadata> <Type?> <ID><FormalParameterList> =\>
+  Function.ShortFunction = <<Metadata> <Type?> <ID><Parameters> =\>
     <Expression>;>
   
+  // ---
+  
+  FunctionSignature.FunctionSignature = <<Metadata> <Type?> <ID><Parameters>>
+  
+  FunctionBody.FunctionBody = <<FunctionModifier?> {
+    <Statement*>
+  }>
+  
+  FunctionBody.ShortFunctionBody = <<ASYNC?> =\>
+    <Expression>;>
+  
+  FunctionModifier.Async = ASYNC
+  FunctionModifier.Asyncs = ASYNC '*'
+  FunctionModifier.Syncs = SYNC '*'

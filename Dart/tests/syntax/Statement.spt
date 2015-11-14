@@ -102,6 +102,10 @@ test yield [[
   yield x;
 ]] parse succeeds
 
+test assert [[
+  assert (x);
+]] parse succeeds
+
 test invoke with whitespace [[
   print ( ) ;
 ]] parse succeeds

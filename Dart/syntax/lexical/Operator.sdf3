@@ -1,0 +1,36 @@
+module lexical/Operator
+
+lexical syntax
+
+  // Special?
+  Operator = "~"
+  Operator = "[]"
+  Operator = "[]="
+
+  // Multiplicative
+  Operator = "*"
+  Operator = "/"
+  Operator = "%"
+  Operator = "~/"
+
+  // Additive
+  Operator = "+"
+  Operator = "-"
+  
+  // Shift
+  Operator = "<<"
+  Operator = ">>"
+  
+  // Relational
+  Operator = ">="
+  Operator = ">"
+  Operator = "<="
+  Operator = "<"
+
+  // Equality
+  Operator = "=="
+  
+  // Bitwise
+  Operator = "&"
+  Operator = "^"
+  Operator = ";"

@@ -5,7 +5,7 @@ imports
   Common
   Expression
   Variable
-  Argument
+  Arguments
 
 context-free syntax
   
@@ -13,7 +13,9 @@ context-free syntax
     <Statement+>
   }>
   
-  Statement.Expression = <<Expression?>;>
+  Statement.Nop = <;>
+  
+  Statement.Expression = <<Expression>;>
   
   Statement.If = <if (<Expression>)
     <Statement>>
@@ -53,7 +55,9 @@ context-free syntax
   
   Statement.Yield = <yield <Expression>;>
   
-  Statement.Invoke = <<ID>(<{Argument ", "}*>);>
+  Statement.Assert = <assert (<Expression>);> // TODO: This should be 'ConditionalExpression', what is the influence of our change?
+  
+  Statement.Call = <<ID>(<Arguments>);>
 
 template options
 

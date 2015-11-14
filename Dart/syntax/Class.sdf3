@@ -3,6 +3,7 @@ module Class
 imports
 
   Common
+  lexical/Operator
   Metadata
   Type
   Expression
@@ -10,11 +11,12 @@ imports
   Statement
   Parameters
   Function
+  Arguments
   
 context-free syntax // Class
   
   Class.Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Parent?> <Mixins?> <Interfaces?> {
-    <{ClassMember "\n"}*>
+    <{ClassMemberDefinition "\n"}*>
   }>
   
   Class.MixinApplication = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> =
@@ -22,15 +24,58 @@ context-free syntax // Class
   
   Parent.Parent = <extends <Type>>
   
-  TypeParameters.TypeParameters = [<[{TypeParameter ", "}+]>]
-  TypeParameter.TypeParameter = <<Metadata> <ID> <Parent?>>
-  
   Mixins.Mixins = <with <{Type ", "}+>>
   
   Interfaces.Interfaces = <implements <{Type ", "}+>>
   
-context-free syntax // Class members
+context-free syntax // Class member definitions
+  
+	ClassMemberDefinition.Method = <<MethodSignature> <FunctionBody>>
+  ClassMemberDefinition = <<ConstantConstructorSignature> <RedirectionOrInitializers?>;>
+  ClassMemberDefinition = <<ConstructorSignature> <RedirectionOrInitializers?>;>
+  ClassMemberDefinition = <<EXTERNAL?> <Type?> operator <Operator> <Parameters>;>
+  ClassMemberDefinition = <static <FinalOrConst> <Type?> <{StaticFinalDeclaration ", "}+>;>
+  ClassMemberDefinition = <final <Type?> <{InitializedIdentifier ", "}+>;>
+  ClassMemberDefinition = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
+  
+	MethodSignature = ConstructorSignature // <--
+	MethodSignature = <<ConstructorSignature> : <{SuperCallOrFieldInitializer ", "}+>>
+	MethodSignature = <factory <ID><Parameters>>
+	MethodSignature = <factory <ID>.<ID><Parameters>>
+	MethodSignature = <<STATIC?> <FunctionSignature>> // <--
+	//MethodSignature = <<STATIC?> <GetterSignature>>
+	//MethodSignature = <<STATIC?> <SetterSignature>>
+	MethodSignature = <<Type?> operator <Operator> <Parameters>>
+  
 
+  
+  ConstantConstructorSignature = <const <Qualified> <Parameters>>
+  
+  ConstructorSignature = <<ID><Parameters>>
+  ConstructorSignature = <<ID>.<ID><Parameters>>
+  
+  RedirectionOrInitializers.Redirection = <: this<Arguments>>
+  RedirectionOrInitializers.RedirectionMethod = <: this.<ID><Arguments>>
+  RedirectionOrInitializers.Initializer = <: <{SuperCallOrFieldInitializer ", "}+>>
+  
+	// TODO: <Expression> should be <ConditionalExpression> and there should be <CascadeSelection*> after <Expression>
+	SuperCallOrFieldInitializer = <super<Arguments>>
+	SuperCallOrFieldInitializer = <super.<ID><Arguments>>
+	SuperCallOrFieldInitializer = <<ID> = <Expression>>
+	SuperCallOrFieldInitializer = <this.<ID> = <Expression>>
+
+  StaticFinalDeclaration = <<ID> = <Expression>>
+  
+	InitializedIdentifier = <<ID> = <Expression>>
+	InitializedIdentifier = <<ID>>
+	
+	FinalOrConst = "final"
+	FinalOrConst = "const"
+	
+	VarOrType = "var"
+	VarOrType = Type
+
+  /*
   ClassMember.FinalFields = <final <Type?> <{InitializedIdentifier ", "}+>;>
   InitializedIdentifier = <<ID>>
   InitializedIdentifier = <<ID> = <Expression>>
@@ -41,24 +86,35 @@ context-free syntax // Class members
   ClassMember.Fields = <<STATIC?> var <{InitializedIdentifier ", "}+>;>
   ClassMember.Fields = <<STATIC?> <Type> <{InitializedIdentifier ", "}+>;>
   
-  ClassMember.Constructor = <<CONST?> <Qualified> <FormalParameterList>;>
+  ClassMember = Declaration
+  Declaration.Constructor = <<CONST?> <Qualified> <FormalParameterList> <Initializers?>;>
   
   // Prefer constructor to disambiguate with regular function members
-  ClassMember.Constructor = <<Qualified> <FormalParameterList> {
+  ClassMember.Constructor = <<Qualified> <FormalParameterList> <Initializers?> {
   	<{Statement "\n"}*>
   }> {prefer}
+  
+  Initializers.Initializers = <: <{Initializer ", "}+>>
+  
+  // TODO: <Expression> should be <ConditionalExpression> and there should be <CascadeSelection*> after <Expression>
+  Initializer.SuperCall = <super(<Arguments>)>
+  Initializer.SuperMethodCall = <super.<ID>(<Arguments>)>
+  Initializer.Field = <<ID> = <Expression>>
+  Initializer.ThisField = <this.<ID> = <Expression>>
   
   ClassMember.StaticFunction = <static <Function>>
   
   ClassMember = Function
+  */
   
 context-free syntax // Rejections
   
   // Reject classes that have a mixin without parent
   Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
-    <{ClassMember "\n"}*>
+    <{ClassMemberDefinition "\n"}*>
   }> {reject}
   
 template options
 
   keyword -/- [a-zA-Z]
+  tokenize: ".("

@@ -111,3 +111,15 @@ test class with constant constructor with body [[
     const Point() {}
   }
 ]] parse fails
+
+test constructor with empty list of initializers [[
+  class Point {
+    Point(x, y) : ;
+  }
+]] parse fails
+
+test constructor with two initializers [[
+	class Point {
+	  Point(x, y) : x = 1, y = 2;
+	}
+]] parse succeeds

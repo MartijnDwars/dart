@@ -1,10 +1,36 @@
 Program(
   [ Library(
-      Some(LibraryName(Metadata([]), "x"))
-    , [Import("'dart:math'", [])]
+      None()
     , []
-    , [ DeclarationStmt(DynamicVariableDeclaration(Metadata([]), [Variable("x")]))
-      , DeclarationStmt(DynamicVariableDeclaration(Metadata([]), [Variable("y")]))
+    , []
+    , [ Class(
+          Metadata([])
+        , None()
+        , "Bunny"
+        , None()
+        , None()
+        , None()
+        , None()
+        , [ Method(
+              amb(
+                [ ("Bunny", [])
+                , (None(), FunctionSignature(Metadata([]), None(), "Bunny", []))
+                ]
+              )
+            , FunctionBody(
+                amb(
+                  [None(), Some(amb([Syncs([]), Asyncs([])]))]
+                )
+              , [ amb(
+                    [ Call("print", ExpArguments([String("'in bunny'")]))
+                    , Expression(Call(VarRef("print"), String("'in bunny'")))
+                    ]
+                  )
+                ]
+              )
+            )
+          ]
+        )
       ]
     )
   ]

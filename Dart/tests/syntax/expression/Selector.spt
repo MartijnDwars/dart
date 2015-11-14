@@ -1,0 +1,32 @@
+module Selector
+
+language Dart
+start symbol Expression
+
+test assignable expression [[
+  x.y
+]] parse succeeds
+
+test assignable expression with arguments [[
+  x(1)
+]] parse succeeds
+
+test assignable expression with arguments and assignable selector [[
+  x(1).y
+]] parse succeeds
+
+test super with conditional assignable selector [[
+  super?.x
+]] parse fails
+
+test super with conditional assignable selector [[
+  super[x]
+]] parse succeeds
+
+test argument and selector twice [[
+  x(1).y(1).z
+]] parse succeeds
+
+test multiple arguments and assignable selector [[
+  x(1)(1)(1).y(1)
+]] parse succeeds

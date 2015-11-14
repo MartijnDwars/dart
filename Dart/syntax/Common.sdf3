@@ -111,4 +111,7 @@ lexical syntax // Dart keywords
   STATIC = "static"
   ABSTRACT = "abstract"
   CONST = "const"
+  ASYNC = "async"
+  SYNC = "sync"
   URI = STRING
+  EXTERNAL = "external"
