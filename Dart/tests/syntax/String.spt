@@ -1,0 +1,140 @@
+module String
+
+language Dart
+start symbol String
+
+test single quoted string [[
+  'abc'
+]] parse succeeds
+
+test double quoted string [[
+  "abc"
+]] parse succeeds
+
+test single quoted string with \ [[
+  'abc\def'
+]] parse succeeds
+
+test double quoted string with \ [[
+	"abc\def"
+]]
+
+test single quoted string with only \ [[
+  '\'
+]] parse fails
+
+test double quoted string with only \ [[
+  "\"
+]] parse fails
+
+test string interpolation [[
+  'Hello, $world!'
+]] parse succeeds
+
+// Adjacent (concatenated) strings
+
+test single string joining [[
+  'This is a'
+  'very long message'
+]] parse succeeds
+
+test double string joining [[
+  "This is a"
+  "very long message"
+]] parse succeeds
+
+// Single quoted multiline strings
+
+test single quoted multiline string [[
+	'''
+	You can create
+	multi-line strings like this one.
+	'''
+]] parse succeeds
+
+test single quoted multiline string [[
+  '''
+  You can safely use ' and '' in these strings
+  '''
+]] parse succeeds
+
+test single quoted multiline string with $ [[
+  '''
+  This $ should not work
+  '''
+]] parse fails
+
+test single quoted multiline string with ''' [[
+  '''
+  This ''' should not work
+  '''
+]] parse fails
+
+test single quoted \ may not be followed by ' [[
+  '''\'''
+]] parse fails
+
+test single quoted multiline string with \ [[
+  '''
+  This \ should not work
+  '''
+]] parse succeeds
+
+test single quoted empty multiline string [[
+	''''''
+]] parse succeeds
+
+test single quoted multi-line string that is not multi-line [[
+  '''Multi-line may just be one line'''
+]] parse succeeds
+
+// Double quoted multiline strings
+
+test double quoted multiline string [[
+  """
+  You can create
+  multi-line strings like this one.
+  """
+]] parse succeeds
+
+test double quoted multiline string [[
+  """
+  You can safely use " and "" in these strings
+  """
+]] parse succeeds
+
+test double quoted multiline string with $ [[
+  """
+  This $ should not work
+  """
+]] parse fails
+
+test double quoted multiline string with triple double quotes [[
+  """
+  This """ should not work
+  """
+]] parse fails
+
+test double quoted \ may not be followed by ' [[
+  """\"""
+]] parse fails
+
+test double quoted multiline string with \ [[
+  """
+  This \ should not work
+  """
+]] parse succeeds
+
+test double quoted empty multiline string [[
+  """"""
+]] parse 
+
+test double quoted multi-line string that is not multi-line [[
+  '''Multi-line may just be one line'''
+]] parse succeeds
+
+// Raw strings
+
+test raw string [[
+  r"abc"
+]] parse succeeds

@@ -15,6 +15,7 @@ imports
   Metadata
   Parameters
 	Statement
+	String
 	Variable
   
 context-free start-symbols
@@ -22,7 +23,6 @@ context-free start-symbols
   // For testing
   ID
   Qualified
-  STRING
   Arguments
   Class
   CompilationUnit
@@ -34,6 +34,7 @@ context-free start-symbols
   Metadata
   Operator
   Statement
+  String
   VariableDeclaration
   
   // Real start symbol

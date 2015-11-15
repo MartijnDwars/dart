@@ -17,19 +17,7 @@ lexical syntax
 	MoreQualified    = ID
 	MoreQualified    = ID '.' ID
 	MoreQualified    = ID '.' ID '.' ID
-	
-	STRING           = SingleString | DoubleString
-	SingleString     = "'" SingleStringChar* "'"
-  SingleStringChar = ~[\'\n]
-  SingleStringChar = "\\'"
-  SingleStringChar = SingleBackSlashChar
-  SingleBackSlashChar = "\\"
-  DoubleString     = "\"" DoubleStringChar* "\""
-	DoubleStringChar = ~[\"\n] 
-	DoubleStringChar = "\\\"" 
-	DoubleStringChar = DoubleBackSlashChar
-	DoubleBackSlashChar = "\\"
-	 
+  
 	LAYOUT         = [\ \t\n\r] 
 	CommentChar    = [\*] 
 	LAYOUT         = "/*" InsideComment* "*/" 
@@ -38,7 +26,7 @@ lexical syntax
 	LAYOUT         = "//" ~[\n\r]* NewLineEOF 
 	NewLineEOF     = [\n\r] 
 	NewLineEOF     = EOF 
-	EOF            =  
+	EOF            = 
 
 lexical restrictions
 
@@ -51,11 +39,6 @@ lexical restrictions
 	// EOF may not be followed by any char
 	
 	EOF           -/- ~[]
-	
-	// Backslash chars in strings may not be followed by " or '
-	
-	DoubleBackSlashChar -/- [\"]
-	SingleBackSlashChar -/- [\']
 
 context-free restrictions
 
@@ -117,5 +100,4 @@ lexical syntax // Dart keywords
   CONST = "const"
   ASYNC = "async"
   SYNC = "sync"
-  URI = STRING
   EXTERNAL = "external"

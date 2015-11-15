@@ -5,6 +5,7 @@ imports
   Common
   Type
   Expression
+  String
   
 context-free syntax
 
@@ -18,7 +19,7 @@ context-free syntax
   
   Literal.HexNumber = HEX-NUMBER
   
-  Literal.String = STRING
+  Literal = String
   
   Literal.Symbol = <#<{ID "."}+>>
   

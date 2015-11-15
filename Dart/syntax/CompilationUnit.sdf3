@@ -9,6 +9,7 @@ imports
   Class
   Enum
   Function
+  String
   Variable
 
 context-free syntax
@@ -33,7 +34,7 @@ context-free syntax
   Header = Export
   
   // Part
-  PartDirective.PartDirective = <<Metadata> part <URI>;>
+  PartDirective.PartDirective = <<Metadata> part <String>;>
   
   // Top level definition
   TopDefinition = Class

@@ -3,12 +3,13 @@ module Import
 imports
 
   Common
-
+  String
+  
 context-free syntax
   
-  Import.Import = <import <URI> <Combinator*>;>
-  Import.AliasedImport = <import <URI> as <ID> <Combinator*>;>
-  Import.DeferredImport = <import <URI> deferred as <ID> <Combinator*>;>
+  Import.Import = <import <String> <Combinator*>;>
+  Import.AliasedImport = <import <String> as <ID> <Combinator*>;>
+  Import.DeferredImport = <import <String> deferred as <ID> <Combinator*>;>
   
   Combinator.Show = <show <{ID ","}+>>
   Combinator.Hide = <hide <{ID ","}+>>
