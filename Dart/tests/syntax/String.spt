@@ -135,6 +135,26 @@ test double quoted multi-line string that is not multi-line [[
 
 // Raw strings
 
-test raw string [[
+test raw double quote string [[
   r"abc"
 ]] parse succeeds
+
+test raw double quote string no quote [[
+  r"ab"c"
+]] parse fails
+
+test raw double quote string escaping not allowed [[
+  r"ab\"c"
+]] parse fails
+
+test raw single quote string [[
+  r'abc'
+]] parse succeeds
+
+test raw single quote string no quote [[
+  r'ab'c'
+]] parse fails
+
+test raw single quote string escaping not allowed [[
+  r'ab\'c'
+]] parse fails

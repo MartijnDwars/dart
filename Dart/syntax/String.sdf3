@@ -1,0 +1,67 @@
+module String
+
+imports
+
+  Common
+  
+lexical syntax
+
+  STRING = "'" SingleStringChar* "'"
+  STRING = "\"" DoubleStringChar* "\""
+  STRING = "'''" SingleMultiStringChar* "'''"
+  STRING = "\"\"\"" DoubleMultiStringChar* "\"\"\""
+  STRING = "r" "'" RawSingleStringChar* "'"
+  STRING = "r" "\"" RawDoubleStringChar* "\""
+  STRING = "r" "'''" RawSingleMultiStringChar* "'''"
+  STRING = "r" "\"\"\"" RawDoubleMultiStringChar* "\"\"\""
+  
+  SingleStringChar = ~[\'\n\\]
+  SingleStringChar = "\\'"
+  SingleStringChar = SingleBackSlashChar
+  SingleBackSlashChar = "\\"
+  
+  DoubleStringChar = ~[\"\n\\]
+  DoubleStringChar = "\\\""
+  DoubleStringChar = DoubleBackSlashChar
+  DoubleBackSlashChar = "\\"
+  
+  SingleMultiStringChar = ~[\'\$\\]
+  SingleMultiStringChar = SingleQuoteChar
+  SingleQuoteChar = "'"
+  SingleQuoteChar = "''"
+  SingleMultiStringChar = "\\'"
+  SingleMultiStringChar = SingleBackSlashChar
+  
+  DoubleMultiStringChar = ~[\"\$\\]
+  DoubleMultiStringChar = DoubleQuoteChar
+  DoubleQuoteChar = "\""
+  DoubleQuoteChar = "\"\""
+  DoubleMultiStringChar = "\\\""
+  DoubleMultiStringChar = DoubleBackSlashChar
+  
+  RawSingleStringChar = ~[\'\n]
+  
+  RawDoubleStringChar = ~[\"\n]
+  
+  RawSingleMultiStringChar = ~[\']
+  RawSingleMultiStringChar = SingleQuoteChar
+  
+  RawDoubleMultiStringChar = ~[\"]
+  RawDoubleMultiStringChar = DoubleQuoteChar
+
+lexical restrictions
+
+  // Backslash chars in strings may not be followed by ' or "
+  
+  SingleBackSlashChar -/- [\']
+  DoubleBackSlashChar -/- [\"]
+  
+  // Quote char in multi-line string may not be followed by " or '
+  
+  SingleQuoteChar -/- [\']
+  DoubleQuoteChar -/- [\"] 
+  
+context-free syntax
+  
+  String.String = STRING {prefer}
+  String.ConcatStrings = STRING+
