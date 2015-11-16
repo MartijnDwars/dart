@@ -21,8 +21,6 @@ context-free syntax
   
   Expression.Throw = <throw <Expression>>
   
-  Expression = VariableDeclaration
-  
   Expression = Primary
   
   Expression = <(<Expression>)> {bracket}

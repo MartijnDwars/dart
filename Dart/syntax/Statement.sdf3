@@ -2,11 +2,14 @@ module Statement
 
 imports
   
+  Arguments
   Common
   Expression
+  Type
   Variable
-  Arguments
-
+  statement/For
+  statement/Try
+  
 context-free syntax
   
   Statement.Block = <{
@@ -17,18 +20,15 @@ context-free syntax
   
   Statement.Expression = <<Expression>;>
   
+  // TODO: Where is VariableDeclaration used? Can we make the AST more pretty? (Double VarDecl/VariableDeclaration constructor now)
+  Statement.VarDecl = <<VariableDeclaration>;>
+  
   Statement.If = <if (<Expression>)
     <Statement>>
   
   Statement.IfElse = <if (<Expression>)
     <Statement>
   else
-    <Statement>>
-  
-  Statement.For = <for (<Expression?>; <Expression?>; <{Expression ", "}*>)
-    <Statement>>
-  
-  Statement.ForIn = <for (<ID> in <Expression>)
     <Statement>>
   
   Statement.While = <while (<Expression>)
@@ -44,8 +44,6 @@ context-free syntax
   SwitchCase.SwitchCase = <case <Expression>: <Statement*>>
   
   DefaultCase.DefaultCase = <default: <Statement*>>
-  
-  Statement.Rethrow = <rethrow;>
   
   Statement.Return = <return <Expression?>;>
   

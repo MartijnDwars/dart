@@ -1,0 +1,24 @@
+module For
+
+language Dart
+start symbol Statement
+
+test for with dynamic initializer [[
+  for (x = 0; x < 9; x++)
+    print("Hello");
+]] parse succeeds
+
+test for with declared identifier initializer [[
+  for (final int x = 0; x < 9; x++)
+    print("Hello");
+]] parse succeeds
+
+test for in [[
+  for (x in y)
+    var v = 2;
+]] parse succeeds
+
+test for in with declared identifier [[
+  for (final int x in y)
+    var v = 2;
+]] parse succeeds

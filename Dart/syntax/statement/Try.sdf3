@@ -1,0 +1,43 @@
+module statement/Try
+
+imports
+
+  Common
+  Type
+  
+context-free syntax
+  
+  Statement.Rethrow = <rethrow;>
+  
+  Statement.TryFinally = <try {
+    <Statement*>
+  } finally {
+    <Statement*>
+  }>
+  
+  Statement.TryCatch = <try {
+    <Statement*>
+  } <CatchClause+>>
+  
+  Statement.TryCatchFinally = <try {
+    <Statement*>
+  } <CatchClause+> finally {
+    <Statement*>
+  }>
+  
+  CatchClause.Catch = <catch(<Qualified>) {
+    <Statement*>
+  }>
+  
+  CatchClause.On = <on <Type> {
+    <Statement*>
+  }>
+  
+  CatchClause.OnCatch = <on <Type> catch(<Qualified>) {
+    <Statement*>
+  }>
+
+template options
+
+  tokenize : ";("
+  keyword -/- [a-zA-Z]

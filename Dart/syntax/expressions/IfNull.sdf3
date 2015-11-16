@@ -3,5 +3,5 @@ module expressions/IfNull
 context-free syntax
 
   Expression.IfNull = Expression "??" Expression {left}
-  Expression.Conditional = Expression "?" Expression ":" Expression {right} // TODO: No cascades allowed
+  Expression.Conditional = Expression "?" Expression ":" Expression // TODO: Ambiguity? TODO: No cascades allowed here
   Expression.Cascade = Expression ".." Expression {left}

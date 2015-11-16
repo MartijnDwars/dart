@@ -1,0 +1,21 @@
+module statement/For
+
+imports
+
+  Common
+  Expression
+  Variable
+
+context-free syntax
+
+  Statement.For = <for (<ForInitializer?>; <Expression?>; <{Expression ", "}*>)
+    <Statement>>
+    
+  ForInitializer = VariableDeclaration
+  
+  ForInitializer = Expression
+  
+  Statement.ForIn = <for (<ID> in <Expression>)
+    <Statement>>
+
+  // TODO: add production for ForIn with a declaredIdentifier instead of identifier)

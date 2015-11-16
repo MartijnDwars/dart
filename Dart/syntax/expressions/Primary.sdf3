@@ -20,18 +20,23 @@ context-free syntax
   
   Primary = Literal
   
+  // Since <Type> may contain '.', these two are ambiguous
   Primary.NewObject = <new <Type>(<Arguments>)>
   
-  Primary.NewObject = <new <Type>.<ID>(<Arguments>)>
+  Primary.NewObject = <new <Type>.<ID>(<Arguments>)> {prefer}
   
   Primary.Closurization = <new <Type>#>
   
   Primary.Closurization = <new <Type>#.<ID>>
   
+  // Since <Type> may contain '.', these two are ambiguous
   Primary.ConstObject = <const <Type>(<Arguments>)>
   
-  Primary.ConstObject = <const <Type>.<ID>(<Arguments>)>
+  Primary.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}
   
   Primary.SuperIndex = <super[<Expression>]>
   
   Primary.SuperField = <super.<ID>>
+  
+  Primary.Selector = <<Primary>.<ID>> {left}
+  
