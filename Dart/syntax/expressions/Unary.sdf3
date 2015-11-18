@@ -13,8 +13,6 @@ context-free syntax
   // Expression.ConditionalSelector = Expression "?." ID
   Expression.PostInc = <<AssignableExpression>++>
   Expression.PostDec = <<AssignableExpression>-->
-  Expression.Index = <<Expression>[<IndexExpression>]>
-  Expression.Call = <<Expression>(<Arguments>)> // TODO: deal with precedence like in Expression.Index?
   
   // Unary prefix
   Expression.Min = <-<Expression>>
@@ -22,8 +20,3 @@ context-free syntax
   Expression.BitNot = <~<Expression>>
   Expression.PreInc = <++<AssignableExpression>>
   Expression.PreDec = <--<AssignableExpression>>
-  
-  // Indirection to fix precedence for Expression.Index
-  IndexExpression = Expression
-
-  // TODO: not everything in this file is unary, split this

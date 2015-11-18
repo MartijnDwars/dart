@@ -1,0 +1,36 @@
+module Expression
+
+language Dart
+start symbol Expression
+
+test invoke on new object [[
+  new StreamController.broadcast()
+]] parse succeeds
+
+test selector [[
+  actions.length
+]] parse succeeds
+
+test repeated selector [[
+  actions.child.length
+]] parse succeeds
+
+test method invocation [[
+  actions.add(action)
+]] parse succeeds
+
+test lambda [[
+  () {}
+]] parse succeeds
+
+test lambda with argument [[
+  (x) {}
+]] parse succeeds
+
+test lambda with multiple arguments [[
+  (x, y, z) {}
+]] parse succeeds
+
+test assignable operator on non-assignable expression [[
+  ++x++
+]] parse fails

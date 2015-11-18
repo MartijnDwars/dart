@@ -43,16 +43,6 @@ test if else [[
     var v = 2;
 ]] parse succeeds
 
-test for [[
-  for (int x = 0; x < 9; x++)
-    print("Hello");
-]] parse succeeds
-
-test for in [[
-  for (x in y)
-    var v = 2;
-]] parse succeeds
-
 test while [[
   while (true)
     var v = 1;
@@ -141,3 +131,21 @@ test invoke end with labeled arg [[
 test invoke start with labeled arg [[
   print(label1: 1, 2, 3);
 ]] parse fails
+
+test no ambiguity [[
+  var result = undo ? action.undo() : action.execute();
+]] parse succeeds
+
+test local function declaration [[
+  myFunction() {
+  }
+]] parse succeeds
+
+test nested function declaration [[
+  main() {
+    myFunction() {
+      nestedFunction() {
+      }
+    }
+  }
+]] parse succeeds

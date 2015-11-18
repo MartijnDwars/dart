@@ -5,6 +5,7 @@ imports
   Arguments
   Common
   Expression
+  Function
   Type
   Variable
   statement/For
@@ -54,6 +55,8 @@ context-free syntax
   Statement.Yield = <yield <Expression>;>
   
   Statement.Assert = <assert (<Expression>);> // TODO: This should be 'ConditionalExpression', what is the influence of our change?
+  
+  Statement.LocalFunction = <<FunctionSignature> <FunctionBody>>
 
 template options
 

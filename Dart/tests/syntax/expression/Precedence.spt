@@ -52,15 +52,9 @@ test conditional > cascade [[
 ]]
 
 test cascade > assign [[
-  3..4 = 5
+  x = 3..4
 ]] parse to [[
-  (3..4) = 5
-]]
-
-test post inc higher than pre inc [[
-  ++x++
-]] parse to [[
-  ++(x++)
+  x = (3..4)
 ]]
 
 test precedence index [[
@@ -70,3 +64,21 @@ test precedence index [[
 test precedence call [[
   a(1+1)
 ]] parse succeeds
+
+test ternary operator precedence (left) [[
+  true && false ? 'x' : 'y'   
+]] parse to [[
+  (true && false) ? 'x' : 'y'
+]]
+
+test ternary operator precedence (right) [[
+  true ? 2 : 3 / 4
+]] parse to [[
+  true ? 2 : (3 / 4)
+]]
+
+test ternary operator precedence (middle) [[
+  true ? 1 + 2 : 2
+]] parse to [[
+  true ? 1 + 2 : 2
+]]

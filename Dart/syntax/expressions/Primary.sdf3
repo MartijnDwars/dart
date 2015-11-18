@@ -6,6 +6,7 @@ imports
   Type
   Function
   Arguments
+  Parameters
   Expression
   expressions/Literals
   expressions/AssignableExpression
@@ -39,4 +40,10 @@ context-free syntax
   Primary.SuperField = <super.<ID>>
   
   Primary.Selector = <<Primary>.<ID>> {left}
+  
+  Primary.Lambda = <<Parameters> <FunctionBody>>
+
+  Primary.Index = <<Primary>[<Expression>]>
+  
+  Primary.Call = <<Primary>(<Arguments>)>
   

@@ -11,8 +11,7 @@ test complex library name [[
   library x.y.z;
 ]] parse succeeds
 
-// Our implementation requires one or more top-level definitions. This is
-// non-standard, but fixes an ambiguity. 
+// We require at least one top-level definitions (fix ambiguity)
 setup footer [[
   var x;
 ]]

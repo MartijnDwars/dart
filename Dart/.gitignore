@@ -5,6 +5,7 @@ include/Dart.def
 include/Dart-parenthesize.str
 include/Dart-Permissive.def
 include/Dart.generated.pp.af
+include/Dart.generated.pp
 include/Dart.packed.esv
 include/Dart.pp.af
 include/Dart.rtg

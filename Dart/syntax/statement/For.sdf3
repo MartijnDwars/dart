@@ -15,7 +15,9 @@ context-free syntax
   
   ForInitializer = Expression
   
-  Statement.ForIn = <for (<ID> in <Expression>)
+  Statement.ForIn = <for (<ForInInitializer> in <Expression>)
     <Statement>>
-
-  // TODO: add production for ForIn with a declaredIdentifier instead of identifier)
+  
+  ForInInitializer = ID
+  
+  ForInInitializer = DeclaredIdentifier

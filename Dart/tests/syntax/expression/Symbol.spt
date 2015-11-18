@@ -21,8 +21,8 @@ test symbol operator + [[
 
 test symbol operator brackets [[
   # [ ]
-]] parse succeeds
+]] parse fails
 
 test symbol operator brackets = [[
   # [ ] =
-]] parse succeeds
+]] parse fails

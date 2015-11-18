@@ -124,7 +124,7 @@ test constructor with two initializers [[
 	}
 ]] parse succeeds
 
-test x [[
+test class with constructor [[
 	class Bunny {
 	  Bunny() {
 	    print('in bunny');

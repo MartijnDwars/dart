@@ -10,8 +10,11 @@ imports
   
 context-free syntax
   
-  VariableDeclaration.VariableDeclaration = <<Metadata> <Modifier?> <Type?> <{Variable ", "}+>>
-  VariableDeclaration.DynamicVariableDeclaration = <<Metadata> var <{Variable ", "}+>>
+  VariableDeclaration.VariableDeclarations = <<Metadata> <Modifier?> <Type?> <{Variable ", "}+>>
+  VariableDeclaration.DynamicVariableDeclarations = <<Metadata> var <{Variable ", "}+>>
+  
+  DeclaredIdentifier.DeclaredIdentifier = <<Metadata> <Modifier?> <Type?> <ID>>
+  DeclaredIdentifier.DynamicDeclaredIdentifier = <<Metadata> var <ID>>
   
   Dynamic.Var = <var>
   
@@ -22,6 +25,9 @@ context-free syntax // Rejections
   
   // Reject variable declarations that lack both a modifier and type
   VariableDeclaration = <<Metadata> <{Variable ","}+>> {reject}
+  
+  // Same for DeclaredIdentifier
+  DeclaredIdentifier = <<Metadata> <ID>> {reject}
   
 template options
 

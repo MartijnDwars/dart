@@ -158,3 +158,9 @@ test raw single quote string no quote [[
 test raw single quote string escaping not allowed [[
   r'ab\'c'
 ]] parse fails
+
+// String interpolation
+
+test single quote string interpolation [[
+  'abc${def}ghi'
+]]
