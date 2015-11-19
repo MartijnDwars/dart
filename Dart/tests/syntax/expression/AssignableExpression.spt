@@ -1,0 +1,24 @@
+module AssignableExpression
+
+language Dart
+start symbol Expression
+
+test subscript [[
+  array[1]
+]] parse succeeds
+
+test repeated subscript [[
+  array[1][1]
+]] parse succeeds
+
+test whitespace super field [[
+  super . xyz
+]] parse succeeds
+
+test whitespace subscript [[
+  super [ 5 ]
+]] parse succeeds
+
+test no whitespace [[
+  b ? . v()
+]] parse fails

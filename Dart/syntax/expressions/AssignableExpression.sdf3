@@ -7,16 +7,21 @@ imports
   expressions/Primary
   
 context-free syntax
-
-  LiftPrimary = AssignableExpression
-  LiftPrimary = Primary
   
   // TODO: these 3 should also allow arguments (see spec)
-  AssignableExpression.Field = <<LiftPrimary>.<ID>>
-  AssignableExpression.Index = <<LiftPrimary>[<Expression>]>
-  AssignableExpression.ConditionalField = <<LiftPrimary>?.<ID>>
+  AssignableExpression.ConditionalField = <<PrimaryOrAssignableExpression>?.<ID>>
+  AssignableExpression.Field = <<PrimaryOrAssignableExpression>.<ID>>
+  AssignableExpression.Index = <<PrimaryOrAssignableExpression>[<Expression>]>
   
   AssignableExpression.SuperField = <super.<ID>>
   AssignableExpression.SuperIndex = <super[<Expression>]>
   
+  PrimaryOrAssignableExpression = AssignableExpression
+  PrimaryOrAssignableExpression = Primary
+  
   AssignableExpression.VarRef = ID
+
+template options
+
+  tokenize : "?.["
+  

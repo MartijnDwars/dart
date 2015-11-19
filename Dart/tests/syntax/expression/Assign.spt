@@ -3,6 +3,14 @@ module Assign
 language Dart
 start symbol Expression
 
+test simple assignment [[
+  x = 2
+]] parse succeeds
+
+test repeated assignment [[
+  x = y = 2
+]] parse succeeds
+
 test compound assignment [[
   x += 2
 ]] parse succeeds

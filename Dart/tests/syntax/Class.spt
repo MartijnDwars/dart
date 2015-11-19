@@ -131,3 +131,9 @@ test class with constructor [[
 	  }
 	}
 ]] parse succeeds
+
+test class member with dynamic type [[
+	abstract class Adaptable {
+	  dynamic adapt(Type type);
+	}
+]]

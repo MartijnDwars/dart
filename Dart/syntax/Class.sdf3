@@ -46,12 +46,17 @@ context-free syntax // Class member definitions
   
   ClassMember.OperatorDeclaration = <<EXTERNAL?> <Type?> operator <Operator><Parameters>;>
   
-  // TODO: Constructors
-  ClassMember = <static <FinalOrConst> <Type?> <{StaticFinalDeclaration ", "}+>;>
+  // TODO: Prettify AST/overlaps
+  ClassMember.StaticFinalDeclaration = <static <FinalOrConst> <Type?> <{StaticFinalDeclaration ", "}+>;>
   
-  ClassMember = <final <Type?> <{InitializedIdentifier ", "}+>;>
+  ClassMember.FinalFieldDeclaration = <final <Type?> <{InitializedIdentifier ", "}+>;>
   
-  ClassMember = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
+  ClassMember.StaticFieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
+  
+  ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
+  
+  FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
+  
   
   RedirectionOrInitializers.Redirection = <: this<Arguments>>
   RedirectionOrInitializers.RedirectionMethod = <: this.<ID><Arguments>>

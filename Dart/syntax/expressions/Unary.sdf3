@@ -5,18 +5,21 @@ imports
   Arguments
   Common
   expressions/AssignableExpression
+  expressions/Primary
 
 context-free syntax
 
+  Expression = UnaryExpression
+  
   // Unary postfix
-  // Expression.Selector = Expression "." ID
-  // Expression.ConditionalSelector = Expression "?." ID
-  Expression.PostInc = <<AssignableExpression>++>
-  Expression.PostDec = <<AssignableExpression>-->
+  UnaryExpression.PostInc = <<AssignableExpression>++>
+  UnaryExpression.PostDec = <<AssignableExpression>-->
   
   // Unary prefix
-  Expression.Min = <-<Expression>>
-  Expression.Neg = <!<Expression>>
-  Expression.BitNot = <~<Expression>>
-  Expression.PreInc = <++<AssignableExpression>>
-  Expression.PreDec = <--<AssignableExpression>>
+  UnaryExpression.Min = <-<UnaryExpression>>
+  UnaryExpression.Neg = <!<UnaryExpression>>
+  UnaryExpression.BitNot = <~<UnaryExpression>>
+  UnaryExpression = Primary
+  
+  UnaryExpression.PreInc = <++<AssignableExpression>>
+  UnaryExpression.PreDec = <--<AssignableExpression>>

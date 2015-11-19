@@ -14,7 +14,7 @@ imports
 
 context-free syntax
 
-  // Enforce greedy matching of TopDefinitions. Parse at least one top definition (NOTE: more restrictive than standard)
+  // Enforce greedy matching of TopDefinitions. Parse at least one top definition (TODO: more restrictive than standard)
   CompilationUnit.Library =
     <<LibraryName?>
     <Header*>

@@ -3,6 +3,10 @@ module Associativity
 language Dart
 start symbol Expression
 
+test variable reference [[
+  x
+]] parse succeeds
+
 test prefix decrement no ambiguity [[
   --x
 ]] parse succeeds
@@ -25,6 +29,12 @@ test mixed prefix and postfix minus [[
   x---x
 ]] parse to [[
   (x--)-x
+]]
+
+test x [[
+	-x++
+]] parse to [[
+	-(x++)
 ]]
 
 test add left assoc [[

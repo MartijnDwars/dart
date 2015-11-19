@@ -3,6 +3,18 @@ module Expression
 language Dart
 start symbol Expression
 
+test addition [[
+	1+1
+]] parse succeeds
+
+test field [[
+  x.y
+]] parse succeeds
+
+test safe field [[
+  x?.y
+]] parse succeeds
+
 test invoke on new object [[
   new StreamController.broadcast()
 ]] parse succeeds

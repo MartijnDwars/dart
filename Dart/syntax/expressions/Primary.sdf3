@@ -9,7 +9,6 @@ imports
   Parameters
   Expression
   expressions/Literals
-  expressions/AssignableExpression
   
 context-free syntax
 
@@ -39,11 +38,17 @@ context-free syntax
   
   Primary.SuperField = <super.<ID>>
   
-  Primary.Selector = <<Primary>.<ID>> {left}
-  
   Primary.Lambda = <<Parameters> <FunctionBody>>
-
+  
+  Primary.Field = <<Primary>.<ID>> {left}
+  
+  Primary.SafeField = <<Primary>?.<ID>> {left}
+  
   Primary.Index = <<Primary>[<Expression>]>
   
   Primary.Call = <<Primary>(<Arguments>)>
+  
+template options
+
+  tokenize : "?.["
   

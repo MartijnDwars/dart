@@ -23,4 +23,4 @@ abstract class Adaptable {
    * this object, or `null` if no such object can be found.
    */
   dynamic adapt(Type type);
-} 
+}
