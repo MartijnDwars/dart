@@ -17,24 +17,24 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-OptExp
+  prettyprint-sdf-example =
+    prettyprint-sdf-OptExp
 
-  prettyprint-example =
-    prettyprint-RealCon
+  prettyprint-sdf-example =
+    prettyprint-sdf-RealCon
 
-  prettyprint-OptExp :
+  prettyprint-sdf-OptExp :
     Present(t1__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [S("e"), t1__']
                        )
                      ]
-    with t1__' := <pp-one-Z(prettyprint-IntCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-IntCon)> t1__
 
   is-OptExp =
     ?Present(_)
 
-  prettyprint-OptExp :
+  prettyprint-sdf-OptExp :
     Absent() -> [ H(
                     []
                   , [S("")]
@@ -44,15 +44,15 @@ strategies
   is-OptExp =
     ?Absent()
 
-  prettyprint-RealCon :
+  prettyprint-sdf-RealCon :
     RealCon(base__, decimal__, exp__) -> [ H(
                                              [SOpt(HS(), "0")]
                                            , [base__', S("."), decimal__', exp__']
                                            )
                                          ]
-    with base__' := <pp-one-Z(prettyprint-IntCon)> base__
-    with decimal__' := <pp-one-Z(prettyprint-NatCon)> decimal__
-    with exp__' := <pp-one-Z(prettyprint-OptExp)> exp__
+    with base__' := <pp-one-Z(prettyprint-sdf-IntCon)> base__
+    with decimal__' := <pp-one-Z(prettyprint-sdf-NatCon)> decimal__
+    with exp__' := <pp-one-Z(prettyprint-sdf-OptExp)> exp__
 
   is-RealCon =
     ?RealCon(_, _, _)

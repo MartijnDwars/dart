@@ -17,13 +17,13 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Renamings
+  prettyprint-sdf-example =
+    prettyprint-sdf-Renamings
 
-  prettyprint-example =
-    prettyprint-Renaming
+  prettyprint-sdf-example =
+    prettyprint-sdf-Renaming
 
-  prettyprint-Renamings :
+  prettyprint-sdf-Renamings :
     Renamings(list__) -> [ H(
                              [SOpt(HS(), "0")]
                            , [ S("[")
@@ -32,31 +32,31 @@ strategies
                              ]
                            )
                          ]
-    with list__' := <pp-H-list(prettyprint-Renaming)> list__
+    with list__' := <pp-H-list(prettyprint-sdf-Renaming)> list__
 
   is-Renamings =
     ?Renamings(_)
 
-  prettyprint-Renaming :
+  prettyprint-sdf-Renaming :
     Symbol(from__, to__) -> [ H(
                                 [SOpt(HS(), "0")]
                               , [from__', S(" => "), to__']
                               )
                             ]
-    with from__' := <pp-one-Z(prettyprint-Symbol)> from__
-    with to__' := <pp-one-Z(prettyprint-Symbol)> to__
+    with from__' := <pp-one-Z(prettyprint-sdf-Symbol)> from__
+    with to__' := <pp-one-Z(prettyprint-sdf-Symbol)> to__
 
   is-Renaming =
     ?Symbol(_, _)
 
-  prettyprint-Renaming :
+  prettyprint-sdf-Renaming :
     Production(from-prod__, to-prod__) -> [ H(
                                               [SOpt(HS(), "0")]
                                             , [from-prod__', S(" => "), to-prod__']
                                             )
                                           ]
-    with from-prod__' := <pp-one-Z(prettyprint-Production)> from-prod__
-    with to-prod__' := <pp-one-Z(prettyprint-Production)> to-prod__
+    with from-prod__' := <pp-one-Z(prettyprint-sdf-Production)> from-prod__
+    with to-prod__' := <pp-one-Z(prettyprint-sdf-Production)> to-prod__
 
   is-Renaming =
     ?Production(_, _)

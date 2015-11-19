@@ -7,14 +7,14 @@ imports
 
 
 strategies
-  prettyprint-StrChar =
+  prettyprint-sdf-StrChar =
     ![S(<is-string>)]
 
-  prettyprint-StrCon =
+  prettyprint-sdf-StrCon =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-StrChar
+  prettyprint-sdf-example =
+    prettyprint-sdf-StrChar
 
-  prettyprint-example =
-    prettyprint-StrCon
+  prettyprint-sdf-example =
+    prettyprint-sdf-StrCon

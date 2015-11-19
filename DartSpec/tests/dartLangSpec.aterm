@@ -1,4 +1,10 @@
 Production(
-  "declaredIdentifier"
-, Conc(Conc(Ref("metadata"), Ref("finalConstVarOrType")), Ref("identifier"))
+  "initializedVariableDeclaration"
+, Conc(
+    Conc(
+      Ref("declaredIdentifier")
+    , Optional(Conc(Lit("'='"), Ref("expression")))
+    )
+  , RepAny(Conc(Lit("','"), Ref("initializedIdentifier")))
+  )
 )

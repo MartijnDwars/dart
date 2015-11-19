@@ -17,35 +17,35 @@ imports
 
 
 strategies
-  prettyprint-Sort =
+  prettyprint-sdf-Sort =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-Sort
+  prettyprint-sdf-example =
+    prettyprint-sdf-Sort
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-example =
-    prettyprint-SymbolDef
+  prettyprint-sdf-example =
+    prettyprint-sdf-SymbolDef
 
-  prettyprint-example =
-    prettyprint-Grammar
+  prettyprint-sdf-example =
+    prettyprint-sdf-Grammar
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Sort(t0__) -> [ H(
                       [SOpt(HS(), "0")]
                     , [t0__']
                     )
                   ]
-    with t0__' := <pp-one-Z(prettyprint-Sort)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-Sort)> t0__
 
   is-Symbol =
     ?Sort(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     ParameterizedSort(t0__, parameters__) -> [ H(
                                                  [SOpt(HS(), "0")]
                                                , [ t0__'
@@ -55,57 +55,57 @@ strategies
                                                  ]
                                                )
                                              ]
-    with t0__' := <pp-one-Z(prettyprint-Sort)> t0__
-    with parameters__' := <pp-H-list(prettyprint-Symbol|", ")> parameters__
+    with t0__' := <pp-one-Z(prettyprint-sdf-Sort)> t0__
+    with parameters__' := <pp-H-list(prettyprint-sdf-Symbol|", ")> parameters__
 
   is-Symbol =
     ?ParameterizedSort(_, _)
 
-  prettyprint-SymbolDef :
+  prettyprint-sdf-SymbolDef :
     SortDef(t0__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [t0__']
                        )
                      ]
-    with t0__' := <pp-one-Z(prettyprint-Sort)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-Sort)> t0__
 
   is-SymbolDef =
     ?SortDef(_)
 
-  prettyprint-SymbolDef :
+  prettyprint-sdf-SymbolDef :
     Cf(t0__) -> [ H(
                     [SOpt(HS(), "0")]
                   , [t0__', S("-CF")]
                   )
                 ]
-    with t0__' := <pp-one-Z(prettyprint-SymbolDef)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-SymbolDef)> t0__
 
   is-SymbolDef =
     ?Cf(_)
 
-  prettyprint-SymbolDef :
+  prettyprint-sdf-SymbolDef :
     Lex(t0__) -> [ H(
                      [SOpt(HS(), "0")]
                    , [t0__', S("-LEX")]
                    )
                  ]
-    with t0__' := <pp-one-Z(prettyprint-SymbolDef)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-SymbolDef)> t0__
 
   is-SymbolDef =
     ?Lex(_)
 
-  prettyprint-SymbolDef :
+  prettyprint-sdf-SymbolDef :
     Var(t0__) -> [ H(
                      [SOpt(HS(), "0")]
                    , [t0__', S("-VAR")]
                    )
                  ]
-    with t0__' := <pp-one-Z(prettyprint-SymbolDef)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-SymbolDef)> t0__
 
   is-SymbolDef =
     ?Var(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     Sorts(t0__) -> [ H(
                        [SOpt(HS(), "0")]
                      , [S("sorts")]
@@ -120,7 +120,7 @@ strategies
                      , [S("")]
                      )
                    ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Symbols)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Symbols)> t0__]
 
   is-Grammar =
     ?Sorts(_)

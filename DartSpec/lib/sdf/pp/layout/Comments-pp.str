@@ -15,26 +15,26 @@ imports
 
 
 strategies
-  prettyprint-LayoutNewlineAlt =
+  prettyprint-sdf-LayoutNewlineAlt =
     ![S(<is-string>)]
 
-  prettyprint-LayoutCommentAlt =
+  prettyprint-sdf-LayoutCommentAlt =
     ![S(<is-string>)]
 
-  prettyprint-CommentChar =
+  prettyprint-sdf-CommentChar =
     ![S(<is-string>)]
 
-  prettyprint-EOF =
+  prettyprint-sdf-EOF =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-LayoutNewlineAlt
+  prettyprint-sdf-example =
+    prettyprint-sdf-LayoutNewlineAlt
 
-  prettyprint-example =
-    prettyprint-LayoutCommentAlt
+  prettyprint-sdf-example =
+    prettyprint-sdf-LayoutCommentAlt
 
-  prettyprint-example =
-    prettyprint-CommentChar
+  prettyprint-sdf-example =
+    prettyprint-sdf-CommentChar
 
-  prettyprint-example =
-    prettyprint-EOF
+  prettyprint-sdf-example =
+    prettyprint-sdf-EOF

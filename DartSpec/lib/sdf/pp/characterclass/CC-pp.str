@@ -17,16 +17,16 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     CharClass(t0__) -> [ H(
                            [SOpt(HS(), "0")]
                          , [t0__']
                          )
                        ]
-    with t0__' := <pp-one-Z(prettyprint-CharClass)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-CharClass)> t0__
 
   is-Symbol =
     ?CharClass(_)

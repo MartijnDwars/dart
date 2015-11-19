@@ -17,16 +17,16 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Group
+  prettyprint-sdf-example =
+    prettyprint-sdf-Group
 
-  prettyprint-Group :
+  prettyprint-sdf-Group :
     NonTransitive(t1__) -> [ H(
                                [SOpt(HS(), "0")]
                              , [t1__', S(".")]
                              )
                            ]
-    with t1__' := <pp-one-Z(prettyprint-Group)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Group)> t1__
 
   is-Group =
     ?NonTransitive(_)

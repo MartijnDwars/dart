@@ -7,46 +7,46 @@ imports
 
 
 strategies
-  prettyprint-NumChar =
+  prettyprint-sdf-NumChar =
     ![S(<is-string>)]
 
-  prettyprint-ShortChar =
+  prettyprint-sdf-ShortChar =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-NumChar
+  prettyprint-sdf-example =
+    prettyprint-sdf-NumChar
 
-  prettyprint-example =
-    prettyprint-ShortChar
+  prettyprint-sdf-example =
+    prettyprint-sdf-ShortChar
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Character
+  prettyprint-sdf-example =
+    prettyprint-sdf-Character
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     Numeric(t0__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [t0__']
                        )
                      ]
-    with t0__' := <pp-one-Z(prettyprint-NumChar)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-NumChar)> t0__
 
   is-Character =
     ?Numeric(_)
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     Short(t0__) -> [ H(
                        [SOpt(HS(), "0")]
                      , [t0__']
                      )
                    ]
-    with t0__' := <pp-one-Z(prettyprint-ShortChar)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-ShortChar)> t0__
 
   is-Character =
     ?Short(_)
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     Top() -> [ H(
                  [SOpt(HS(), "0")]
                , [S("\\TOP")]
@@ -56,7 +56,7 @@ strategies
   is-Character =
     ?Top()
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     Eof() -> [ H(
                  [SOpt(HS(), "0")]
                , [S("\\EOF")]
@@ -66,7 +66,7 @@ strategies
   is-Character =
     ?Eof()
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     Bot() -> [ H(
                  [SOpt(HS(), "0")]
                , [S("\\BOT")]
@@ -76,7 +76,7 @@ strategies
   is-Character =
     ?Bot()
 
-  prettyprint-Character :
+  prettyprint-sdf-Character :
     LabelStart() -> [ H(
                         [SOpt(HS(), "0")]
                       , [S("\\LABEL_START")]

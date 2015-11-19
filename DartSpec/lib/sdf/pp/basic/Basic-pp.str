@@ -19,13 +19,13 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Grammar
+  prettyprint-sdf-example =
+    prettyprint-sdf-Grammar
 
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     Lexical(t1__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [S("lexical syntax")]
@@ -40,12 +40,12 @@ strategies
                        , [S("")]
                        )
                      ]
-    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Productions)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Productions)> t1__]
 
   is-Grammar =
     ?Lexical(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     Contextfree(t1__) -> [ H(
                              [SOpt(HS(), "0")]
                            , [S("context-free syntax")]
@@ -60,12 +60,12 @@ strategies
                            , [S("")]
                            )
                          ]
-    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Productions)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Productions)> t1__]
 
   is-Grammar =
     ?Contextfree(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     Variables(t1__) -> [ H(
                            [SOpt(HS(), "0")]
                          , [S("variables")]
@@ -80,12 +80,12 @@ strategies
                          , [S("")]
                          )
                        ]
-    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Productions)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Productions)> t1__]
 
   is-Grammar =
     ?Variables(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     VariablesProductive(t1__) -> [ H(
                                      [SOpt(HS(), "0")]
                                    , [S("variables")]
@@ -100,12 +100,12 @@ strategies
                                    , [S("")]
                                    )
                                  ]
-    with t1__' := <pp-indent(|"2")> [<pp-V-list(prettyprint-SdfProduction)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-V-list(prettyprint-sdf-SdfProduction)> t1__]
 
   is-Grammar =
     ?VariablesProductive(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     LexVariables(t1__) -> [ H(
                               [SOpt(HS(), "0")]
                             , [S("lexical variables")]
@@ -120,12 +120,12 @@ strategies
                             , [S("")]
                             )
                           ]
-    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Productions)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Productions)> t1__]
 
   is-Grammar =
     ?LexVariables(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     LexVariablesProductive(t1__) -> [ H(
                                         [SOpt(HS(), "0")]
                                       , [S("lexical variables")]
@@ -140,45 +140,45 @@ strategies
                                       , [S("")]
                                       )
                                     ]
-    with t1__' := <pp-indent(|"2")> [<pp-V-list(prettyprint-SdfProduction)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-V-list(prettyprint-sdf-SdfProduction)> t1__]
 
   is-Grammar =
     ?LexVariablesProductive(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Cf(t1__) -> [ H(
                     [SOpt(HS(), "0")]
                   , [t1__', S("-CF")]
                   )
                 ]
-    with t1__' := <pp-one-Z(prettyprint-Symbol)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Symbol)> t1__
 
   is-Symbol =
     ?Cf(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Lex(t1__) -> [ H(
                      [SOpt(HS(), "0")]
                    , [t1__', S("-LEX")]
                    )
                  ]
-    with t1__' := <pp-one-Z(prettyprint-Symbol)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Symbol)> t1__
 
   is-Symbol =
     ?Lex(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Varsym(t1__) -> [ H(
                         [SOpt(HS(), "0")]
                       , [t1__', S("-VAR")]
                       )
                     ]
-    with t1__' := <pp-one-Z(prettyprint-Symbol)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Symbol)> t1__
 
   is-Symbol =
     ?Varsym(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Layout() -> [ H(
                     [SOpt(HS(), "0")]
                   , [S("LAYOUT")]

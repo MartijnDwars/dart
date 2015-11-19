@@ -8,6 +8,4 @@ imports
 rules
   
   pp-SDF =
-    prettyprint-example
-    ; !V([], <id>)
-    ; box2text-string(|120)
+    ?[_|_] < (map(pp-SDF); concat-strings) + (prettyprint-sdf-example; !V([], <id>); box2text-string(|120))

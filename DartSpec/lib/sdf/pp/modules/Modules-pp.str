@@ -19,42 +19,42 @@ imports
 
 
 strategies
-  prettyprint-ModuleWord =
+  prettyprint-sdf-ModuleWord =
     ![S(<is-string>)]
 
-  prettyprint-ModuleId =
+  prettyprint-sdf-ModuleId =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-ModuleWord
+  prettyprint-sdf-example =
+    prettyprint-sdf-ModuleWord
 
-  prettyprint-example =
-    prettyprint-ModuleId
+  prettyprint-sdf-example =
+    prettyprint-sdf-ModuleId
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Module
+  prettyprint-sdf-example =
+    prettyprint-sdf-Module
 
-  prettyprint-example =
-    prettyprint-Sections
+  prettyprint-sdf-example =
+    prettyprint-sdf-Sections
 
-  prettyprint-example =
-    prettyprint-Section
+  prettyprint-sdf-example =
+    prettyprint-sdf-Section
 
-  prettyprint-example =
-    prettyprint-ModuleName
+  prettyprint-sdf-example =
+    prettyprint-sdf-ModuleName
 
-  prettyprint-example =
-    prettyprint-ImpSection
+  prettyprint-sdf-example =
+    prettyprint-sdf-ImpSection
 
-  prettyprint-example =
-    prettyprint-Imports
+  prettyprint-sdf-example =
+    prettyprint-sdf-Imports
 
-  prettyprint-example =
-    prettyprint-Import
+  prettyprint-sdf-example =
+    prettyprint-sdf-Import
 
-  prettyprint-Module :
+  prettyprint-sdf-Module :
     Module(t1__, list__, t2__) -> [ H(
                                       [SOpt(HS(), "0")]
                                     , [S("module "), t1__']
@@ -76,45 +76,45 @@ strategies
                                     , [t2__']
                                     )
                                   ]
-    with t1__' := <pp-one-Z(prettyprint-ModuleName)> t1__
-    with list__' := <pp-H-list(prettyprint-ImpSection)> list__
-    with t2__' := <pp-one-Z(prettyprint-Sections)> t2__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ModuleName)> t1__
+    with list__' := <pp-H-list(prettyprint-sdf-ImpSection)> list__
+    with t2__' := <pp-one-Z(prettyprint-sdf-Sections)> t2__
 
   is-Module =
     ?Module(_, _, _)
 
-  prettyprint-Sections :
+  prettyprint-sdf-Sections :
     t1__ -> [ H(
                 [SOpt(HS(), "0")]
               , [t1__']
               )
             ]
     where not(is-Sections)
-    where t1__' := <pp-V-list(prettyprint-Section)> t1__
+    where t1__' := <pp-V-list(prettyprint-sdf-Section)> t1__
 
-  prettyprint-Section :
+  prettyprint-sdf-Section :
     SDFSection(t1__) -> [ H(
                             [SOpt(HS(), "0")]
                           , [t1__']
                           )
                         ]
-    with t1__' := <pp-one-Z(prettyprint-Grammar)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Grammar)> t1__
 
   is-Section =
     ?SDFSection(_)
 
-  prettyprint-ModuleName :
+  prettyprint-sdf-ModuleName :
     Unparameterized(t1__) -> [ H(
                                  [SOpt(HS(), "0")]
                                , [t1__']
                                )
                              ]
-    with t1__' := <pp-one-Z(prettyprint-ModuleId)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ModuleId)> t1__
 
   is-ModuleName =
     ?Unparameterized(_)
 
-  prettyprint-ModuleName :
+  prettyprint-sdf-ModuleName :
     Parameterized(t1__, params__) -> [ H(
                                          [SOpt(HS(), "0")]
                                        , [ t1__'
@@ -124,40 +124,40 @@ strategies
                                          ]
                                        )
                                      ]
-    with t1__' := <pp-one-Z(prettyprint-ModuleId)> t1__
-    with params__' := <pp-one-Z(prettyprint-Symbols)> params__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ModuleId)> t1__
+    with params__' := <pp-one-Z(prettyprint-sdf-Symbols)> params__
 
   is-ModuleName =
     ?Parameterized(_, _)
 
-  prettyprint-ImpSection :
+  prettyprint-sdf-ImpSection :
     Imports(list__) -> [ H(
                            [SOpt(HS(), "0")]
                          , [S("imports")]
                          )
                        , list__'
                        ]
-    with list__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Imports)> list__]
+    with list__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Imports)> list__]
 
   is-ImpSection =
     ?Imports(_)
 
-  prettyprint-Imports :
+  prettyprint-sdf-Imports :
     list__ -> [ H(
                   [SOpt(HS(), "0")]
                 , [list__']
                 )
               ]
     where not(is-Imports)
-    where list__' := <pp-V-list(prettyprint-Import|"0", "\t")> list__
+    where list__' := <pp-V-list(prettyprint-sdf-Import|"0", "\t")> list__
 
-  prettyprint-Import :
+  prettyprint-sdf-Import :
     Module(t1__) -> [ H(
                         [SOpt(HS(), "0")]
                       , [t1__']
                       )
                     ]
-    with t1__' := <pp-one-Z(prettyprint-ModuleName)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ModuleName)> t1__
 
   is-Import =
     ?Module(_)

@@ -9,36 +9,36 @@ imports
 
 
 strategies
-  prettyprint-SDF-start-symbols =
-    prettyprint-Start
+  // prettyprint-sdf-SDF-start-symbols =
+  //   prettyprint-sdf-Start
 
 
 strategies
-  prettyprint-ID =
+  prettyprint-sdf-ID =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-ID
+  prettyprint-sdf-example =
+    prettyprint-sdf-ID
 
-  prettyprint-ID :
-    amb([h|hs]) -> <prettyprint-ID> h
+  prettyprint-sdf-ID :
+    amb([h|hs]) -> <prettyprint-sdf-ID> h
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Exp
+  prettyprint-sdf-example =
+    prettyprint-sdf-Exp
 
-  prettyprint-Exp :
+  prettyprint-sdf-Exp :
     t1__ -> [ H(
                 [SOpt(HS(), "0")]
               , [t1__', S("();")]
               )
             ]
     where not(is-Exp)
-    where t1__' := <pp-one-Z(prettyprint-ID)> t1__
+    where t1__' := <pp-one-Z(prettyprint-sdf-ID)> t1__
 
   is-Exp =
     fail
 
-  prettyprint-Exp :
-    amb([h|hs]) -> <prettyprint-Exp> h
+  prettyprint-sdf-Exp :
+    amb([h|hs]) -> <prettyprint-sdf-Exp> h

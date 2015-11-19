@@ -21,27 +21,27 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-AFun
+  prettyprint-sdf-example =
+    prettyprint-sdf-AFun
 
-  prettyprint-AFun :
+  prettyprint-sdf-AFun :
     Quoted(t1__) -> [ H(
                         [SOpt(HS(), "0")]
                       , [t1__']
                       )
                     ]
-    with t1__' := <pp-one-Z(prettyprint-StrCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-StrCon)> t1__
 
   is-AFun =
     ?Quoted(_)
 
-  prettyprint-AFun :
+  prettyprint-sdf-AFun :
     Unquoted(t1__) -> [ H(
                           [SOpt(HS(), "0")]
                         , [t1__']
                         )
                       ]
-    with t1__' := <pp-one-Z(prettyprint-IdCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-IdCon)> t1__
 
   is-AFun =
     ?Unquoted(_)
@@ -51,43 +51,43 @@ strategies
 
 
 strategies
-  prettyprint-example =
-    prettyprint-ATerm
+  prettyprint-sdf-example =
+    prettyprint-sdf-ATerm
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Int(t1__) -> [ H(
                      [SOpt(HS(), "0")]
                    , [t1__']
                    )
                  ]
-    with t1__' := <pp-one-Z(prettyprint-IntCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-IntCon)> t1__
 
   is-ATerm =
     ?Int(_)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Real(t1__) -> [ H(
                       [SOpt(HS(), "0")]
                     , [t1__']
                     )
                   ]
-    with t1__' := <pp-one-Z(prettyprint-RealCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-RealCon)> t1__
 
   is-ATerm =
     ?Real(_)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Fun(t1__) -> [ H(
                      [SOpt(HS(), "0")]
                    , [t1__']
                    )
                  ]
-    with t1__' := <pp-one-Z(prettyprint-AFun)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-AFun)> t1__
 
   is-ATerm =
     ?Fun(_)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Appl(t1__, t2__) -> [ H(
                             [SOpt(HS(), "0")]
                           , [ t1__'
@@ -97,13 +97,13 @@ strategies
                             ]
                           )
                         ]
-    with t1__' := <pp-one-Z(prettyprint-AFun)> t1__
-    with t2__' := <pp-H-list(prettyprint-ATerm|",")> t2__
+    with t1__' := <pp-one-Z(prettyprint-sdf-AFun)> t1__
+    with t2__' := <pp-H-list(prettyprint-sdf-ATerm|",")> t2__
 
   is-ATerm =
     ?Appl(_, _)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Placeholder(t1__) -> [ H(
                              [SOpt(HS(), "0")]
                            , [ S("<")
@@ -112,12 +112,12 @@ strategies
                              ]
                            )
                          ]
-    with t1__' := <pp-one-Z(prettyprint-ATerm)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ATerm)> t1__
 
   is-ATerm =
     ?Placeholder(_)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     List(t1__) -> [ H(
                       [SOpt(HS(), "0")]
                     , [ S("[")
@@ -126,19 +126,19 @@ strategies
                       ]
                     )
                   ]
-    with t1__' := <pp-H-list(prettyprint-ATerm|",")> t1__
+    with t1__' := <pp-H-list(prettyprint-sdf-ATerm|",")> t1__
 
   is-ATerm =
     ?List(_)
 
-  prettyprint-ATerm :
+  prettyprint-sdf-ATerm :
     Annotated(t1__, t2__) -> [ H(
                                  [SOpt(HS(), "0")]
                                , [t1__', t2__']
                                )
                              ]
-    with t1__' := <pp-one-Z(prettyprint-ATerm)> t1__
-    with t2__' := <pp-one-Z(prettyprint-Annotation)> t2__
+    with t1__' := <pp-one-Z(prettyprint-sdf-ATerm)> t1__
+    with t2__' := <pp-one-Z(prettyprint-sdf-Annotation)> t2__
 
   is-ATerm =
     ?Annotated(_, _)
@@ -148,10 +148,10 @@ strategies
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Annotation
+  prettyprint-sdf-example =
+    prettyprint-sdf-Annotation
 
-  prettyprint-Annotation :
+  prettyprint-sdf-Annotation :
     Default(t1__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [ S("{")
@@ -160,7 +160,7 @@ strategies
                          ]
                        )
                      ]
-    with t1__' := <pp-H-list(prettyprint-ATerm|",")> t1__
+    with t1__' := <pp-H-list(prettyprint-sdf-ATerm|",")> t1__
 
   is-Annotation =
     ?Default(_)

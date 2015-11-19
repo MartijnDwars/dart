@@ -19,41 +19,41 @@ imports
 
 
 strategies
-  prettyprint-SingleQuotedStrChar =
+  prettyprint-sdf-SingleQuotedStrChar =
     ![S(<is-string>)]
 
-  prettyprint-SingleQuotedStrCon =
+  prettyprint-sdf-SingleQuotedStrCon =
     ![S(<is-string>)]
 
-  prettyprint-example =
-    prettyprint-SingleQuotedStrChar
+  prettyprint-sdf-example =
+    prettyprint-sdf-SingleQuotedStrChar
 
-  prettyprint-example =
-    prettyprint-SingleQuotedStrCon
+  prettyprint-sdf-example =
+    prettyprint-sdf-SingleQuotedStrCon
 
 
 strategies
-  prettyprint-example =
-    prettyprint-FunctionName
+  prettyprint-sdf-example =
+    prettyprint-sdf-FunctionName
 
-  prettyprint-FunctionName :
+  prettyprint-sdf-FunctionName :
     UnquotedFun(t1__) -> [ H(
                              [SOpt(HS(), "0")]
                            , [t1__']
                            )
                          ]
-    with t1__' := <pp-one-Z(prettyprint-IdCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-IdCon)> t1__
 
   is-FunctionName =
     ?UnquotedFun(_)
 
-  prettyprint-FunctionName :
+  prettyprint-sdf-FunctionName :
     QuotedFun(t1__) -> [ H(
                            [SOpt(HS(), "0")]
                          , [t1__']
                          )
                        ]
-    with t1__' := <pp-one-Z(prettyprint-StrCon)> t1__
+    with t1__' := <pp-one-Z(prettyprint-sdf-StrCon)> t1__
 
   is-FunctionName =
     ?QuotedFun(_)
@@ -63,27 +63,27 @@ strategies
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Lit(string__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [string__']
                        )
                      ]
-    with string__' := <pp-one-Z(prettyprint-StrCon)> string__
+    with string__' := <pp-one-Z(prettyprint-sdf-StrCon)> string__
 
   is-Symbol =
     ?Lit(_)
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     CiLit(ci-string__) -> [ H(
                               [SOpt(HS(), "0")]
                             , [ci-string__']
                             )
                           ]
-    with ci-string__' := <pp-one-Z(prettyprint-SingleQuotedStrCon)> ci-string__
+    with ci-string__' := <pp-one-Z(prettyprint-sdf-SingleQuotedStrCon)> ci-string__
 
   is-Symbol =
     ?CiLit(_)

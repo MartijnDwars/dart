@@ -17,10 +17,10 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Grammar
+  prettyprint-sdf-example =
+    prettyprint-sdf-Grammar
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     KernelStartSymbols(t0__) -> [ H(
                                     [SOpt(HS(), "0")]
                                   , [S("start-symbols")]
@@ -35,12 +35,12 @@ strategies
                                   , [S("")]
                                   )
                                 ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Symbols)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Symbols)> t0__]
 
   is-Grammar =
     ?KernelStartSymbols(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     LexicalStartSymbols(t0__) -> [ H(
                                      [SOpt(HS(), "0")]
                                    , [S("lexical start-symbols")]
@@ -55,12 +55,12 @@ strategies
                                    , [S("")]
                                    )
                                  ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Symbols)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Symbols)> t0__]
 
   is-Grammar =
     ?LexicalStartSymbols(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     ContextFreeStartSymbols(t0__) -> [ H(
                                          [SOpt(HS(), "0")]
                                        , [S("context-free start-symbols")]
@@ -75,7 +75,7 @@ strategies
                                        , [S("")]
                                        )
                                      ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Symbols)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Symbols)> t0__]
 
   is-Grammar =
     ?ContextFreeStartSymbols(_)

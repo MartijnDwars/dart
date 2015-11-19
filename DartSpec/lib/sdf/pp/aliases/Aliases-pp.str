@@ -17,16 +17,16 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Grammar
+  prettyprint-sdf-example =
+    prettyprint-sdf-Grammar
 
-  prettyprint-example =
-    prettyprint-Alias
+  prettyprint-sdf-example =
+    prettyprint-sdf-Alias
 
-  prettyprint-example =
-    prettyprint-Aliases
+  prettyprint-sdf-example =
+    prettyprint-sdf-Aliases
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     Aliases(t1__) -> [ H(
                          [SOpt(HS(), "0")]
                        , [S("aliases")]
@@ -41,31 +41,31 @@ strategies
                        , [S("")]
                        )
                      ]
-    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Aliases)> t1__]
+    with t1__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Aliases)> t1__]
 
   is-Grammar =
     ?Aliases(_)
 
-  prettyprint-Alias :
+  prettyprint-sdf-Alias :
     Alias(t1__, alias__) -> [ H(
                                 [SOpt(HS(), "0")]
                               , [t1__', S(" -> "), alias__']
                               )
                             ]
-    with t1__' := <pp-one-Z(prettyprint-Symbol)> t1__
-    with alias__' := <pp-one-Z(prettyprint-Symbol)> alias__
+    with t1__' := <pp-one-Z(prettyprint-sdf-Symbol)> t1__
+    with alias__' := <pp-one-Z(prettyprint-sdf-Symbol)> alias__
 
   is-Alias =
     ?Alias(_, _)
 
-  prettyprint-Aliases :
+  prettyprint-sdf-Aliases :
     list__ -> [ H(
                   [SOpt(HS(), "0")]
                 , [list__']
                 )
               ]
     where not(is-Aliases)
-    where list__' := <pp-H-list(prettyprint-Alias)> list__
+    where list__' := <pp-H-list(prettyprint-sdf-Alias)> list__
 
   is-Grammar =
     fail

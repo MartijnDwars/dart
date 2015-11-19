@@ -28,7 +28,7 @@ rules // SDF
   gen-sdf-production:
     Production(name, rhs) -> SdfProduction(SortDef(name), Rhs(symbols), NoAttrs())
     where
-    	symbols := <gen-sdf-rhs> rhs
+    	symbols := <gen-sdf-rhs; listify> rhs
   
   gen-sdf-rhs:
   	Conc(x, y) -> <flatten-list> [<gen-sdf-rhs> x, <gen-sdf-rhs> y]
@@ -39,8 +39,16 @@ rules // SDF
 	gen-sdf-rhs:
 		Lit(value) -> Lit(value)
 	
+  gen-sdf-rhs:
+    RepAny(rhs) -> IterStar(<gen-sdf-rhs> rhs)
+  
+  gen-sdf-rhs:
+    RepSome(rhs) -> Iter(<gen-sdf-rhs> rhs)
+	
 	gen-sdf-rhs:
-	  RepAny(rhs) -> IterStar(<gen-sdf-rhs> rhs)
+	  Optional(rhs) -> Opt(<gen-sdf-rhs> rhs)
+  
+	listify = ?[_|_] < id + ![<id>]
 	
 rules // Misc
   

@@ -48,7 +48,7 @@ rules // Generate SDF
       <debug(!"Start generating..")> ast;
       sdf      := <gen-sdf-any> ast;
       <debug(!"SDF ")> sdf;
-      result   := <pp-SDF> selected;
+      result   := <pp-SDF> sdf;
       <debug(!"pp-SDF ")> result
   
 rules // Misc rules

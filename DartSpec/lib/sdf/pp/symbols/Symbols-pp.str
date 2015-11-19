@@ -15,16 +15,16 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-example =
-    prettyprint-Symbols
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbols
 
-  prettyprint-example =
-    prettyprint-SymbolDef
+  prettyprint-sdf-example =
+    prettyprint-sdf-SymbolDef
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Parenthetical(t0__) -> [ H(
                                [SOpt(HS(), "0")]
                              , [ S("(")
@@ -33,25 +33,25 @@ strategies
                                ]
                              )
                            ]
-    with t0__' := <pp-one-Z(prettyprint-Symbol)> t0__
+    with t0__' := <pp-one-Z(prettyprint-sdf-Symbol)> t0__
 
-  prettyprint-Symbols :
+  prettyprint-sdf-Symbols :
     list__ -> [ H(
                   [SOpt(HS(), "0")]
                 , [list__']
                 )
               ]
     where not(is-Symbols)
-    where list__' := <pp-H-list(prettyprint-Symbol)> list__
+    where list__' := <pp-H-list(prettyprint-sdf-Symbol)> list__
 
-  prettyprint-SymbolDef :
+  prettyprint-sdf-SymbolDef :
     t0__ -> [ H(
                 [SOpt(HS(), "0")]
               , [t0__']
               )
             ]
     where not(is-SymbolDef)
-    where t0__' := <pp-one-Z(prettyprint-Symbol)> t0__
+    where t0__' := <pp-one-Z(prettyprint-sdf-Symbol)> t0__
 
   is-Symbol =
     fail

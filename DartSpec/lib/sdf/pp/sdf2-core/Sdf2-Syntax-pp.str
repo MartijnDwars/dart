@@ -39,13 +39,13 @@ imports
 
 
 strategies
-  prettyprint-example =
-    prettyprint-Symbol
+  prettyprint-sdf-example =
+    prettyprint-sdf-Symbol
 
-  prettyprint-example =
-    prettyprint-Grammar
+  prettyprint-sdf-example =
+    prettyprint-sdf-Grammar
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     Start() -> [ H(
                    [SOpt(HS(), "0")]
                  , [S("<START>")]
@@ -55,7 +55,7 @@ strategies
   is-Symbol =
     ?Start()
 
-  prettyprint-Symbol :
+  prettyprint-sdf-Symbol :
     FileStart() -> [ H(
                        [SOpt(HS(), "0")]
                      , [S("<Start>")]
@@ -65,7 +65,7 @@ strategies
   is-Symbol =
     ?FileStart()
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     LexicalPriorities(t0__) -> [ H(
                                    [SOpt(HS(), "0")]
                                  , [S("lexical priorities")]
@@ -80,12 +80,12 @@ strategies
                                  , [S("")]
                                  )
                                ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Priorities)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Priorities)> t0__]
 
   is-Grammar =
     ?LexicalPriorities(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     ContextFreePriorities(t0__) -> [ H(
                                        [SOpt(HS(), "0")]
                                      , [S("context-free priorities")]
@@ -100,12 +100,12 @@ strategies
                                      , [S("")]
                                      )
                                    ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Priorities)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Priorities)> t0__]
 
   is-Grammar =
     ?ContextFreePriorities(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     LexicalRestrictions(t0__) -> [ H(
                                      [SOpt(HS(), "0")]
                                    , [S("lexical restrictions")]
@@ -120,12 +120,12 @@ strategies
                                    , [S("")]
                                    )
                                  ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Restrictions)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Restrictions)> t0__]
 
   is-Grammar =
     ?LexicalRestrictions(_)
 
-  prettyprint-Grammar :
+  prettyprint-sdf-Grammar :
     ContextFreeRestrictions(t0__) -> [ H(
                                          [SOpt(HS(), "0")]
                                        , [S("context-free restrictions")]
@@ -140,7 +140,7 @@ strategies
                                        , [S("")]
                                        )
                                      ]
-    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-Restrictions)> t0__]
+    with t0__' := <pp-indent(|"2")> [<pp-one-Z(prettyprint-sdf-Restrictions)> t0__]
 
   is-Grammar =
     ?ContextFreeRestrictions(_)
