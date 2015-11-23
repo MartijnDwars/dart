@@ -32,7 +32,9 @@ context-free syntax // Class member definitions
 	
 	ClassMember.InitializedConstructor = <<Qualified><Parameters> : <{SuperCallOrFieldInitializer ", "}+> <FunctionBody>>
 	
-  ClassMember.ConstructorDeclaration = <<CONST?> <Qualified><Parameters> <RedirectionOrInitializers?>;>
+  ClassMember.ConstantConstructorDeclaration = <const <Qualified><Parameters> <RedirectionOrInitializers?>;>
+  
+  ClassMember.ConstructorDeclaration = <<Qualified><Parameters> <RedirectionOrInitializers>;>
   
   ClassMember.FactoryMethod = <factory <Qualified><Parameters> <FunctionBody>>
   
