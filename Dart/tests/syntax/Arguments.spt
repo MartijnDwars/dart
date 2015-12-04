@@ -1,4 +1,4 @@
-module Argument
+module Arguments
 
 language Dart
 start symbol Arguments
@@ -9,6 +9,10 @@ test no arguments [[
 
 test single expression argument [[
   1
+]] parse succeeds
+
+test optional whitespace [[
+  1,2,3
 ]] parse succeeds
 
 test single named argument [[
