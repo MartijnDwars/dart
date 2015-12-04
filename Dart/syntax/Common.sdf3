@@ -84,9 +84,26 @@ lexical syntax // Reserved words
 	ID = "while" {reject}
 	ID = "with" {reject}
 	
-lexical syntax // Built-in identifiers (NOTE: non-standard Dart)
+lexical syntax // Built-in identifiers
 
+  ID = "abstract" {reject}
+  ID = "as"
   ID = "library" {reject}
+  ID = "dynamic" {reject}
+  ID = "deferred" {reject}
+  ID = "dynamic" {reject}
+  ID = "export" {reject}
+  ID = "external" {reject}
+  ID = "factory" {reject}
+  ID = "get" {reject}
+  ID = "implements" {reject}
+  ID = "import" {reject}
+  ID = "library" {reject}
+  ID = "operator" {reject}
+  ID = "part" {reject}
+  ID = "set" {reject}
+  ID = "static" {reject}
+  ID = "typedef" {reject}
   
 lexical syntax // Limited reserved words (NOTE: non-standard Dart)
 
@@ -95,6 +112,7 @@ lexical syntax // Limited reserved words (NOTE: non-standard Dart)
 lexical syntax // Dart keywords
   
   VOID = "void"
+  DYNAMIC = "dynamic"
   STATIC = "static"
   ABSTRACT = "abstract"
   CONST = "const"

@@ -7,10 +7,6 @@ test simple identifier [[
   abc
 ]] parse succeeds
 
-test void identifier [[
-  void
-]] parse succeeds
-
 test qualified identifier [[
   abc.def
 ]] parse succeeds

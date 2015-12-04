@@ -48,7 +48,6 @@ context-free syntax // Class member definitions
   
   ClassMember.OperatorDeclaration = <<EXTERNAL?> <Type?> operator <Operator><Parameters>;>
   
-  // TODO: Prettify AST/overlaps
   ClassMember.StaticFinalDeclaration = <static <FinalOrConst> <Type?> <{StaticFinalDeclaration ", "}+>;>
   
   ClassMember.FinalFieldDeclaration = <final <Type?> <{InitializedIdentifier ", "}+>;>

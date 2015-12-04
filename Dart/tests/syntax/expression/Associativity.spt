@@ -31,7 +31,7 @@ test mixed prefix and postfix minus [[
   (x--)-x
 ]]
 
-test x [[
+test unary minus and post increment [[
 	-x++
 ]] parse to [[
 	-(x++)

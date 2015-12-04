@@ -38,3 +38,7 @@ test reserved word enum [[
 test reserved word return [[
   return
 ]] parse fails
+
+test dynamic illegal id [[
+  dynamic
+]] parse fails
