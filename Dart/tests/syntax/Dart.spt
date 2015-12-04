@@ -95,3 +95,7 @@ test dartje 2 [[
 test var decl with initializer [[
   var int x = 1;
 ]] parse fails
+
+test type alias is a tld [[
+  typedef Future<dynamic> TaskEntry(TaskStatus status);
+]] parse succeeds

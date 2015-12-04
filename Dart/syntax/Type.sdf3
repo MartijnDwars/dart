@@ -5,6 +5,7 @@ imports
   Common
   Metadata
   Type
+  Parameters
   
 context-free syntax
   
@@ -20,6 +21,9 @@ context-free syntax
   
   TypeParameter.TypeParameter = <<Metadata> <ID>>
   TypeParameter.BoundedTypeParameter = <<Metadata> <ID> extends <Type>>
+  
+  // Type alias
+  TypeAlias.Typealias = <<Metadata> typedef <Type?> <ID> <TypeParameters?> <Parameters>;>
   
 template options
 

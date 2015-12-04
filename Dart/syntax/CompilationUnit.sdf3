@@ -10,6 +10,7 @@ imports
   Enum
   Function
   String
+  Type
   Variable
 
 context-free syntax
@@ -40,4 +41,5 @@ context-free syntax
   TopDefinition = Class
   TopDefinition = Enum
   TopDefinition = Function
+  TopDefinition = TypeAlias
   TopDefinition.DeclarationStmt = <<VariableDeclaration>;>
