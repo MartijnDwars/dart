@@ -82,3 +82,27 @@ test ternary operator precedence (middle) [[
 ]] parse to [[
   true ? 1 + 2 : 2
 ]]
+
+test short lambda [[
+  (e) => e.type == type
+]] parse to [[
+  (e) => (e.type == type)
+]]
+
+test safe precedence with short lambda [[
+  foo + () => 1 + 2
+]] parse to [[
+  foo + (() => 1 + 2)
+]]
+
+test safe precedence with unary minus [[
+  1 + -1
+]] parse to [[
+  1 + (-1)
+]]
+
+test safe precedence with unary minus 2 [[
+  -1 + 1
+]] parse to [[
+  (-1) + 1
+]]

@@ -29,7 +29,7 @@ context-free syntax
 context-free priorities
   
   // Unary postfix
-  {/*Expression.Property Expression.ConditionalProperty*/ UnaryExpression.PostInc UnaryExpression.PostDec /*Expression.Index Expression.Call*/}
+  {/*Expression.ConditionalProperty*/ /*Primary.Field*/ UnaryExpression.PostInc UnaryExpression.PostDec /*Expression.Index Expression.Call*/}
   // Unary prefix
 > {UnaryExpression.Min UnaryExpression.Neg UnaryExpression.BitNot UnaryExpression.PreInc UnaryExpression.PreDec}
   // Multiplicative
@@ -51,4 +51,4 @@ context-free priorities
   // Cascade
 > {left: Expression.Cascade}
   // Assignment
-> {right: Expression.Assign Expression.MulAssign Expression.DivAssign Expression.IntDivAssign Expression.ModAssign Expression.AddAssign Expression.SubAssign Expression.LShiftAssign Expression.RShiftAssign Expression.BitAndAssign Expression.BitXorAssign Expression.BitOrAssign Expression.NullAssign}
+> {right: Expression.Assign Expression.MulAssign Expression.DivAssign Expression.IntDivAssign Expression.ModAssign Expression.AddAssign Expression.SubAssign Expression.LShiftAssign Expression.RShiftAssign Expression.BitAndAssign Expression.BitXorAssign Expression.BitOrAssign Expression.NullAssign }

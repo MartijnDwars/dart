@@ -46,3 +46,15 @@ test lambda with multiple arguments [[
 test assignable operator on non-assignable expression [[
   ++x++
 ]] parse fails
+
+test identifier [[
+  x
+]] parse succeeds
+
+test function expression [[
+  (e) => e.type == type
+]] parse succeeds
+
+test function expression [[
+  () => x
+]] parse succeeds

@@ -28,8 +28,7 @@ context-free syntax
     <Statement*>
   }>
   
-  FunctionBody.ShortFunctionBody = <<ASYNC?> =\>
-    <Expression>;>
+  FunctionBody.ShortFunctionBody = <<ASYNC?> =\> <Expression>;>
   
   FunctionModifier.Async = ASYNC
   FunctionModifier.Asyncs = ASYNC '*'
