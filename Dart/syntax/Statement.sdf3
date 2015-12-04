@@ -27,7 +27,7 @@ context-free syntax
   Statement.VarDecl = <<VariableDeclaration>;>
   
   Statement.If = <if (<Expression>)
-    <Statement>>
+    <Statement>> {prefer}
   
   Statement.IfElse = <if (<Expression>)
     <Statement>
