@@ -149,3 +149,13 @@ test nested function declaration [[
     }
   }
 ]] parse succeeds
+
+test labeled statement [[
+  loop: for (int i = 0; ; ) {
+  }
+]] parse succeeds
+
+test recursively labeled statement [[
+  a: b: c: for (int i = 0; ; ) {
+  }
+]] parse succeeds

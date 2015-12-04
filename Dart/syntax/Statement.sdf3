@@ -17,6 +17,8 @@ context-free syntax
     <Statement*>
   }>
   
+  Statement.Labeled = <<ID>: <Statement>>
+  
   Statement.Nop = <;>
   
   Statement.Expression = <<Expression>;>
@@ -36,15 +38,6 @@ context-free syntax
     <Statement>>
   
   Statement.Do = <do <Statement> while (<Expression>);>
-  
-  Statement.Switch = <switch (<Expression>) {
-    <SwitchCase*>
-    <DefaultCase?>
-  }>
-  
-  SwitchCase.SwitchCase = <case <Expression>: <Statement*>>
-  
-  DefaultCase.DefaultCase = <default: <Statement*>>
   
   Statement.Return = <return <Expression?>;>
   

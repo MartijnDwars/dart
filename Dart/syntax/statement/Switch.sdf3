@@ -1,0 +1,18 @@
+module statement/Switch
+
+imports
+
+  Expression
+
+context-free syntax
+  
+  // TODO: case and default must be prefixed with label*
+  
+  Statement.Switch = <switch (<Expression>) {
+    <SwitchCase*>
+    <DefaultCase?>
+  }>
+  
+  SwitchCase.SwitchCase = <case <Expression>: <Statement*>>
+  
+  DefaultCase.DefaultCase = <default: <Statement*>>
