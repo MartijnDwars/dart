@@ -13,6 +13,11 @@ context-free syntax // Type
   Type.DynamicType = DYNAMIC
   Type.Type = <<Qualified>>
   Type.Generic = <<Qualified> <TypeArguments>>
+ 
+context-free syntax // DynType parses ε as Dynamic()
+
+  DynType.Type = <<Qualified>>
+  DynType.Dynamic = 
   
 context-free syntax // Type arguments
   
@@ -27,7 +32,7 @@ context-free syntax // Type parameters
   
 context-free syntax // Type alias
 
-  TypeAlias.Typealias = <<Metadata> typedef <Type?> <ID> <TypeParameters?> <Parameters>;>
+  TypeAlias.Typealias = <<Metadata> typedef <DynType> <ID> <TypeParameters?> <Parameters>;>
   
 template options
 

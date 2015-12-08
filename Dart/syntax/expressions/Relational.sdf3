@@ -10,6 +10,6 @@ context-free syntax
   Expression.Gt = Expression ">" Expression
   Expression.Lte = Expression "<=" Expression
   Expression.Gte = Expression ">=" Expression
-  Expression.As = Expression "as" Type
-  Expression.Is = Expression "is" Type
-  Expression.IsNot = Expression "is!" Type
+  Expression.TypeCast = Expression "as" Type
+  Expression.TypeCheck = Expression "is" Type
+  Expression.NegTypeCheck = Expression "is!" Type

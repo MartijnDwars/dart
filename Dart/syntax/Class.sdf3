@@ -52,7 +52,7 @@ context-free syntax // Class member definitions
   
   ClassMember.FinalFieldDeclaration = <final <Type?> <{InitializedIdentifier ", "}+>;>
   
-  ClassMember.StaticFieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
+  ClassMember.FieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
   
   ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
   

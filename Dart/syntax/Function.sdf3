@@ -8,25 +8,22 @@ imports
   Type
   Metadata
   Parameters
+  statement/Block
   
 context-free syntax
   
-  // TODO: Replace this by the rules below
+  // TODO: Duplication, replace this by the rules below
   
-  Function.Function = <<Metadata> <Type?> <ID><Parameters> {
-    <Statement*>
-  }>
+  Function.Function = <<Metadata> <DynType> <ID><Parameters> <Block>>
   
-  Function.ShortFunction = <<Metadata> <Type?> <ID><Parameters> =\>
+  Function.ShortFunction = <<Metadata> <DynType> <ID><Parameters> =\>
     <Expression>;>
   
   // ---
   
-  FunctionSignature.FunctionSignature = <<Metadata> <Type?> <ID><Parameters>>
+  FunctionSignature.FunctionSignature = <<Metadata> <DynType> <ID><Parameters>>
   
-  FunctionBody.FunctionBody = <<FunctionModifier?> {
-    <Statement*>
-  }>
+  FunctionBody.FunctionBody = <<FunctionModifier?> <Block>>
   
   FunctionBody.ShortFunctionBody = <<ASYNC?> =\> <Expression>;>
   

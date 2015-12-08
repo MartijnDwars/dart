@@ -42,4 +42,4 @@ context-free syntax
   TopDefinition = Enum
   TopDefinition = Function
   TopDefinition = TypeAlias
-  TopDefinition.DeclarationStmt = <<VariableDeclaration>;>
+  TopDefinition.VarDeclStmt = <<VarDecl>;>

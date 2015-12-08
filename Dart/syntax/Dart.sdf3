@@ -39,7 +39,7 @@ context-free start-symbols
   Operator
   Statement
   String
-  VariableDeclaration
+  VarDecl
   TypeAlias
   
   // Real start symbol

@@ -41,7 +41,7 @@ context-free priorities
   // Bitwise
 > {left: Expression.BitAnd Expression.BitXor Expression.BitOr}
   // Relational
-> {left: Expression.Lt Expression.Gt Expression.Lte Expression.Gte Expression.As Expression.Is Expression.IsNot}
+> {left: Expression.Lt Expression.Gt Expression.Lte Expression.Gte Expression.TypeCast Expression.TypeCheck Expression.NegTypeCheck}
   // Equality
 > {left: Expression.Eq Expression.Neq}
   // Logical

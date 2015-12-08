@@ -11,32 +11,33 @@ imports
   
 context-free syntax
   
-  Parameters.Parameters = <(<{NormalFormalParameter ", "}*>)>
-  Parameters.Parameters = <(<{NormalFormalParameter ", "}+>, <OptionalFormalParameters>)>
-  Parameters.Parameters = <(<OptionalFormalParameters>)>
+  // TODO: Reduce to 1 rule and enforce the optional last in analysis
+  Parameters.Parameters = <(<{Parameter ", "}*>)>
+  Parameters.Parameters = <(<{Parameter ", "}+>, <OptionalParameters>)>
+  Parameters.Parameters = <(<OptionalParameters>)>
   
-  NormalFormalParameter = FunctionSignature
-  NormalFormalParameter = FieldFormalParameter
-  NormalFormalParameter = SimpleFormalParameter
+context-free syntax // Required parameters
+
+  Parameter = FunctionSignature
+  Parameter = FieldParameter
+  Parameter = SimpleParameter
   
-  FieldFormalParameter = <<Metadata> <FinalConstVarOrType?> this.<ID><Parameters?>>
+  FieldParameter.FieldParameter = <<Metadata> <Modifier?> <DynType> this.<ID><Parameters?>>
+  FieldParameter.FieldParameter = <<Metadata> var this.<ID><Parameters?>>
   
-  FinalConstVarOrType = <final <Type?>>
-  FinalConstVarOrType = <const <Type?>>
-  FinalConstVarOrType = <var>
-  FinalConstVarOrType = <<Type>>
+  SimpleParameter.SimpleParameter = <<Metadata> <Modifier?> <DynType> <ID>>
+  SimpleParameter.SimpleParameter = <<Metadata> var <ID>>
   
-  OptionalFormalParameters.Positional = <[<{DefaultFormalParameter ", "}+>]>
-  OptionalFormalParameters.Named = <{<{NamedFormalParameter ", "}+>}>
+context-free syntax // Optional parameters
+
+  OptionalParameters.Positional = <[<{DefaultParameter ", "}+>]>
+  OptionalParameters.Named = <{<{NamedParameter ", "}+>}>
   
-  SimpleFormalParameter = <<Metadata> <Modifier?> <Type?> <ID>>
-  SimpleFormalParameter = <<Metadata> var <ID>>
+  DefaultParameter.DefaultParameter = <<Parameter> = <Expression>>
+  DefaultParameter = Parameter
   
-  DefaultFormalParameter.Param = <<NormalFormalParameter>>
-  DefaultFormalParameter.InitializedParam = <<NormalFormalParameter> = <Expression>>
-  
-  NamedFormalParameter.NamedParam = <<NormalFormalParameter>>
-  NamedFormalParameter.NamedInitializedParam = <<NormalFormalParameter>: <Expression>>
+  NamedParameter.NamedInitializedParam = <<Parameter>: <Expression>>
+  NamedParameter = Parameter
   
 template options
 

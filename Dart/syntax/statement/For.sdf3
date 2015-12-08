@@ -6,15 +6,17 @@ imports
   Expression
   Variable
 
-context-free syntax
+context-free syntax // For
 
   Statement.For = <for (<ForInitializer?>; <Expression?>; <{Expression ", "}*>)
     <Statement>>
     
-  ForInitializer = VariableDeclaration
+  ForInitializer = VarDecl
   
   ForInitializer = Expression
   
+context-free syntax // For-in
+
   Statement.ForIn = <for (<ForInInitializer> in <Expression>)
     <Statement>>
   
