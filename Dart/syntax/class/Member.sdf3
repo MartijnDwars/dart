@@ -1,0 +1,24 @@
+module class/Member
+
+imports
+  
+  class/Initializer
+  Common
+  Parameters
+  Function
+  Type
+  lexical/Operator
+
+context-free syntax
+
+  ClassMember.InitializedConstructor = <<Qualified><Parameters> : <{SuperCallOrFieldInitializer ", "}+> <FunctionBody>>
+  
+  ClassMember.FactoryMethod = <factory <Qualified><Parameters> <FunctionBody>>
+  
+  ClassMember.OperatorMethod = <<ReturnType> operator <Operator><Parameters> <FunctionBody>>
+  
+  ClassMember.Method = <<STATIC?> <FunctionSignature> <FunctionBody>>
+  
+  ClassMember.Getter = <<STATIC?> <ReturnType> get <ID><FunctionBody>>
+  
+  ClassMember.Setter = <<STATIC?> <ReturnType> set <ID><Parameters> <FunctionBody>>

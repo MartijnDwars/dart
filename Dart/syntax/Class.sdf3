@@ -3,6 +3,9 @@ module Class
 imports
 
   Common
+  class/Declaration
+  class/Initializer
+  class/Member
   lexical/Operator
   Metadata
   Type
@@ -13,7 +16,7 @@ imports
   Function
   Arguments
   
-context-free syntax // Class
+context-free syntax
   
   Class.Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Parent?> <Mixins?> <Interfaces?> {
     <{ClassMember "\n"}*>
@@ -27,58 +30,6 @@ context-free syntax // Class
   Mixins.Mixins = <with <{Type ", "}+>>
   
   Interfaces.Interfaces = <implements <{Type ", "}+>>
-  
-context-free syntax // Class member definitions
-	
-	ClassMember.InitializedConstructor = <<Qualified><Parameters> : <{SuperCallOrFieldInitializer ", "}+> <FunctionBody>>
-	
-  ClassMember.ConstantConstructorDeclaration = <const <Qualified><Parameters> <RedirectionOrInitializers?>;>
-  
-  ClassMember.ConstructorDeclaration = <<Qualified><Parameters> <RedirectionOrInitializers>;>
-  
-  ClassMember.FactoryMethod = <factory <Qualified><Parameters> <FunctionBody>>
-  
-  ClassMember.OperatorMethod = <<Type?> operator <Operator><Parameters> <FunctionBody>>
-  
-  ClassMember.Method = <<STATIC?> <FunctionSignature> <FunctionBody>>
-  
-  ClassMember.Getter = <<STATIC?> <Type?> get <ID> <FunctionBody>>
-  
-  ClassMember.Setter = <<STATIC?> <Type?> set <ID><Parameters> <FunctionBody>>
-  
-  ClassMember.OperatorDeclaration = <<EXTERNAL?> <Type?> operator <Operator><Parameters>;>
-  
-  ClassMember.StaticFinalDeclaration = <static <FinalOrConst> <Type?> <{StaticFinalDeclaration ", "}+>;>
-  
-  ClassMember.FinalFieldDeclaration = <final <Type?> <{InitializedIdentifier ", "}+>;>
-  
-  ClassMember.FieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
-  
-  ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
-  
-  FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
-  
-  
-  RedirectionOrInitializers.Redirection = <: this<Arguments>>
-  RedirectionOrInitializers.RedirectionMethod = <: this.<ID><Arguments>>
-  RedirectionOrInitializers.Initializer = <: <{SuperCallOrFieldInitializer ", "}+>>
-  
-	// TODO: <Expression> should be <ConditionalExpression> and there should be <CascadeSelection*> after <Expression>
-	SuperCallOrFieldInitializer = <super<Arguments>>
-	SuperCallOrFieldInitializer = <super.<ID><Arguments>>
-	SuperCallOrFieldInitializer = <<ID> = <Expression>>
-	SuperCallOrFieldInitializer = <this.<ID> = <Expression>>
-
-  StaticFinalDeclaration = <<ID> = <Expression>>
-  
-	InitializedIdentifier = <<ID> = <Expression>>
-	InitializedIdentifier = <<ID>>
-	
-	FinalOrConst = "final"
-	FinalOrConst = "const"
-	
-	VarOrType = "var"
-	VarOrType = Type
   
 context-free syntax // Rejections
   
