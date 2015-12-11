@@ -29,3 +29,5 @@ lib/*.generated.str
 lib-refactoring/*.generated.str
 /src-gen
 trans/names.str
+trans/*.generated.str
+tests/gen

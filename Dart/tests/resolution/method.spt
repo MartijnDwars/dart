@@ -1,0 +1,65 @@
+module method
+
+language Dart
+start symbol Start
+
+test forward method reference [[
+  class Foo {
+    int m() {
+      return [[n]]();
+    }
+    
+    int [[n]]() {
+    }
+  }
+]] resolve #1 to #2
+
+test backward method reference [[
+  class Foo {
+    int [[n]]() {
+    }
+    
+    int m() {
+      return [[n]]();
+    }
+  }
+]] resolve #2 to #1
+
+test imported method [[
+  class Foo {
+    int [[n]]() {
+    }
+  }
+  
+  class Bar extends Foo {
+    int m() {
+      return [[n]]();
+    }
+  }
+]] resolve #2 to #1
+
+test transitively imported method [[
+  class Foo {
+    int [[n]]() {
+    }
+  }
+  
+  class Bar extends Foo {
+  }
+  
+  class Baz extends Bar {
+    int m() {
+      return [[n]]();
+    }
+  }
+]] resolve #2 to #1
+
+test getter [[
+  class Foo {
+    bool get [[canRedo]] => true;
+    
+    int m() {
+      return [[canRedo]];
+    }
+  }
+]] resolve #2 to #1

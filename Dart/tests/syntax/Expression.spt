@@ -58,3 +58,7 @@ test function expression [[
 test function expression [[
   () => x
 ]] parse succeeds
+
+test type cast [[
+  foo as bar
+]] parse succeeds

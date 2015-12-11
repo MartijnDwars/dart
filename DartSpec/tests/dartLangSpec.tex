@@ -129,7 +129,7 @@
     constructorSignature (redirection ; initializers)?;
     'external' constantConstructorSignature;
     'external' constructorSignature;
-    (('external' \STATIC{} ?))? getterSignature;
+    (('external' \STATIC{}?))? getterSignature;
     (('external' \STATIC{}?))? setterSignature;
     'external'? operatorSignature;
      (('external' \STATIC{}?))? functionSignature;
@@ -523,7 +523,7 @@
 \end{grammar}
 \begin{grammar}
 {\bf relationalExpression:}
-    bitwiseOrExpression (typeTest ; typeCast ;  relationalOperator bitwiseOrExpression)?;
+    bitwiseOrExpression (typeTest ; typeCast ; relationalOperator bitwiseOrExpression)?;
     'super' relationalOperator bitwiseOrExpression
     .
 
@@ -977,7 +977,7 @@
 \begin{grammar}
 
 {\bf typeAlias:}
-    metadata  \TYPEDEF{} typeAliasBody
+    metadata \TYPEDEF{} typeAliasBody
     .
   
 {\bf typeAliasBody:}
@@ -985,7 +985,7 @@
     .
 
 {\bf functionTypeAlias:}
-    functionPrefix  typeParameters? formalParameterList ';'
+    functionPrefix typeParameters? formalParameterList ';'
     .
     
 {\bf functionPrefix:}
