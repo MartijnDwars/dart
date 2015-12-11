@@ -1,7 +1,7 @@
 module Variable
 
 language Dart
-start symbol VariableDeclaration
+start symbol VarDecl
 
 test single int variable [[
   int sides

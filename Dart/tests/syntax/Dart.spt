@@ -9,6 +9,10 @@ test library [[
   int x;
 ]] parse succeeds
 
+test var decl is tld [[
+  int x;
+]] parse succeeds
+
 test empty main method [[
   void main() {
   }

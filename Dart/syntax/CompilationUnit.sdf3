@@ -38,8 +38,16 @@ context-free syntax
   PartDirective.PartDirective = <<Metadata> part <String>;>
   
   // Top level definition
-  TopDefinition = Class
   TopDefinition = Enum
-  TopDefinition = Function
   TopDefinition = TypeAlias
+  TopDefinition = Function
+  TopDefinition = Class
   TopDefinition.VarDeclStmt = <<VarDecl>;>
+
+  // TODO:
+  //   TopDefinition = <EXTERNAL? <functionSignature> ;>
+  //   TopDefinition = <EXTERNAL? <getterSignature> ;>
+  //   TopDefinition = <EXTERNAL? <setterSignature> ;>
+  //   TopDefinition = <<ReturnType> get <ID><FunctionBody>>
+  //   TopDefinition = <<ReturnType> set <ID><Parameters> <FunctionBody>>
+  //   TopDefinition = <('final' ; 'const') <DynType> staticFinalDeclarationList ';'>
