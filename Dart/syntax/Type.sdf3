@@ -7,17 +7,16 @@ imports
   Type
   Parameters
   
-context-free syntax // Type
+context-free syntax // Types
   
-  Type.VoidType = VOID
-  Type.DynamicType = DYNAMIC
   Type.Type = <<Qualified>>
   Type.Generic = <<Qualified> <TypeArguments>>
- 
-context-free syntax // DynType parses ε as Dynamic()
-
-  DynType.Type = <<Qualified>>
-  DynType.Dynamic = 
+  
+  DynType.Dynamic =
+  DynType = Type
+  
+  ReturnType.Void = VOID
+  ReturnType = DynType
   
 context-free syntax // Type arguments
   

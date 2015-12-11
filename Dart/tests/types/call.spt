@@ -1,0 +1,20 @@
+module method
+
+language Dart
+start symbol Start
+
+test type of method is its return type [[
+  int [[foo]]() {
+    return 0;
+  }
+]] run get-type to Type("int")
+
+test type of call is type of function [[
+  int bar() {
+    return 0;
+  }
+  
+  int main() {
+    return [[bar()]];
+  }
+]] run get-type to Type("int")

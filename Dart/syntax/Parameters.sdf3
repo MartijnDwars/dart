@@ -22,10 +22,10 @@ context-free syntax // Required parameters
   Parameter = FieldParameter
   Parameter = SimpleParameter
   
-  FieldParameter.FieldParameter = <<Metadata> <Modifier?> <DynType> this.<ID><Parameters?>>
+  FieldParameter.FieldParameter = <<Metadata> <Modifier?> <ReturnType> this.<ID><Parameters?>>
   FieldParameter.FieldParameter = <<Metadata> var this.<ID><Parameters?>>
   
-  SimpleParameter.SimpleParameter = <<Metadata> <Modifier?> <DynType> <ID>>
+  SimpleParameter.SimpleParameter = <<Metadata> <Modifier?> <ReturnType> <ID>>
   SimpleParameter.SimpleParameter = <<Metadata> var <ID>>
   
 context-free syntax // Optional parameters

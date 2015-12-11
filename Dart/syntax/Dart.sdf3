@@ -39,8 +39,9 @@ context-free start-symbols
   Operator
   Statement
   String
-  VarDecl
+  Type
   TypeAlias
+  VarDecl
   
   // Real start symbol
   Start

@@ -14,14 +14,14 @@ context-free syntax
   
   // TODO: Duplication, replace this by the rules below
   
-  Function.Function = <<Metadata> <DynType> <ID><Parameters> <Block>>
+  Function.Function = <<Metadata> <ReturnType> <ID><Parameters> <Block>>
   
-  Function.ShortFunction = <<Metadata> <DynType> <ID><Parameters> =\>
+  Function.ShortFunction = <<Metadata> <ReturnType> <ID><Parameters> =\>
     <Expression>;>
   
   // ---
   
-  FunctionSignature.FunctionSignature = <<Metadata> <DynType> <ID><Parameters>>
+  FunctionSignature.FunctionSignature = <<Metadata> <ReturnType> <ID><Parameters>>
   
   FunctionBody.FunctionBody = <<FunctionModifier?> <Block>>
   
