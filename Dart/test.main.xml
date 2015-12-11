@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Test" default="test">
+  <import file="build.main.xml"/>
+  
+  <path id="test.files">
+    <fileset dir="tests/stratego">
+      <include name="**/*.str" />
+    </fileset>
+  </path>
+  
+	<target name="test">
+	  <mkdir dir="${basedir}/tests/gen/src" />
+	  <mkdir dir="${basedir}/tests/gen/target/classes" />
+	  
+	  <!-- Compile files -->
+    <for param="file">
+      <path>
+        <fileset dir="tests/stratego" includes="**/*.str" />
+      </path>
+	    <sequential>
+	      <antcall target="test.compile">
+	        <param name="file" value="@{file}" />
+        </antcall>
+	    </sequential>
+	  </for>
+	  
+	  <!-- Run files -->
+	  <for param="file">
+	    <path>
+	      <fileset dir="tests/stratego" includes="**/*.str" />
+	    </path>
+	    <sequential>
+	      <antcall target="test.run">
+	        <param name="file" value="@{file}" />
+	      </antcall>
+	    </sequential>
+	  </for>
+	</target>
+	
+  <!-- Compile .str to .class -->
+  <target name="test.compile">
+    <echo message="Compile ${file}" />
+    <basename property="filename" file="${file}" suffix=".str"/>
+    
+    <!-- Compile .str to .java -->
+    <java classname="org.strategoxt.strj.Main" failonerror="true">
+      <arg value="--input" />
+      <arg value="${basedir}/tests/stratego/${filename}.str" />
+      <arg value="--output" />
+      <arg value="${basedir}/tests/gen/src/${filename}.java" />
+      <arg value="--clean" />
+      <arg line="-I &quot;${basedir}/trans&quot; -I &quot;${basedir}&quot; -la stratego-lib -la stratego-sglr -la stratego-gpp -la stratego-xtc -la stratego-aterm -la stratego-parallel" />
+      <arg line="-I &quot;${lib}&quot; -I &quot;${include}&quot; --cache-dir &quot;${basedir}/.cache&quot;" />
+    </java>
+
+    <!-- Compile .java to .class -->
+    <javac srcdir="${basedir}/tests/gen/src" destdir="${basedir}/tests/gen/target/classes" source="1.7" target="1.7" debug="on">
+      <classpath>
+        <pathelement path="utils/strategoxt.jar:${src-gen}${externaljarimport1}${externaljarimport2}${java.jar.classpath}" />
+      </classpath>
+    </javac>
+  </target>
+        
+  <!-- Run test suite -->
+  <target name="test.run">
+    <echo message="Running ${file}" />
+                    
+    <basename property="filename" file="${file}" suffix=".str"/>
+                
+    <java classname="${filename}" failonerror="true" fork="true">
+      <classpath>
+        <pathelement location="${eclipse.spoofaximp.strategojar}" />
+        <pathelement location="${basedir}/tests/gen/target/classes" />
+        <pathelement location="${basedir}/include" />
+      </classpath>
+    </java>
+  </target>
+</project>
