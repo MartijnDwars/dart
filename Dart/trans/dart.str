@@ -20,18 +20,30 @@ imports
 	generate
 	pp
 	constraints
+	desugar
+	types.generated
 
 rules // Analysis
 	
 	editor-analyze = analysis-default-editor
 	
 	analysis-single-default-interface = 
-		analysis-single-default(id, id, id|<language>)
+		where(?(_, path, _)); analysis-single-default(desugar-all(|path), id, id|<language>)
+		//analysis-single-default(desugar-all(|$[x]), id, id|<language>)
 	analysis-multiple-default-interface = 
-		analysis-multiple-default(parse-file <+ !(), id, id, id|<language>, <project-path>)
+		analysis-multiple-default(parse-file <+ !(), desugar-all, id, id|<language>, <project-path>)
 	
 	editor-save = analysis-save-default(|<language>)
 
+rules // Builders
+  
+  // Resolves a reference when the user control-clicks or presses F3 in the editor.
+  builder-desugar:
+    (selected, _, _, path, _) -> (filename, result)
+    where
+      filename := <guarantee-extension(|$[desugared])> path;
+      result   := <desugar-all(|path)> selected
+  
 rules // Editor services
 	
 	// Resolves a reference when the user control-clicks or presses F3 in the editor.
@@ -44,7 +56,7 @@ rules // Editor services
 	// For references, this rule is invoked using the resolved term.
 	editor-hover:
 		(target, position, ast, path, project-path) ->
-			<get-editor-properties(pp-partial-Dart-string |<language>, project-path);properties-to-html>target
+			<get-editor-properties(pp-partial-Dart-string|<language>, project-path); properties-to-html> target
 
 	// Gathers the outline nodes for the outline view.
 	editor-outline:

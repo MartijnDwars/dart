@@ -1,0 +1,6 @@
+module utils
+
+rules
+  
+  is-quoted = is-quoted(|'"') + is-quoted(|'\'')
+  

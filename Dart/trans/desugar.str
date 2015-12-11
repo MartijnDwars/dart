@@ -1,0 +1,53 @@
+module desugar
+
+imports
+  
+  include/Dart
+  signatures
+  traversal
+  utils
+
+rules
+  
+  /**
+   * One declaration of multiple variables becomes multiple variable declarations.
+   */
+  desugar:
+    VarDecl(meta, type, var*) -> [var-decls]
+    where
+      var-decls := <map(!VarDecl(meta, type, <id>))> var*
+  
+  desugar:
+    VarDecl(meta, var*) -> [var-decls]
+    where
+      var-decls := <map(!VarDecl(meta, <id>))> var*
+  
+  desugar:
+    FieldDeclaration(static, type, field*) -> [fields]
+    where
+      fields := <map(!FieldDeclaration(static, type, <id>))> field*
+
+rules // Remove superfluous constructors
+  
+  desugar:
+    VarDeclStmt(decl) -> decl
+    
+  desugar:
+    Parameters(params) -> params
+  
+  desugar:
+    Some(x) -> x
+  
+rules // Remove superfluous quotes in imports
+  
+  desugar:
+    Import(String(name), args) -> Import(String(<unquote(id)> name), args)
+    where
+      <is-quoted> name
+  
+strategies
+  
+  desugar-all(|path) =
+    inline-td(try(repeat(desugar)))
+  ; !File(<base-filename> path, <id>)
+  

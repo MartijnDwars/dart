@@ -1,0 +1,12 @@
+module traversal
+
+rules
+  
+  /**
+   * Topdown traversal with s but inline lists of lists.
+   */
+  inline-td(s) = s; if is-list then
+    ?[] + (map(inline-td(s)); flatten-list)
+  else
+    all(inline-td(s))
+  end
