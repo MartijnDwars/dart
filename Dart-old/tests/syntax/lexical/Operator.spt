@@ -1,0 +1,20 @@
+module Operator
+
+language Dart
+start symbol Operator
+
+test plus valid operator [[
+  +
+]] parse succeeds
+
+test no layout around operator [[
+  [ ] =
+]] parse fails
+
+test inequality is not a valid operator [[
+  !+
+]] parse fails
+
+test equality is not a valid operator [[
+  =
+]] parse fails

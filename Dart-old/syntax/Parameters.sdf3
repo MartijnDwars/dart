@@ -1,0 +1,44 @@
+module Parameters
+
+imports
+  
+  Common
+  Expression
+  Function
+  Metadata
+  Modifier
+  Type
+  
+context-free syntax
+  
+  // TODO: Reduce to 1 rule and enforce the optional last in analysis
+  Parameters.Parameters = <(<{Parameter ", "}*>)>
+  Parameters.Parameters = <(<{Parameter ", "}+>, <OptionalParameters>)>
+  Parameters.Parameters = <(<OptionalParameters>)>
+  
+context-free syntax // Required parameters
+
+  Parameter = FunctionSignature
+  Parameter = FieldParameter
+  Parameter = SimpleParameter
+  
+  FieldParameter.FieldParameter = <<Metadata> <Modifier?> <ReturnType> this.<ID><Parameters?>>
+  FieldParameter.FieldParameter = <<Metadata> var this.<ID><Parameters?>>
+  
+  SimpleParameter.SimpleParameter = <<Metadata> <Modifier?> <ReturnType> <ID>>
+  SimpleParameter.SimpleParameter = <<Metadata> var <ID>>
+  
+context-free syntax // Optional parameters
+
+  OptionalParameters.Positional = <[<{DefaultParameter ", "}+>]>
+  OptionalParameters.Named = <{<{NamedParameter ", "}+>}>
+  
+  DefaultParameter.DefaultParameter = <<Parameter> = <Expression>>
+  DefaultParameter = Parameter
+  
+  NamedParameter.NamedInitializedParam = <<Parameter>: <Expression>>
+  NamedParameter = Parameter
+  
+template options
+
+  tokenize : "."

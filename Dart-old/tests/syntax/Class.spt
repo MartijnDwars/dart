@@ -1,0 +1,139 @@
+module Class
+
+language Dart
+start symbol Class
+
+test empty class [[
+  class Foo {
+  }
+]] parse succeeds
+
+test abstract class [[
+  abstract class Foo {
+  }
+]] parse succeeds
+
+test extending class [[
+  class Foo extends Bar {
+  }
+]] parse succeeds
+
+test singleton type parameter list [[
+  class Foo<X> {
+  }
+]] parse succeeds
+
+test multiple type parameters [[
+  class Foo<X, Y, Z> {
+  }
+]] parse succeeds
+
+test empty type parameter list [[
+  class Foo<> {
+  }
+]] parse fails
+
+test class with parent and mixin [[
+  class Foo extends Bar with Baz {
+  }
+]] parse succeeds
+
+test class with parent and mixin and interface [[
+  class Foo extends Bar with Baz implements Qux {
+  }
+]] parse succeeds
+
+test class with mixin without parent [[
+  class Foo with Bar {
+  }
+]] parse fails
+
+test no whitespace [[
+  classFoo extendsBar withBaz implementsBaz {
+  }
+]] parse fails
+
+test class with constructor [[
+  class Foo {
+    Foo(String bar) {
+    }
+  }
+]] parse succeeds
+
+test class with method [[
+  class Foo {
+    num distanceTo() {
+      
+    }
+  }
+]] parse succeeds
+
+test class with fields [[
+  class Point {
+  	final num x = 1, y;
+  	final num z;
+  }
+]] parse succeeds
+
+test class with static fields [[
+  class Point {
+    static final num x = 1, y = 2;
+  }
+]] parse succeeds
+
+test class with static field without initializer [[
+  class Point {
+    static final num x;
+  }
+]] parse fails
+
+test class with normal fields [[
+  class Point {
+    var x, y;
+    num a, b;
+  }
+]] parse succeeds
+
+test class with setting constructor [[
+  class Point {
+    Point(this.x, this.y);
+  }
+]] parse succeeds
+
+test class with constant constructor without modifier [[
+  class Point {
+    const Point(this.x);
+  }
+]] parse succeeds
+
+test class with constant constructor with body [[
+  class Point {
+    const Point() {}
+  }
+]] parse fails
+
+test constructor with empty list of initializers [[
+  class Point {
+    Point(x, y) : ;
+  }
+]] parse fails
+
+test constructor with two initializers [[
+	class Point {
+	  Point(x, y) : x = 1, y = 2;
+	}
+]] parse succeeds
+
+test class with constructor [[
+	class Bunny {
+	  Bunny() {
+	    print('in bunny');
+	  }
+	}
+]] parse succeeds
+
+test class member with dynamic type [[
+	abstract class Adaptable {
+	  dynamic adapt(Type type);
+	}
+]]

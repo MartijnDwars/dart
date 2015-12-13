@@ -1,0 +1,32 @@
+module Variable
+
+imports
+
+  Common
+  Type
+  Metadata
+  Expression
+  Modifier
+  
+context-free syntax
+
+  VarDecl.VarDecl = <<Metadata> <Modifier> <Type?> <{Init ", "}+>>
+  VarDecl.VarDecl = <<Metadata> var <{Var ", "}+>>
+  VarDecl.VarDecl = <<Metadata> <Type> <{Var ", "}+>>
+  
+  Var.Var = ID
+  Var = Init
+  
+  Init.Var = <<ID> = <Expression>>
+  
+  DeclaredIdentifier.DeclaredIdentifier = <<Metadata> <Modifier?> <Type?> <ID>>
+  DeclaredIdentifier.DeclaredIdentifier = <<Metadata> var <ID>>
+
+context-free syntax // Rejections
+  
+  // DeclaredIdentifier must have at least a type or modifier
+  DeclaredIdentifier = <<Metadata> <ID>> {reject}
+  
+template options
+
+  keyword -/- [a-zA-Z]

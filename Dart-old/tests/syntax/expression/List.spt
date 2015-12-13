@@ -1,0 +1,28 @@
+module List
+
+language Dart
+start symbol Expression
+
+test empty list [[
+  []
+]] parse succeeds
+
+test singleton list [[
+  [1]
+]] parse succeeds
+
+test non-empty list [[
+  [1, 2, 3]
+]] parse succeeds
+
+test constant list literal [[
+  const [1, 2, 3]
+]] parse succeeds
+
+test list with trailing comma [[
+  [1, 2, 3, ]
+]] parse succeeds
+
+test typed list [[
+  <int>[1, 2, 3]
+]] parse succeeds

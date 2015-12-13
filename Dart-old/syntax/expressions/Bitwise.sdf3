@@ -1,0 +1,11 @@
+module expressions/Bitwise
+
+imports
+
+  Common
+
+context-free syntax
+
+  Expression.BitAnd = Expression "&" Expression {left}
+  Expression.BitXor = Expression "^" Expression {left}
+  Expression.BitOr = Expression "|" Expression {left}

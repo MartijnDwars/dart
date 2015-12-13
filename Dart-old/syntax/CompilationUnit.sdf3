@@ -1,0 +1,53 @@
+module CompilationUnit
+
+imports
+
+  Common
+  Import
+  Export
+  Metadata
+  Class
+  Enum
+  Function
+  String
+  Type
+  Variable
+
+context-free syntax
+
+  // Enforce greedy matching of TopDefinitions. Parse at least one top definition (TODO: more restrictive than standard)
+  CompilationUnit.Library =
+    <<LibraryName?>
+    <Header*>
+    <PartDirective*>
+    <{TopDefinition "\n\n"}+>> {longest-match}
+  
+  CompilationUnit.Part =
+    <<Metadata>
+    part of <ID>;
+    <{TopDefinition "\n\n"}*>>
+  
+  // Library name
+  LibraryName.LibraryName = <<Metadata> library <{ID "."}+>;>
+  
+  // Header
+  Header = Import
+  Header = Export
+  
+  // Part
+  PartDirective.PartDirective = <<Metadata> part <String>;>
+  
+  // Top level definition
+  TopDefinition = Enum
+  TopDefinition = TypeAlias
+  TopDefinition = Function
+  TopDefinition = Class
+  TopDefinition.VarDeclStmt = <<VarDecl>;>
+
+  // TODO:
+  //   TopDefinition = <EXTERNAL? <functionSignature> ;>
+  //   TopDefinition = <EXTERNAL? <getterSignature> ;>
+  //   TopDefinition = <EXTERNAL? <setterSignature> ;>
+  //   TopDefinition = <<ReturnType> get <ID><FunctionBody>>
+  //   TopDefinition = <<ReturnType> set <ID><Parameters> <FunctionBody>>
+  //   TopDefinition = <('final' ; 'const') <DynType> staticFinalDeclarationList ';'>

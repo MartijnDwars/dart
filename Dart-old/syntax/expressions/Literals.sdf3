@@ -1,0 +1,34 @@
+module expressions/Literals
+
+imports
+
+  Common
+  Type
+  Expression
+  String
+  lexical/Operator
+  
+context-free syntax
+
+  Literal = String
+  Literal = Boolean
+  Literal = Number
+  Literal.Symbol = <#<{ID "."}+>>
+  Literal.OperatorSymbol = <#<Operator>>
+  Literal.Null = "null"
+  
+  Literal.List = <<CONST?> [<{Expression ", "}*>]>
+  Literal.List = <<CONST?> [<{Expression ", "}*>, ]>
+  Literal.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
+  
+  Literal.Map = <<CONST?> {<{MapEntry ", "}*>}>
+  Literal.Map = <<CONST?> {<{MapEntry ", "}*>, }>
+  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
+  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
+  MapEntry.MapEntry = <<Expression>: <Expression>> 
+  
+  Boolean.True = "true"
+  Boolean.False = "false"
+  
+  Number.Dec = NUMBER
+  Number.Hex = HEX-NUMBER

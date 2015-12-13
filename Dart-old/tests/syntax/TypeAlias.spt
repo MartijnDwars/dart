@@ -1,0 +1,16 @@
+module TypeAlias
+
+language Dart
+start symbol TypeAlias
+
+test type alias [[
+  typedef void LoggerOutputFunction(String msg);
+]] parse succeeds
+
+test mandatory whitespace [[
+  typedefvoid LoggerOutputFunction(String msg);
+]] parse fails
+
+test type alias with type parameter [[
+  typedef void LoggerOutputFunction<T>(T msg);
+]] parse succeeds

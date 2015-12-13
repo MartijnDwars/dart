@@ -1,0 +1,12 @@
+module Import
+
+language Dart
+start symbol Import
+
+test import all [[
+  import 'dart:html';
+]] parse succeeds
+
+test import specified classes [[
+  import 'dart:math' show Random;
+]] parse succeeds

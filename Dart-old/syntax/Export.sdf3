@@ -1,0 +1,14 @@
+module Export
+
+imports
+
+  Common
+  Metadata
+  String
+  
+context-free syntax
+
+  Export.Export = <<Metadata> export <String> <Combinator*>;>
+  
+  Combinator.Show = <show <{ID ","}+>>
+  Combinator.Hide = <hide <{ID ","}+>>

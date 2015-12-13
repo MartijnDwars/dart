@@ -1,0 +1,30 @@
+module typedef
+
+language Dart
+start symbol Start
+
+test typedef with type [[
+  typedef void [[LoggerOutputFunction]](String msg);
+
+  class Logger {
+    [[LoggerOutputFunction]] out;
+  }
+]] resolve #2 to #1
+
+test typedef without type [[
+  typedef [[LoggerOutputFunction]](String msg);
+
+  class Logger {
+    [[LoggerOutputFunction]] out;
+  }
+]] resolve #2 to #1
+
+test typedef scopes parameters [[
+	typedef LoggerOutputFunction(String msg);
+	
+	class Foo {
+	  int m() {
+	    return msg;
+	  }
+	}
+]] 1 error

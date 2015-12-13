@@ -1,0 +1,60 @@
+module expressions/Primary
+
+imports
+  
+  Common
+  Type
+  Function
+  Arguments
+  Parameters
+  Expression
+  expressions/Literals
+  Statement
+  
+context-free syntax
+
+  Primary.This = <this>
+  
+  Primary.VarRef = ID
+  
+  Primary = Function
+  
+  Primary = Literal
+  
+  // Since <Type> may contain '.', these two are ambiguous
+  Primary.NewObject = <new <Type>(<Arguments>)>
+  
+  Primary.NewObject = <new <Type>.<ID>(<Arguments>)> {prefer}
+  
+  Primary.Closurization = <new <Type>#>
+  
+  Primary.Closurization = <new <Type>#.<ID>>
+  
+  // Since <Type> may contain '.', these two are ambiguous
+  Primary.ConstObject = <const <Type>(<Arguments>)>
+  
+  Primary.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}
+  
+  Primary.SuperIndex = <super[<Expression>]>
+  
+  Primary.SuperField = <super.<ID>>
+  
+  Primary.Lambda = <<Parameters> <FunctionModifier?> {
+    <Statement*>
+  }>
+  
+  // NOTE: {longest-match} is used because SDF lacks safe precedence, see e.g. http://dx.doi.org/10.1007/978-3-319-02654-1_8
+  Primary.ShortLambda = <<Parameters> <ASYNC?> =\> <Expression>> {longest-match}
+  
+  Primary.Field = <<Primary>.<ID>> {left}
+  
+  Primary.SafeField = <<Primary>?.<ID>> {left}
+  
+  Primary.Index = <<Primary>[<Expression>]>
+  
+  Primary.Call = <<Primary>(<Arguments>)>
+  
+template options
+
+  tokenize : "?.["
+  

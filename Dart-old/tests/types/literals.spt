@@ -1,0 +1,12 @@
+module literals
+
+language Dart
+start symbol Exp
+
+test list literal has type [[
+  []
+]] run get-type to ListType()
+
+test list literal has type [[
+  {}
+]] run get-type to MapType()

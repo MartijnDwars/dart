@@ -1,0 +1,35 @@
+module traversal
+
+imports
+  libstratego-lib
+  include/Dart
+  trans/traversal
+  
+strategies
+  main =
+    test-suite(!"inline-td",
+      test-inline-empty
+    ; test-inline-id
+    ; test-inline
+    )
+
+  test-inline-empty =
+    apply-test(!"inline on empty list"
+    , inline-td(id)
+    , ![]
+    , ![]
+    )
+  
+  test-inline-id =
+    apply-test(!"inline with id"
+    , inline-td(id)
+    , ![1, 2, 3]
+    , !Conc(1,Conc(2,Conc(3,[])))
+    )
+
+  test-inline =
+    apply-test(!"inline with [<id>]"
+    , inline-td(is-list < id + ![<id>])
+    , ![1, 2, 3]
+    , ![1, 2, 3]
+    )

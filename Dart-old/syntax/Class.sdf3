@@ -1,0 +1,44 @@
+module Class
+
+imports
+
+  Common
+  class/Declaration
+  class/Initializer
+  class/Member
+  lexical/Operator
+  Metadata
+  Type
+  Expression
+  Modifier
+  Statement
+  Parameters
+  Function
+  Arguments
+  
+context-free syntax
+  
+  Class.Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Parent?> <Mixins?> <Interfaces?> {
+    <{ClassMember "\n"}*>
+  }>
+  
+  Class.MixinApplication = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> =
+  	<Type> with <{Type ", "}+> <Interfaces?>;>
+  
+  Parent.Parent = <extends <Type>>
+  
+  Mixins.Mixins = <with <{Type ", "}+>>
+  
+  Interfaces.Interfaces = <implements <{Type ", "}+>>
+  
+context-free syntax // Rejections
+  
+  // Reject classes that have a mixin without parent
+  Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
+    <{ClassMember "\n"}*>
+  }> {reject}
+  
+template options
+
+  keyword -/- [a-zA-Z]
+  tokenize: ".("

@@ -1,0 +1,15 @@
+module Import
+
+imports
+
+  Common
+  String
+  
+context-free syntax
+  
+  Import.Import = <import <String> <Combinator*>;>
+  Import.AliasedImport = <import <String> as <ID> <Combinator*>;>
+  Import.DeferredImport = <import <String> deferred as <ID> <Combinator*>;>
+  
+  Combinator.Show = <show <{ID ","}+>>
+  Combinator.Hide = <hide <{ID ","}+>>

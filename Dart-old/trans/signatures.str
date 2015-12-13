@@ -1,0 +1,16 @@
+module signatures
+
+signature constructors // File
+  
+  File       : STRING * Start -> Root
+  
+signature constructors // Types
+
+  StringType : Type
+  IntType    : Type
+  DoubleType : Type
+  BoolType   : Type
+  VoidType   : Type
+  MapType    : Type
+  ListType   : Type
+  

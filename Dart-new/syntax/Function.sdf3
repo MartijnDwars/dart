@@ -1,0 +1,33 @@
+module Function
+
+imports
+
+  Common
+  Expression
+  Statement
+  Type
+  Metadata
+  Parameters
+  statement/Block
+  
+context-free syntax
+  
+  // --- Version 1
+  
+  Function.Function =
+    <<Metadata> <ReturnType> <ID><Parameters> <FunctionModifier?> <Block>>
+  
+  Function.ShortFunction =
+    <<Metadata> <ReturnType> <ID><Parameters> <ASYNC?> =\> <Expression>;>
+  
+  // --- Version 2
+  
+  FunctionSignature.FunctionSignature = <<Metadata> <ReturnType> <ID><Parameters>>
+  
+  FunctionBody.FunctionBody = <<FunctionModifier?> <Block>>
+  
+  FunctionBody.ShortFunctionBody = <<ASYNC?> =\> <Expression>;>
+  
+  FunctionModifier.Async  = ASYNC
+  FunctionModifier.Asyncs = <<ASYNC>*>
+  FunctionModifier.Syncs  = <<SYNC>*>

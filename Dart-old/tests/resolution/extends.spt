@@ -1,0 +1,16 @@
+module extends
+
+language Dart
+start symbol Start
+
+test import fields [[
+  class Foo {
+    int [[x]];
+  }
+  
+  class Bar extends Foo {
+    int m() {
+      return [[x]];
+    }
+  }
+]] resolve #2 to #1

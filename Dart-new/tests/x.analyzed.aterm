@@ -1,0 +1,110 @@
+File(
+  "x.dart"{ Def(
+              URI(
+                Language("Dart")
+              , [ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))]
+              )
+            )
+          }
+, Program(
+    [ Library(
+        None()
+      , []
+      , []
+      , [ Function(
+            Metadata([])
+          , Dynamic()
+          , "main"{ Def(
+                      URI(
+                        Language("Dart")
+                      , [ ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                        , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                        ]
+                      )
+                    )
+                  }
+          , []
+          , None()
+          , Block(
+              [ VarDecl(Metadata([]), Type("int"), Var("x"{ Def(
+                                                              URI(
+                                                                Language("Dart")
+                                                              , [ ID(NablNsGlobal(), "x", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                                , Subsequent("eclipse:///dart/tests/x.dart/0")
+                                                                , Anonymous("eclipse:///dart/tests/x.dart/0")
+                                                                , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                                , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                                ]
+                                                              )
+                                                            )
+                                                          }))
+              , For(
+                  [VarDecl(Metadata([]), Var("i"{ Def(
+                                                    URI(
+                                                      Language("Dart")
+                                                    , [ ID(NablNsGlobal(), "i", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                      , Subsequent("eclipse:///dart/tests/x.dart/0")
+                                                      , Anonymous("eclipse:///dart/tests/x.dart/0")
+                                                      , Subsequent("eclipse:///dart/tests/x.dart/0")
+                                                      , Anonymous("eclipse:///dart/tests/x.dart/0")
+                                                      , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                      , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                                                      ]
+                                                    )
+                                                  )
+                                                }, Dec("0")))]
+                , Lt(VarRef("i"{Use(Result(5174))}), Dec("10"))
+                , [PostInc(VarRef("i"{Use(Result(5174))}))]
+                , Block(
+                    [ExprStmt(Call(VarRef("print"{Use(Result(5181))}), ExpArguments([VarRef("i"{Use(Result(5183))})])))]
+                  ){ Scope(
+                       [ ( NablNsGlobal()
+                         , URI(
+                             Language("Dart")
+                           , [ Anonymous("eclipse:///dart/tests/x.dart/0")
+                             , Anonymous("eclipse:///dart/tests/x.dart/0")
+                             , Subsequent("eclipse:///dart/tests/x.dart/0")
+                             , Anonymous("eclipse:///dart/tests/x.dart/0")
+                             , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                             , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                             ]
+                           )
+                         )
+                       ]
+                     )
+                   }
+                ){ Scope(
+                     [ ( NablNsGlobal()
+                       , URI(
+                           Language("Dart")
+                         , [ Anonymous("eclipse:///dart/tests/x.dart/0")
+                           , Subsequent("eclipse:///dart/tests/x.dart/0")
+                           , Anonymous("eclipse:///dart/tests/x.dart/0")
+                           , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                           , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                           ]
+                         )
+                       )
+                     ]
+                   )
+                 }
+              ]
+            ){ Scope(
+                 [ ( NablNsGlobal()
+                   , URI(
+                       Language("Dart")
+                     , [ Anonymous("eclipse:///dart/tests/x.dart/0")
+                       , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/x.dart/0"))
+                       , ID(NablNsFile(), "x.dart", Unique("eclipse:///dart/tests/x.dart/0"))
+                       ]
+                     )
+                   )
+                 ]
+               )
+             }
+          )
+        ]
+      )
+    ]
+  )
+)

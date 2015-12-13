@@ -1,0 +1,72 @@
+module field
+
+language Dart
+start symbol Start
+
+test field reference [[
+  class Foo {
+    Foo [[x]];
+  }
+  
+  class Bar extends Foo {
+    int m() {
+      return [[x]];
+    }
+  }
+]] resolve #2 to #1
+
+test transitive field reference [[
+  class Foo {
+    Foo [[x]];
+  }
+  
+  class Bar extends Foo {
+    
+  }
+  
+  class Baz extends Bar {
+    int m() {
+      return [[x]];
+    }
+  }
+]] resolve #2 to #1
+
+test final field reference [[
+  class Foo {
+    final String [[s]];
+    
+    int m() {
+      return [[s]];
+    }
+  }
+]] resolve #2 to #1
+
+test field with initializer reference [[
+  class Foo {
+    int [[x]] = 0;
+    
+    int m() {
+      return [[x]];
+    }
+  }
+]] resolve #2 to #1
+
+test static type [[
+  class Foo {
+    int x;
+  }
+  
+  main() {
+    Foo [[f]];
+  }
+]] run get-type to Type("Foo")
+
+test dynamic type [[
+  class Foo {
+    int x;
+  }
+  
+  main() {
+    var f = new Foo();
+  }
+]] run get-type to Type("Foo")

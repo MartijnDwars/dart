@@ -1,0 +1,16 @@
+module Type
+
+language Dart
+start symbol Type
+
+test void is not a valid type [[
+  void
+]] parse fails
+
+test dynamic is not a valid type [[
+  dynamic
+]] parse fails
+
+test int is a valid type [[
+  int
+]] parse succeeds

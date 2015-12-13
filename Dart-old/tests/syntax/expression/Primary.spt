@@ -1,0 +1,12 @@
+module Primary
+
+language Dart
+start symbol Primary
+
+test allowed whitespace super subscript [[
+  super [ 1 ]
+]] parse succeeds
+
+test allowed whitespace super field [[
+  super . x
+]] parse succeeds

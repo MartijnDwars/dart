@@ -1,0 +1,25 @@
+module expressions/Unary
+
+imports
+  
+  Arguments
+  Common
+  expressions/AssignableExpression
+  expressions/Primary
+
+context-free syntax
+
+  Expression = UnaryExpression
+  
+  // Unary postfix
+  UnaryExpression.PostInc = <<AssignableExpression>++>
+  UnaryExpression.PostDec = <<AssignableExpression>-->
+  
+  // Unary prefix
+  UnaryExpression.Min = <-<UnaryExpression>>
+  UnaryExpression.Neg = <!<UnaryExpression>>
+  UnaryExpression.BitNot = <~<UnaryExpression>>
+  UnaryExpression = Primary
+  
+  UnaryExpression.PreInc = <++<AssignableExpression>>
+  UnaryExpression.PreDec = <--<AssignableExpression>>

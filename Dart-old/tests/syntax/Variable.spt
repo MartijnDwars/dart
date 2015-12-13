@@ -1,0 +1,48 @@
+module Variable
+
+language Dart
+start symbol VarDecl
+
+test single int variable [[
+  int sides
+]] parse succeeds
+
+test multiple int variables [[
+  int sides, value
+]] parse succeeds
+
+test final variable [[
+  final x
+]] parse succeeds
+
+test constant variable [[
+  const x
+]] parse succeeds
+
+test dynamic variable [[
+  var x
+]] parse succeeds
+
+test typed variable [[
+  int x
+]] parse succeeds
+
+test mandatory whitespace [[
+  varx
+]] parse fails
+
+test variable lacking both modifier and type [[
+  sides
+]] parse fails
+
+test var no type [[
+  var int x
+]] parse fails
+
+test var no final modifier [[
+  final var x
+]] parse fails
+
+test var no const modifier [[
+  const var x
+]] parse fails

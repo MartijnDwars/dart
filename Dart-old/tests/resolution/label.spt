@@ -1,0 +1,20 @@
+module label
+
+language Dart
+start symbol Start
+
+test label resolution [[
+  main() {
+    [[loop]]: for (int i = 0; ; ) {
+      break [[loop]];
+    }
+  }
+]] resolve #2 to #1
+
+test label not available outside statement [[
+  main() {
+    loop: for (int i = 0; ; ) {
+    }
+    break loop;
+  }
+]] 1 error

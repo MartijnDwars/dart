@@ -1,0 +1,6 @@
+module expressions/Additive
+
+context-free syntax
+
+  Expression.Add = Expression "+" Expression {left}
+  Expression.Sub = Expression "-" Expression {left}

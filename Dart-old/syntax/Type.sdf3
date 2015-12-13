@@ -1,0 +1,39 @@
+module Type
+
+imports
+
+  Common
+  Metadata
+  Type
+  Parameters
+  
+context-free syntax // Types
+  
+  Type.Type = <<Qualified>>
+  Type.Generic = <<Qualified> <TypeArguments>>
+  
+  DynType.Dynamic =
+  DynType = Type
+  
+  ReturnType.Void = VOID
+  ReturnType = DynType
+  
+context-free syntax // Type arguments
+  
+  TypeArguments.TypeArguments = [<[{Type ","}+]>]
+  
+context-free syntax // Type parameters
+
+  TypeParameters.TypeParameters = [<[{TypeParameter ", "}+]>]
+  
+  TypeParameter.TypeParameter = <<Metadata> <ID>>
+  TypeParameter.BoundedTypeParameter = <<Metadata> <ID> extends <Type>>
+  
+context-free syntax // Type alias
+
+  TypeAlias.Typealias = <<Metadata> typedef <DynType> <ID> <TypeParameters?> <Parameters>;>
+  
+template options
+
+  keyword -/- [a-zA-Z]
+  

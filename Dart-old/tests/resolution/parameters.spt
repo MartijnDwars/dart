@@ -1,0 +1,56 @@
+module parameters
+
+language Dart
+start symbol Start
+
+test duplicate parameter [[
+  main(x, x) {
+  }
+]] 2 errors
+
+test duplicate optional parameter [[
+  main([x, x]) {
+  }
+]] 2 errors
+
+test duplciate named parameter [[
+	main({x, x}) {
+	}
+]] 2 errors
+
+test refer to parameter [[
+  main(int [[x]]) {
+    return [[x]];
+  }
+]] resolve #2 to #1
+
+test variable declaration after usage [[
+  main(int [[x]]) {
+    [[x]] = 1;
+    int x;
+  }
+]] resolve #2 to #1
+
+test optional parameter [[
+  main ([int [[x]]]) {
+    return [[x]];
+  }
+]] resolve #2 to #1
+
+test optional parameter with value [[
+  main ([int [[x]] = 1]) {
+    return [[x]];
+  }
+]] resolve #2 to #1
+
+test named parameter [[
+  main ({int [[x]]}) {
+    return [[x]];
+  }
+]] resolve #2 to #1
+
+test named parameter with value [[
+  main ({int [[x]]: 1}) {
+    return [[x]];
+  }
+]] resolve #2 to #1

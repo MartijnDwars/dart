@@ -1,0 +1,6 @@
+module expressions/Logical
+
+context-free syntax
+
+  Expression.LogicAnd = Expression "&&" Expression {left}
+  Expression.LogicOr = Expression "||" Expression {left}

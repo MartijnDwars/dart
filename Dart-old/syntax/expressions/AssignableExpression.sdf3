@@ -1,0 +1,27 @@
+module expressions/AssignableExpression
+
+imports
+  
+  Common
+  Expression
+  expressions/Primary
+  
+context-free syntax
+  
+  // TODO: these 3 should also allow arguments (see spec)
+  AssignableExpression.ConditionalField = <<PrimaryOrAssignableExpression>?.<ID>>
+  AssignableExpression.Field = <<PrimaryOrAssignableExpression>.<ID>>
+  AssignableExpression.Index = <<PrimaryOrAssignableExpression>[<Expression>]>
+  
+  AssignableExpression.SuperField = <super.<ID>>
+  AssignableExpression.SuperIndex = <super[<Expression>]>
+  
+  PrimaryOrAssignableExpression = AssignableExpression
+  PrimaryOrAssignableExpression = Primary
+  
+  AssignableExpression.VarRef = ID
+
+template options
+
+  tokenize : "?.["
+  

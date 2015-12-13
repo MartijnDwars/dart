@@ -1,0 +1,11 @@
+module statement/Block
+
+imports
+
+  Statement
+
+context-free syntax
+  
+  Block.Block = <{
+    <Statement*>
+  }>

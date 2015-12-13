@@ -1,0 +1,20 @@
+module Arguments
+
+imports
+
+  Common
+  Expression
+  
+context-free syntax
+  
+  Arguments.ExpArguments = <<{Expression ", "}*>> {prefer}
+  Arguments.NamedArguments = <<{NamedArgument ", "}*>>
+  Arguments.MixedArguments = <<{Expression ", "}*>, <{NamedArgument ", "}+>>
+  
+  NamedArgument.NamedArgument = <<ID>: <Expression>>
+
+  // The top 3 productions is a complicated way to express
+  //    Arguments.Arguments = `{Argument ", "}*
+  //    Argument = Expression
+  //    Argument = NamedArgument
+  // where Expression must precede NamedArgument. Is there a better way?

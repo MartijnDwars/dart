@@ -1,0 +1,94 @@
+module Function
+
+language Dart
+start symbol Function
+
+test simple function [[
+  main(){}
+]] parse succeeds
+
+test function with whitespace [[
+  main ( ) {
+  }
+]] parse succeeds
+
+test function with return type [[
+  void main() {
+  }
+]] parse succeeds
+
+test single argument [[
+  void main(x) {
+  }
+]] parse succeeds
+
+test function with multiple arguments [[
+  void main(x, y, z) {
+  }
+]] parse succeeds
+
+test function with dynamic type argument [[
+  void main(var x) {
+  }
+]] parse succeeds
+
+test function with typed argument [[
+  void main(int x) {
+  }
+]] parse succeeds
+
+test optional named arguments [[
+  void main({a, b, c}) {
+    
+  }
+]] parse succeeds
+
+test optional named arguments with defaults [[
+  void main({a: x, b: y, c: z}) {
+    
+  }
+]] parse succeeds
+
+test optional positional arguments [[
+  void main([a, b, c]) {
+    
+  }
+]] parse succeeds
+
+test optional positional arguments with defaults [[
+  void main([a = x, b = y, c = z]) {
+    
+  }
+]] parse succeeds
+
+test optional named arguments before default arguments [[
+  void main({a: x, b: y, c: z}, d) {
+  }
+]] parse fails
+
+test optional position arguments before default arguments [[
+  void main([a, b, c], d) {
+  }
+]] parse fails
+
+test arguments trailing comma [[
+  void main(x, y, z, ) {
+  }
+]] parse fails
+
+test shorthand function [[
+  void printNumber() =>
+    x;
+]] parse succeeds
+
+test shorthand function arrow with whitespace [[
+  void printNumber() = >
+    x;
+]] parse fails
+
+test shorthand function body statement instead of expression [[
+  void printNumber() =>
+    if (true) {
+      x;
+    }
+]] parse fails

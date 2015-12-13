@@ -1,0 +1,50 @@
+module Exception
+
+language Dart
+start symbol Statement
+
+test try with finally [[
+  try {
+  } finally {
+  }
+]] parse succeeds
+
+test try without catch or finally [[
+  try {
+  }
+]] parse fails
+
+test try with catch without finally [[
+  try {
+  } catch (e) {
+  }
+]] parse succeeds
+
+test try with on catch [[
+  try {
+  } on SomeType catch (e) {
+  }
+]] parse succeeds
+
+test try with catch and finally [[
+  try {
+  } catch (e) {
+  } finally {
+  }
+]] parse succeeds
+
+test try with on catch and finally [[
+  try {
+  } on SomeType catch (e) {
+  } finally {
+  }
+]] parse succeeds
+
+test try with multiple on catch and finally [[
+  try {
+  } on SomeTypeA catch (e) {
+  } on SomeTypeB catch (e) {
+  } on SomeTypeC catch (e) {
+  } finally {
+  }
+]] parse succeeds

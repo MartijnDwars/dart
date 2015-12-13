@@ -1,0 +1,8 @@
+module expressions/Multiplicative
+
+context-free syntax
+
+  Expression.Mul = Expression "*" Expression {left}
+  Expression.Div = Expression "/" Expression {left}
+  Expression.Mod = Expression "%" Expression {left}
+  Expression.IntDiv = Expression "~/" Expression {left}

@@ -1,0 +1,71 @@
+module desugar
+
+imports
+  libstratego-lib
+  include/Dart
+  trans/desugar
+  
+strategies
+  main =
+    test-suite(!"desugar",
+      test-desugar-vardecl-single
+    ; test-desugar-vardecl-double
+    ; test-desugar-stmt
+    )
+
+  test-desugar-vardecl-single =
+    apply-test(!"var decl with one var"
+    , desugar-all
+    , !VarDecl(
+        Metadata([])
+      , Type("int")
+      , [Var("y", Dec("1"))]
+      )
+    , ![VarDecl(
+          Metadata([])
+        , Type("int")
+        , Var("y", Dec("1"))
+        )
+      ]
+    )
+    
+  test-desugar-vardecl-double =
+    apply-test(!"var decl with two vars"
+    , desugar-all
+    , !VarDecl(
+        Metadata([])
+      , Type("int")
+      , [Var("y", Dec("1")), Var("z", Dec("2"))]
+      )
+    , ![VarDecl(
+          Metadata([])
+        , Type("int")
+        , Var("y", Dec("1"))
+        )
+      , VarDecl(
+          Metadata([])
+        , Type("int")
+        , Var("z", Dec("2"))
+        )
+      ]
+    )
+    
+  test-desugar-stmt =
+    apply-test(!"surround by VarDeclStmt"
+    , desugar-all
+    , !VarDeclStmt(
+        VarDecl(
+          Metadata([])
+        , Type("int")
+        , [Var("y", Dec("1"))]
+        )
+      )
+    , !VarDeclStmt(
+        [ VarDecl(
+            Metadata([])
+          , Type("int")
+          , Var("y", Dec("1"))
+          )
+        ]
+      )
+    )

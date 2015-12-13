@@ -1,0 +1,54 @@
+module Expression
+
+imports
+  
+  Common
+  Variable
+  Arguments
+  expressions/AssignableExpression
+  expressions/Assignments
+  expressions/IfNull
+  expressions/Logical
+  expressions/Equality
+  expressions/Relational
+  expressions/Bitwise
+  expressions/Shift
+  expressions/Additive
+  expressions/Multiplicative
+  expressions/Unary
+  expressions/Primary
+  expressions/Literals
+  expressions/Restrictions
+  
+context-free syntax
+  
+  Expression.Throw = <throw <Expression>>
+  
+  Expression = <(<Expression>)> {bracket}
+  
+context-free priorities
+  
+  // Unary postfix
+  {/*Expression.ConditionalProperty*/ /*Primary.Field*/ UnaryExpression.PostInc UnaryExpression.PostDec /*Expression.Index Expression.Call*/}
+  // Unary prefix
+> {UnaryExpression.Min UnaryExpression.Neg UnaryExpression.BitNot UnaryExpression.PreInc UnaryExpression.PreDec}
+  // Multiplicative
+> {left: Expression.Mul Expression.Div Expression.Mod Expression.IntDiv}
+  // Additive
+> {left: Expression.Add Expression.Sub}
+  // Shift
+> {left: Expression.LShift Expression.RShift}
+  // Bitwise
+> {left: Expression.BitAnd Expression.BitXor Expression.BitOr}
+  // Relational
+> {left: Expression.Lt Expression.Gt Expression.Lte Expression.Gte Expression.TypeCast Expression.TypeCheck Expression.NegTypeCheck}
+  // Equality
+> {left: Expression.Eq Expression.Neq}
+  // Logical
+> {left: Expression.LogicAnd Expression.LogicOr Expression.IfNull}
+  // Conditional
+> {right: Expression.Conditional}
+  // Cascade
+> {left: Expression.Cascade}
+  // Assignment
+> {right: Expression.Assign Expression.MulAssign Expression.DivAssign Expression.IntDivAssign Expression.ModAssign Expression.AddAssign Expression.SubAssign Expression.LShiftAssign Expression.RShiftAssign Expression.BitAndAssign Expression.BitXorAssign Expression.BitOrAssign Expression.NullAssign }

@@ -1,0 +1,47 @@
+module class/Declaration
+
+imports
+  
+  class/Initializer
+  lexical/Operator
+  Common
+  Parameters
+  Type
+  Function
+  Arguments
+  Expression
+  
+context-free syntax // Class member declarations
+
+  ClassMember.ConstantConstructorDeclaration = <const <Qualified><Parameters> <RedirectionOrInitializers?>;>
+  
+  ClassMember.ConstructorDeclaration = <<Qualified><Parameters> <RedirectionOrInitializers>;>
+  
+  ClassMember.OperatorDeclaration = <<EXTERNAL?> <ReturnType> operator <Operator><Parameters>;>
+  
+  ClassMember.StaticFinalDeclaration = <static <FinalOrConst> <DynType> <{StaticFinalDeclaration ", "}+>;>
+  
+  ClassMember.FinalFieldDeclaration = <final <DynType> <{InitializedIdentifier ", "}+>;>
+  
+  ClassMember.FieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
+  
+  ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
+  
+  FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
+  
+context-free syntax // Helpers
+
+  RedirectionOrInitializers.Redirection = <: this<Arguments>>
+  RedirectionOrInitializers.RedirectionMethod = <: this.<ID><Arguments>>
+  RedirectionOrInitializers.Initializer = <: <{SuperCallOrFieldInitializer ", "}+>>
+  
+  StaticFinalDeclaration = <<ID> = <Expression>>
+  
+  InitializedIdentifier = <<ID> = <Expression>>
+  InitializedIdentifier = <<ID>>
+  
+  FinalOrConst = "final"
+  FinalOrConst = "const"
+  
+  VarOrType = "var"
+  VarOrType = Type

@@ -1,0 +1,115 @@
+File(
+  "y.dart"{ Def(
+              URI(
+                Language("Dart")
+              , [ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))]
+              )
+            )
+          }
+, Program(
+    [ Library(
+        None()
+      , []
+      , []
+      , [ Function(
+            Metadata([])
+          , Dynamic()
+          , "func"{ Def(
+                      URI(
+                        Language("Dart")
+                      , [ ID(NablNsGlobal(), "func", Unique("eclipse:///dart/tests/y.dart/0"))
+                        , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                        ]
+                      )
+                    )
+                  }
+          , []
+          , None()
+          , Block(
+              [ VarDecl(Metadata([]), Var("conflictingName"{ Def(
+                                                               URI(
+                                                                 Language("Dart")
+                                                               , [ ID(NablNsGlobal(), "conflictingName", Unique("eclipse:///dart/tests/y.dart/0"))
+                                                                 , Anonymous("eclipse:///dart/tests/y.dart/0")
+                                                                 , ID(NablNsGlobal(), "func", Unique("eclipse:///dart/tests/y.dart/0"))
+                                                                 , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                                                                 ]
+                                                               )
+                                                             )
+                                                           }))
+              , LocalFunction(
+                  FunctionSignature(
+                    Metadata([])
+                  , Dynamic()
+                  , "conflictingName"
+                  , [SimpleParameter(Metadata([]), None(), Dynamic(), "p1")]
+                  )
+                , FunctionBody(None(), Block([]){ Scope(
+                                                    [ ( NablNsGlobal()
+                                                      , URI(
+                                                          Language("Dart")
+                                                        , [ Anonymous("eclipse:///dart/tests/y.dart/0")
+                                                          , Anonymous("eclipse:///dart/tests/y.dart/0")
+                                                          , ID(NablNsGlobal(), "func", Unique("eclipse:///dart/tests/y.dart/0"))
+                                                          , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                                                          ]
+                                                        )
+                                                      )
+                                                    ]
+                                                  )
+                                                })
+                )
+              ]
+            ){ Scope(
+                 [ ( NablNsGlobal()
+                   , URI(
+                       Language("Dart")
+                     , [ Anonymous("eclipse:///dart/tests/y.dart/0")
+                       , ID(NablNsGlobal(), "func", Unique("eclipse:///dart/tests/y.dart/0"))
+                       , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                       ]
+                     )
+                   )
+                 ]
+               )
+             }
+          )
+        , Function(
+            Metadata([])
+          , Dynamic()
+          , "main"{ Def(
+                      URI(
+                        Language("Dart")
+                      , [ ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/y.dart/0"))
+                        , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                        ]
+                      )
+                    )
+                  }
+          , []
+          , None()
+          , Block(
+              [ TryCatch(
+                  [ExprStmt(Call(VarRef("func"{Use(Result(4744))}), ExpArguments([])))]
+                , [Catch("e", [])]
+                )
+              ]
+            ){ Scope(
+                 [ ( NablNsGlobal()
+                   , URI(
+                       Language("Dart")
+                     , [ Anonymous("eclipse:///dart/tests/y.dart/0")
+                       , ID(NablNsGlobal(), "main", Unique("eclipse:///dart/tests/y.dart/0"))
+                       , ID(NablNsFile(), "y.dart", Unique("eclipse:///dart/tests/y.dart/0"))
+                       ]
+                     )
+                   )
+                 ]
+               )
+             }
+          )
+        ]
+      )
+    ]
+  )
+)

@@ -1,0 +1,14 @@
+module cast
+
+language Dart
+start symbol Start
+
+test type cast (as operator) [[
+  class Foo {}
+  
+  int foo() {
+    Foo f;
+    
+    return [[f as Foo]];
+  }
+]] run get-type to Type("Foo")

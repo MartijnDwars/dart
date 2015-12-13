@@ -1,0 +1,115 @@
+module names
+
+namespaces
+  
+  Global Label File
+
+binding rules
+  
+  File(name, _):
+    defines File name
+    scopes Global
+  
+  Import(String(name), _):
+    imports Global from File name
+  
+  Class(_, _, name, _, None(), _, _, _):
+    scopes Global
+    defines Global name
+    of type Type(name)
+    
+  Class(_, _, name, _, Parent(Type(parent)), _, _, _):
+    scopes Global
+    defines Global name
+    of type Type(name)
+    imports Global, imported Global from Global parent
+  
+  FieldDeclaration(_, t, name):
+    defines Global name
+    of type t
+  
+  Field(exp, name):
+    refers to Global name in Global e
+    where exp has type Type(e)
+  
+  Method(_, FunctionSignature(_, Type(t), name, _), _):
+    scopes Global
+  	defines Global name
+  	of type t
+  
+  Typealias(_, t, name, _, p*):
+    scopes Global
+    defines Global name
+    of type (p*, t)
+  
+binding rules // Functions
+
+  Function(_, t, name, p*, _, _):
+    scopes Global
+    defines Global name
+    of type (p*, t)
+    
+  ShortFunction(_, t, name, p*, _, _):
+    scopes Global
+    defines Global name
+    of type (p*, t)
+    
+  SimpleParameter(_, _, Type(t), name):
+    defines Global name
+    of type Type(t)
+  
+  SimpleParameter(_, _, None(), name):
+    defines Global name
+  
+  SimpleParameter(_, name):
+    defines Global name
+  
+binding rules // Statements
+
+  VarDecl(_, t, Var(name, exp)):
+    defines Global name
+      of type t
+      in subsequent scope
+    where exp has type e
+    and e == t
+  
+  VarDecl(_, t, Var(name)):
+    defines Global name
+      of type t
+      in subsequent scope
+  
+  VarDecl(_, Var(name, exp)):
+    defines Global name
+      of type t
+      // in subsequent scope (@see NaBL#48)
+    where exp has type t
+  
+  VarDecl(_, Var(name)):
+    defines Global name
+      // in subsequent scope (@see NaBL#48)
+  
+  Assign(name, exp):
+    defines Global name
+      of type t
+    where exp has type t
+  
+  Block(stmt*):
+    scopes Global
+  
+  Labeled(name, stmt):
+    defines Label name
+    in stmt
+  
+  For(_, _, _, _):
+    scopes Global
+  
+  Break(name):
+    refers to Label name
+  
+  // TODO: Type(name): refers to Global name (but: built-in types?)
+  
+binding rules // Expressions
+  
+  VarRef(name):
+  	refers to Global name
+  

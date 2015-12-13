@@ -1,0 +1,85 @@
+module trans/types.generated
+
+imports
+  
+  lib/runtime/nabl/-
+  lib/runtime/task/-
+  lib/runtime/types/-
+  lib/runtime/properties/-
+  lib/runtime/relations/-
+
+imports
+
+  include/Dart
+  trans/signatures
+  
+signature constructors
+  
+  
+  
+rules // functions 
+  
+
+rules // relations
+  
+  relation-is-reflexive = ?"<:"
+  
+
+rules // rules
+  
+  nabl-constraint(|ctx) :
+    Class(_, _, name, _, Parent(parent), _, _, _) -> <fail>
+    where 
+      relstore6 := <new-rel-tuple(|ctx, "<:", parent)> Type(name)
+  
+  create-type-task(|ctx) :
+    NewObject(Type(t), _) -> <task-create-id(|ctx,[x77])> x77
+    where 
+      x77 := <type-is(|ctx)> Type(t)
+  
+  create-type-task(|ctx) :
+    TypeCast(_, t) -> <task-create-id(|ctx,[])> t
+  
+  create-type-task(|ctx) :
+    Call(e, _) -> <task-create-id(|ctx,[t])> t
+    where 
+      t := <type-task(|ctx)> e
+  
+  create-type-task(|ctx) :
+    VarRef(x) -> <task-create-id(|ctx,[t])> t
+    where 
+      t := <type-lookup(|ctx)> x
+  
+  create-type-task(|ctx) :
+    String(_) -> <task-create-id(|ctx,[x78])> x78
+    where 
+      x78 := <type-is(|ctx)> StringType()
+  
+  create-type-task(|ctx) :
+    Dec(_) -> <task-create-id(|ctx,[x79])> x79
+    where 
+      x79 := <type-is(|ctx)> IntType()
+  
+  create-type-task(|ctx) :
+    True() -> <task-create-id(|ctx,[x80])> x80
+    where 
+      x80 := <type-is(|ctx)> BoolType()
+  
+  create-type-task(|ctx) :
+    False() -> <task-create-id(|ctx,[x81])> x81
+    where 
+      x81 := <type-is(|ctx)> BoolType()
+  
+  create-type-task(|ctx) :
+    List(_, _) -> <task-create-id(|ctx,[x82])> x82
+    where 
+      x82 := <type-is(|ctx)> ListType()
+  
+  create-type-task(|ctx) :
+    Map(_, _) -> <task-create-id(|ctx,[x83])> x83
+    where 
+      x83 := <type-is(|ctx)> MapType()
+  
+
+rules // projections
+  

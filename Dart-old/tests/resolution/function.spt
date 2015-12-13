@@ -1,0 +1,29 @@
+module function
+
+language Dart
+start symbol Start
+
+test function scopes body [[
+  main() {
+    int x;
+  }
+  
+  foo() {
+    x = 2;
+  }
+]] 1 errors
+
+test function scopes parameters [[
+  int foo(int x) {
+  }
+  
+  bar() {
+    return x;
+  }
+]] 1 error
+
+test varref resolves to parameter [[
+  main(int [[x]]) {
+    print([[x]]);
+  }
+]] resolve #2 to #1

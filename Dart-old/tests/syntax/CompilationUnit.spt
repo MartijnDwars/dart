@@ -1,0 +1,17 @@
+module CompilationUnit
+
+language Dart
+start symbol CompilationUnit
+
+test simple library name [[
+  library x;
+]] parse succeeds
+
+test complex library name [[
+  library x.y.z;
+]] parse succeeds
+
+// We require at least one top-level definitions (fix ambiguity)
+setup footer [[
+  var x;
+]]

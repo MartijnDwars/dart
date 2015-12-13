@@ -1,0 +1,108 @@
+module Precedence
+
+language Dart
+start symbol Expression
+
+test minus > mul [[
+  -1 * 2
+]] parse to [[
+  (-1) * 2
+]]
+
+test mul > add [[
+  1 * 2 + 3
+]] parse to [[
+  (1 * 2) + 3
+]]
+
+test add > lshift [[
+  1 + 2 << 3
+]] parse to [[
+  (1 + 2) << 3
+]]
+
+test lshift > bitand [[
+  1 << 2 & 3
+]] parse to [[
+  (1 << 2) & 3
+]]
+
+test bitand > eq [[
+  1 & 2 == 3
+]] parse to [[
+  (1 & 2) == 3
+]]
+
+test eq > logicand [[
+  1 == 2 && 3
+]] parse to [[
+  (1 == 2) && 3
+]]
+
+test logicand > conditional [[
+  1 && 2 ? 3 : 4
+]] parse to [[
+  (1 && 2) ? 3 : 4
+]]
+
+test conditional > cascade [[
+  1 ? 2 : 3..4
+]] parse to [[
+  (1 ? 2 : 3)..4
+]]
+
+test cascade > assign [[
+  x = 3..4
+]] parse to [[
+  x = (3..4)
+]]
+
+test precedence index [[
+  a[1+1]
+]] parse succeeds
+
+test precedence call [[
+  a(1+1)
+]] parse succeeds
+
+test ternary operator precedence (left) [[
+  true && false ? 'x' : 'y'   
+]] parse to [[
+  (true && false) ? 'x' : 'y'
+]]
+
+test ternary operator precedence (right) [[
+  true ? 2 : 3 / 4
+]] parse to [[
+  true ? 2 : (3 / 4)
+]]
+
+test ternary operator precedence (middle) [[
+  true ? 1 + 2 : 2
+]] parse to [[
+  true ? 1 + 2 : 2
+]]
+
+test short lambda [[
+  (e) => e.type == type
+]] parse to [[
+  (e) => (e.type == type)
+]]
+
+test safe precedence with short lambda [[
+  foo + () => 1 + 2
+]] parse to [[
+  foo + (() => 1 + 2)
+]]
+
+test safe precedence with unary minus [[
+  1 + -1
+]] parse to [[
+  1 + (-1)
+]]
+
+test safe precedence with unary minus 2 [[
+  -1 + 1
+]] parse to [[
+  (-1) + 1
+]]

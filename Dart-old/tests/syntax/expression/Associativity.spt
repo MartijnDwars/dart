@@ -1,0 +1,66 @@
+module Associativity
+
+language Dart
+start symbol Expression
+
+test variable reference [[
+  x
+]] parse succeeds
+
+test prefix decrement no ambiguity [[
+  --x
+]] parse succeeds
+
+test repeated postfix [[
+  x++++
+]] parse fails
+
+test repeated prefix [[
+  ----x
+]] parse fails
+
+test mixed prefix and postfix plus [[
+  x+++x
+]] parse to [[
+  (x++)+x
+]]
+
+test mixed prefix and postfix minus [[
+  x---x
+]] parse to [[
+  (x--)-x
+]]
+
+test unary minus and post increment [[
+	-x++
+]] parse to [[
+	-(x++)
+]]
+
+test add left assoc [[
+  1 + 2 + 3
+]] parse to [[
+  (1 + 2) + 3
+]]
+
+test conditional right assoc [[
+  1 ? 2 : 3 ? 2 : 3
+]] parse to [[
+  1 ? 2 : (3 ? 2 : 3)
+]]
+
+test property access [[
+  x.y
+]] parse succeeds
+
+test property access left assoc [[
+  x.y.z
+]] parse to [[
+  (x.y).z
+]]
+
+test null-safe property access [[
+  x?.y?.z
+]] parse to [[
+  (x?.y)?.z
+]]

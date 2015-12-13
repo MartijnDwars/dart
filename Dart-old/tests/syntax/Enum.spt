@@ -1,0 +1,16 @@
+module Enum
+
+language Dart
+start symbol Enum
+
+test enum [[
+  enum E { a, b, c }
+]] parse succeeds
+
+test enum trailing comma [[
+  enum E { a, b, c, }
+]] parse succeeds
+
+test enum no whitespace [[
+  enumE { a, b, c }
+]] parse fails

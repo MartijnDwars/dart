@@ -1,0 +1,60 @@
+module Statement
+
+imports
+  
+  Arguments
+  Common
+  Expression
+  Function
+  Type
+  Variable
+  statement/For
+  statement/Try
+  statement/Switch
+  statement/Block
+  
+context-free syntax
+  
+  Statement = Block
+  
+  Statement.Labeled = <<ID>: <Statement>>
+  
+  Statement.Nop = <;>
+  
+  Statement.ExprStmt = <<Expression>;>
+  
+  Statement.VarDeclStmt = <<VarDecl>;>
+  
+  Statement.If = <if (<Expression>)
+    <Statement>> {prefer}
+  
+  Statement.IfElse = <if (<Expression>)
+    <Statement>
+  else
+    <Statement>>
+  
+  Statement.While = <while (<Expression>)
+    <Statement>>
+  
+  Statement.Do = <do <Statement> while (<Expression>);>
+  
+  Statement.Return = <return <Expression?>;>
+  
+  Statement.Break = <break;>
+  
+  Statement.Break = <break <ID>;>
+  
+  Statement.Continue = <continue;>
+  
+  Statement.Continue = <continue <ID>;>
+  
+  Statement.Yield = <yield <Expression>;>
+  
+  Statement.Assert = <assert (<Expression>);> // TODO: This should be 'ConditionalExpression', what is the influence of our change?
+  
+  Statement = Function
+
+template options
+
+	tokenize : ";("
+  keyword -/- [a-zA-Z]

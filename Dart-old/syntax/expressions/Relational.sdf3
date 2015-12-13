@@ -1,0 +1,15 @@
+module expressions/Relational
+
+imports
+
+  Type
+  
+context-free syntax
+
+  Expression.Lt = Expression "<" Expression
+  Expression.Gt = Expression ">" Expression
+  Expression.Lte = Expression "<=" Expression
+  Expression.Gte = Expression ">=" Expression
+  Expression.TypeCast = Expression "as" Type
+  Expression.TypeCheck = Expression "is" Type
+  Expression.NegTypeCheck = Expression "is!" Type

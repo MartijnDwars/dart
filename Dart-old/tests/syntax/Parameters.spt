@@ -1,0 +1,44 @@
+module Parameters
+
+language Dart
+start symbol Parameters
+
+test variable [[
+  (var x)
+]] parse succeeds
+
+test final without type [[
+  (final x)
+]] parse succeeds
+
+test final with type [[
+  (final int x)
+]] parse succeeds
+
+test simple before positional parameters [[
+  (var b, [var a])
+]] parse succeeds
+
+test simple before optional parameters [[
+  (var b, {var a: 1, var y: 2})
+]] parse succeeds
+
+test function signature as parameter [[
+  (callback())
+]] parse succeeds
+
+test function signature with parameter as parameter [[
+  (callback(String msg))
+]] parse succeeds
+
+test no ambiguity in modifier/type [[
+  (final x)  
+]] parse succeeds
+
+test positional before simple parameters [[
+  ([var a], var b)
+]] parse fails
+
+test optional before simple parameters [[
+  ({var a: 1, var y: 2}, var b)
+]] parse fails

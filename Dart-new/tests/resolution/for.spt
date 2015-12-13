@@ -1,0 +1,9 @@
+module for
+
+language Dart
+start symbol Program
+
+test resolve condition to initializer [[
+  for (var [[i]] = 0; [[i]] < 10; i++) {
+  }
+]] resolve #2 to #1

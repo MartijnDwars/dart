@@ -1,0 +1,25 @@
+module variable
+
+language Dart
+start symbol Start
+
+test variable forward reference [[
+  main() {
+    x = 1;
+    var x;
+  }
+]] 1 error
+
+test variable backward reference [[
+  main() {
+    var x;
+    x = 1;
+  }
+]] 0 errors
+
+test variable hiding parameter [[
+  main(int x) {
+    int [[x]];
+    return [[x]];
+  }
+]] resolve #2 to #1
