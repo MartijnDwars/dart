@@ -21,7 +21,8 @@ context-free syntax
   
   Statement.Nop = <;>
   
-  Statement.ExprStmt = <<Expression>;>
+  // "foo() {};" can be read as "[Function(..), Nop()]" or as "ExprStmt(Function(..))"
+  Statement.ExprStmt = <<Expression>;> {avoid}
   
   Statement.VarDeclStmt = <<VarDecl>;>
   
