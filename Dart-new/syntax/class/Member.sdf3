@@ -15,6 +15,9 @@ context-free syntax
   
   ClassMember.FactoryMethod = <factory <Qualified><Parameters> <FunctionBody>>
   
+  // TODO: the spec uses `<Type>.<ID>` instead of `<Type>`, but this causes ambiguity because `Type = Qualified`
+  ClassMember.RedirectingFactory = <<CONST?> factory <Qualified><Parameters> = <Type>;>
+  
   ClassMember.OperatorMethod = <<ReturnType> operator <Operator><Parameters> <FunctionBody>>
   
   ClassMember.Method = <<STATIC?> <FunctionSignature> <FunctionBody>>
