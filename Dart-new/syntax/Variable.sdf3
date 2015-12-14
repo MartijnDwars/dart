@@ -10,7 +10,7 @@ imports
   
 context-free syntax
 
-  VarDecl.VarDecl = <<Metadata> <Modifier> <Type?> <{Init ", "}+>>
+  VarDecl.VarDecl = <<Metadata> <Modifier> <DynType> <{Init ", "}+>>
   VarDecl.VarDecl = <<Metadata> var <{Var ", "}+>>
   VarDecl.VarDecl = <<Metadata> <Type> <{Var ", "}+>>
   
@@ -19,7 +19,7 @@ context-free syntax
   
   Init.Var = <<ID> = <Expression>>
   
-  DeclaredIdentifier.DeclaredIdentifier = <<Metadata> <Modifier?> <Type?> <ID>>
+  DeclaredIdentifier.DeclaredIdentifier = <<Metadata> <Modifier?> <DynType> <ID>>
   DeclaredIdentifier.DeclaredIdentifier = <<Metadata> var <ID>>
 
 context-free syntax // Rejections
