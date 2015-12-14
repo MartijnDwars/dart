@@ -100,22 +100,35 @@ binding rules // Statements
       // in subsequent scope (@see NaBL#48)
   
   Assign(name, exp):
-    defines Global name
-      // of type t (temporary disabled)
-    // where exp has type t (temporary disabled)
+    refers to Global name
   
   Block(stmt*):
     scopes Global
   
   Labeled(name, stmt):
     defines Label name
-    in stmt
+    // in stmt (@see Nabl#126)
   
   For(_, _, _, _):
     scopes Global
   
   Break(name):
     refers to Label name
+    
+  Continue(name):
+    refers to Label name
+  
+  Switch(_, _, _):
+    scopes Label
+  
+  SwitchLabel(name, _):
+    defines Label name
+  
+  SwitchCase(_, _):
+    scopes Global
+  
+  SwitchDefault(_):
+    scopes Global
   
   // TODO: Type(name): refers to Global name (but: built-in types?)
   
@@ -123,4 +136,7 @@ binding rules // Expressions
   
   VarRef(name):
   	refers to Global name
+  
+  NewObject(Type(c), _):
+    refers to Global c
   
