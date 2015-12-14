@@ -7,17 +7,20 @@ imports
 
 context-free syntax
   
-  // TODO: case and default must be prefixed with label*
-  Label.Label = <<ID>:>
-  
   Statement.Switch = <switch (<Expression>) {
     <{SwitchCase "\n"}*>
-    <DefaultCase?>
+    <SwitchDefault?>
   }>
   
-  SwitchCase.SwitchCase = <<{Label " "}*> case <Expression>:
+  // Switch case
+  SwitchCase.SwitchLabel = <<ID>: <SwitchCase>>
+  
+  SwitchCase.SwitchCase = <case <Expression>:
     <{Statement "\n"}*>>
   
-  DefaultCase.DefaultCase = <<{Label " "}*> default:
+  // Switch default
+  SwitchDefault.SwitchLabel = <<ID>: <SwitchDefault>>
+  
+  SwitchDefault.SwitchDefault = <default:
     <{Statement "\n"}*>>
   

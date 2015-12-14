@@ -26,3 +26,12 @@ test default case scopes [[
     }
   }
 ]] 0 errors
+
+test switch scopes labels [[
+  main() {
+    switch(1) {
+      a: case 1: break;
+      a: case 2: break;
+    }
+  }
+]] 2 errors
