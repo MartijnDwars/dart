@@ -20,6 +20,18 @@ test try with catch without finally [[
   }
 ]] parse succeeds
 
+test catch with qualified param [[
+  try {
+  } catch (e.f) {
+  }
+]] parse fails
+
+test catch exception and stackTrace [[
+  try {
+  } catch (e, stackTrace) {
+  }
+]] parse succeeds
+
 test try with on catch [[
   try {
   } on SomeType catch (e) {

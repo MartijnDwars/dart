@@ -4,39 +4,31 @@ imports
 
   Common
   Type
+  statement/Block
   
 context-free syntax
   
+  // Try/catch/finally statement
   Statement.Rethrow = <rethrow;>
   
-  Statement.TryFinally = <try {
-    <Statement*>
-  } finally {
-    <Statement*>
-  }>
+  Statement.TryFinally = <try <Block> finally <Block>>
   
-  Statement.TryCatch = <try {
-    <Statement*>
-  } <CatchClause+>>
+  Statement.TryCatch = <try <Block> <CatchClause+>>
   
-  Statement.TryCatchFinally = <try {
-    <Statement*>
-  } <CatchClause+> finally {
-    <Statement*>
-  }>
+  Statement.TryCatchFinally = <try <Block> <CatchClause+> finally <Block>>
   
-  CatchClause.Catch = <catch(<Qualified>) {
-    <Statement*>
-  }>
+  // Catch clause
+  CatchClause.Catch = <catch(<CatchParams>) <Block>>
   
-  CatchClause.On = <on <Type> {
-    <Statement*>
-  }>
+  CatchClause.On = <on <Type> <Block>>
   
-  CatchClause.OnCatch = <on <Type> catch(<Qualified>) {
-    <Statement*>
-  }>
-
+  CatchClause.OnCatch = <on <Type> catch(<CatchParams>) <Block>>
+  
+  // Catch parameters
+  CatchParams.Param = ID
+  
+  CatchParams.Param = <<ID>, <ID>>
+  
 template options
 
   tokenize : ";("
