@@ -4,7 +4,7 @@ namespaces
   
   Global Label File
 
-binding rules
+binding rules // Top level "stuff"
   
   File(name, _):
     defines File name
@@ -12,7 +12,17 @@ binding rules
   
   Import(String(name), _):
     imports Global from File name
+
+  Typealias(_, t, name, _, p*):
+    scopes Global
+    defines Global name
+    of type (p*, t)
   
+  TypeParameter(_, name):
+    defines Global name
+  
+binding rules // Classes
+
   Class(_, _, name, _, None(), _, _, _):
     scopes Global
     defines Global name
@@ -24,6 +34,8 @@ binding rules
     of type Type(name)
     imports Global, imported Global from Global parent
   
+binding rules // Fields
+
   FieldDeclaration(_, t, name):
     defines Global name
     of type t
@@ -31,16 +43,13 @@ binding rules
   Field(exp, name):
     refers to Global name in Global e
     where exp has type Type(e)
-  
-  Method(_, FunctionSignature(_, Type(t), name, _), _):
+
+binding rules // Method
+
+  Method(_, FunctionSignature(_, t, name, _), _):
     scopes Global
   	defines Global name
   	of type t
-  
-  Typealias(_, t, name, _, p*):
-    scopes Global
-    defines Global name
-    of type (p*, t)
   
 binding rules // Functions
 
@@ -53,36 +62,38 @@ binding rules // Functions
     scopes Global
     defines Global name
     of type (p*, t)
-    
-  SimpleParameter(_, _, Type(t), name):
+  
+binding rules // Parameters
+
+  SimpleParameter(_, _, t, name):
     defines Global name
     of type Type(t)
-  
-  SimpleParameter(_, _, None(), name):
-    defines Global name
   
   SimpleParameter(_, name):
     defines Global name
   
 binding rules // Statements
 
+  VarDecl(_, _, t, Var(name, exp)):
+    defines Global name
+
   VarDecl(_, t, Var(name, exp)):
     defines Global name
-      of type t
-      in subsequent scope
-    where exp has type e
-    and e == t
+      // of type t  (temporary disabled)
+      // in subsequent scope (@see NaBL#48)
+    //where exp has type e (temporary disabled)
+    //and e == t (temporary disabled)
   
   VarDecl(_, t, Var(name)):
     defines Global name
-      of type t
-      in subsequent scope
+      // of type t (temporary disabled)
+      // in subsequent scope (@see NaBL#48)
   
   VarDecl(_, Var(name, exp)):
     defines Global name
-      of type t
+      // of type t (temporary disabled)
       // in subsequent scope (@see NaBL#48)
-    where exp has type t
+    //where exp has type t (temporary disabled)
   
   VarDecl(_, Var(name)):
     defines Global name
@@ -90,8 +101,8 @@ binding rules // Statements
   
   Assign(name, exp):
     defines Global name
-      of type t
-    where exp has type t
+      // of type t (temporary disabled)
+    // where exp has type t (temporary disabled)
   
   Block(stmt*):
     scopes Global
