@@ -1,0 +1,17 @@
+module Switch
+
+language Dart
+start symbol Statement
+
+test single label before cases [[
+  switch (1) {
+    a: case 1: break;
+    b: default:
+  }
+]] parse succeeds
+
+test multiple labels before case [[
+  switch (1) {
+    a: b: c: case 1: break;
+  }
+]] parse succeeds

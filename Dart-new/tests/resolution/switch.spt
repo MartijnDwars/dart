@@ -1,0 +1,28 @@
+module switch
+
+language Dart
+start symbol Program
+
+test switch case scopes [[
+  main() {
+    switch(1) {
+      case 1:
+        var x;
+        break;
+      case 2:
+        var x;
+        break;
+    }
+  }
+]] 0 errors
+
+test default case scopes [[
+  main() {
+    var x;
+    
+    switch(1) {
+      default:
+        var x;
+    }
+  }
+]] 0 errors

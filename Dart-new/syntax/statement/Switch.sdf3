@@ -1,18 +1,23 @@
 module statement/Switch
 
 imports
-
+  
+  Common
   Expression
 
 context-free syntax
   
   // TODO: case and default must be prefixed with label*
+  Label.Label = <<ID>:>
   
   Statement.Switch = <switch (<Expression>) {
-    <SwitchCase*>
+    <{SwitchCase "\n"}*>
     <DefaultCase?>
   }>
   
-  SwitchCase.SwitchCase = <case <Expression>: <Statement*>>
+  SwitchCase.SwitchCase = <<{Label " "}*> case <Expression>:
+    <{Statement "\n"}*>>
   
-  DefaultCase.DefaultCase = <default: <Statement*>>
+  DefaultCase.DefaultCase = <<{Label " "}*> default:
+    <{Statement "\n"}*>>
+  
