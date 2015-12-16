@@ -43,7 +43,7 @@ context-free syntax
     <Statement*>
   }>
   
-  // NOTE: {longest-match} is used because SDF lacks safe precedence, see e.g. http://dx.doi.org/10.1007/978-3-319-02654-1_8
+  // NOTE: {longest-match} is used because SDF lacks safe precedence, see e.g. http://dx.doi.org/10.1007/978-3-319-02654-1_8. {longest-match} is not supported in core?
   Primary.ShortLambda = <<Parameters> <ASYNC?> =\> <Expression>> {longest-match}
   
   Primary.Field = <<Primary>.<ID>> {left}
