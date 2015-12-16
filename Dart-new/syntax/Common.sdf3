@@ -3,12 +3,12 @@ module Common
 lexical syntax
 
   DIGIT          = [0-9]
-  NUMBER         = DIGIT+ ('.' DIGIT+)? EXPONENT? |
+  NUMBER         = DIGIT+ ('.' DIGIT+)? EXPONENT?
   NUMBER         = '.' DIGIT+ EXPONENT?
-  EXPONENT       = ('e' | 'E') ('+' | '-')? DIGIT+
+  EXPONENT       = [eE] ('+' | '-')? DIGIT+
   
   HEX-DIGIT      = [a-fA-F] | DIGIT
-  HEX-NUMBER     = '0x' HEX-DIGIT+ | '0X' HEX-DIGIT+
+  HEX-NUMBER     = '0' [xX] HEX-DIGIT+
   
 lexical syntax
 
@@ -87,8 +87,7 @@ lexical syntax // Reserved words
 lexical syntax // Built-in identifiers
 
   ID = "abstract" {reject}
-  ID = "as"
-  ID = "library" {reject}
+  ID = "as" {reject}
   ID = "dynamic" {reject}
   ID = "deferred" {reject}
   ID = "dynamic" {reject}
