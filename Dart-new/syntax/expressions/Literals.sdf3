@@ -17,14 +17,14 @@ context-free syntax
   Literal.OperatorSymbol = <#<Operator>>
   Literal.Null = "null"
   
-  Literal.List = <<CONST?> [<{Expression ", "}*>]>
-  Literal.List = <<CONST?> [<{Expression ", "}*>, ]>
-  Literal.TypedList = <<CONST?> <TypeArguments>[<{Expression ","}*>]>
+  // Intentional duplicate constructor to allow ending comma
+  Literal.List = <<CONST?> <TypeArguments?>[<{Expression ", "}*>]>
+  Literal.List = <<CONST?> <TypeArguments?>[<{Expression ", "}*>, ]>
   
-  Literal.Map = <<CONST?> {<{MapEntry ", "}*>}>
-  Literal.Map = <<CONST?> {<{MapEntry ", "}*>, }>
-  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>}>
-  Literal.TypedMap = <<CONST?> <TypeArguments> {<{MapEntry ", "}*>, }>
+  // Intentional duplicate constructor to allow ending comma
+  Literal.Map = <<CONST?> <TypeArguments?>{<{MapEntry ", "}*>}>
+  Literal.Map = <<CONST?> <TypeArguments?>{<{MapEntry ", "}*>, }>
+  
   MapEntry.MapEntry = <<Expression>: <Expression>> 
   
   Boolean.True = "true"
