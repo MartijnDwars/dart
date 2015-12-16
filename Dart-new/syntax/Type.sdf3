@@ -10,7 +10,8 @@ imports
 context-free syntax // Types
   
   Type.Type = <<Qualified>>
-  Type.Generic = <<Qualified> <TypeArguments>>
+  Type.Generic = <<Qualified><TypeArguments>>
+  Type.Dynamic = <<DYNAMIC>>
   
   DynType.Dynamic =
   DynType = Type
