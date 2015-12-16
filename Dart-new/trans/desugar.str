@@ -13,6 +13,11 @@ rules
    * One declaration of multiple variables becomes multiple variable declarations.
    */
   desugar:
+    VarDecl(meta, modifier, type, var*) -> [var-decls]
+    where
+     var-decls := <map(!VarDecl(meta, modifier, type, <id>))> var*
+  
+  desugar:
     VarDecl(meta, type, var*) -> [var-decls]
     where
       var-decls := <map(!VarDecl(meta, type, <id>))> var*
@@ -44,6 +49,21 @@ rules // Remove superfluous quotes in imports
     Import(String(name), args) -> Import(String(<unquote(id)> name), args)
     where
       <is-quoted> name
+  
+rules // Add blocks to If's to fix scoping
+
+  desugar:
+    IfElse(cond, s1, s2) -> IfElse(cond, Block([s1]), s2)
+    where
+      <not(?Block(_))> s1
+  
+  desugar:
+    IfElse(cond, s1, s2) -> IfElse(cond, s1, Block([s2]))
+    where
+      <not(?Block(_))> s2
+  
+  desugar:
+    If(cond, s) -> IfElse(cond, s, Block([]))
   
 strategies
   
