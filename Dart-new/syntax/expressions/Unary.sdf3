@@ -23,3 +23,7 @@ context-free syntax
   
   UnaryExpression.PreInc = <++<AssignableExpression>>
   UnaryExpression.PreDec = <--<AssignableExpression>>
+
+  // Await expression
+  UnaryExpression.Await = <await <UnaryExpression>>
+  

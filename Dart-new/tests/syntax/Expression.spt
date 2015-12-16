@@ -66,3 +66,7 @@ test type cast [[
 test negation with parenthesis [[
   !(true)
 ]] parse succeeds
+
+test await expression [[
+  await -x
+]] parse succeeds

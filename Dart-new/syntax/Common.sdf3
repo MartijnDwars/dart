@@ -104,8 +104,10 @@ lexical syntax // Built-in identifiers
   ID = "static" {reject}
   ID = "typedef" {reject}
   
-lexical syntax // Limited reserved words (NOTE: non-standard Dart)
+lexical syntax // Limited reserved words (NOTE: non-standard Dart, but needed to disambiguate)
 
+  ID = "async" {reject}
+  ID = "await" {reject}
   ID = "yield" {reject}
 
 lexical syntax // Dart keywords
