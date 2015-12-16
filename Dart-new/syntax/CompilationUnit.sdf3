@@ -12,6 +12,7 @@ imports
   String
   Type
   Variable
+  Parameters
 
 context-free syntax
 
@@ -43,11 +44,11 @@ context-free syntax
   TopDefinition = Function
   TopDefinition = Class
   TopDefinition.VarDeclStmt = <<VarDecl>;>
-
+  TopDefinition.Getter = <<ReturnType> get <ID><FunctionBody>>
+  TopDefinition.Setter = <<ReturnType> set <ID><Parameters> <FunctionBody>>
+  
   // TODO:
   //   TopDefinition = <EXTERNAL? <functionSignature> ;>
   //   TopDefinition = <EXTERNAL? <getterSignature> ;>
   //   TopDefinition = <EXTERNAL? <setterSignature> ;>
-  //   TopDefinition = <<ReturnType> get <ID><FunctionBody>>
-  //   TopDefinition = <<ReturnType> set <ID><Parameters> <FunctionBody>>
   //   TopDefinition = <('final' ; 'const') <DynType> staticFinalDeclarationList ';'>
