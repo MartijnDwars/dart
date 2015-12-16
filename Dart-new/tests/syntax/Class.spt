@@ -132,8 +132,14 @@ test class with constructor [[
 	}
 ]] parse succeeds
 
-test class member with dynamic type [[
-	abstract class Adaptable {
-	  dynamic adapt(Type type);
-	}
-]]
+test constructor [[
+  class A<TypeParam> {
+    A(this.x);
+  }
+]] parse succeeds
+
+test factory [[
+  class F {
+    factory F(x, [String y]) = C;
+  }
+]] parse succeeds

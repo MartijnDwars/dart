@@ -3,11 +3,20 @@ module label
 language Dart
 start symbol Start
 
-test label resolution [[
+test label resolution in break [[
   main() {
     [[loop]]: for (int i = 0; ; ) {
       break [[loop]];
     }
+  }
+]] resolve #2 to #1
+
+test label resolution in continue [[
+  main() {
+    [[L]]: var x;
+    do {
+      continue [[L]];
+    } while(false);
   }
 ]] resolve #2 to #1
 

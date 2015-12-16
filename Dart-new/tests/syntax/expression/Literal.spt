@@ -1,0 +1,12 @@
+module Literal
+
+language Dart
+start symbol Expression
+
+test hex lowercase x [[
+  0xCAFEBABE
+]] parse succeeds
+
+test hex uppercase x [[
+  0XCAFEBABE
+]] parse succeeds

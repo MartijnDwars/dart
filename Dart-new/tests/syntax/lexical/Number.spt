@@ -1,0 +1,8 @@
+module Number
+
+language Dart
+start symbol NUMBER
+
+test scientific notation [[
+  3.14e1
+]] parse succeeds

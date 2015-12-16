@@ -103,3 +103,31 @@ test var decl with initializer [[
 test type alias is a tld [[
   typedef Future<dynamic> TaskEntry(TaskStatus status);
 ]] parse succeeds
+
+test getter is a tld [[
+  get g {}
+]] parse succeeds
+
+test setter is a tld [[
+  int set age() {}
+]] parse succeeds
+
+// TODO: This test succeeds in spt, but fails in the editor?
+test non-ambiguous [[
+  main() {
+    abc() {
+    }
+  
+    void f() {
+      f();
+    };
+  }
+]] parse succeeds
+
+test parsable [[
+  main() {
+    if (true) {
+      (() => [x]) ();
+    }
+  }
+]] parse succeeds

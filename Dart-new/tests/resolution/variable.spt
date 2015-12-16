@@ -23,3 +23,29 @@ test variable hiding parameter [[
     return [[x]];
   }
 ]] resolve #2 to #1
+
+test reference local function parameter in initializer [[
+  main() {
+    try {
+      var f = (f) => f;
+    } catch(_) {};
+  }
+]] 0 errors
+
+test reference variable inside its own initializer [[
+  main() {
+    try {
+      var x;
+      Function f = () {x = f;};
+    } catch(x) {}
+  }
+}]] 1 errors
+
+test use before def funciton [[
+  main() {
+    try {
+      func();
+    } catch(e) {}
+    void func() {}
+  }
+]] 1 errors

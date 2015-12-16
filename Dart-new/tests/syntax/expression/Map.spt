@@ -27,6 +27,10 @@ test typed map [[
   <int>{a: 1, b: 2, c: 3}
 ]] parse succeeds
 
+test typed map trailing comma [[
+  <int>{a: 1, b: 2, c: 3, }
+]] parse succeeds
+
 test missing key [[
   {: 1}
 ]] parse fails

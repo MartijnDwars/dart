@@ -83,12 +83,14 @@ test ternary operator precedence (middle) [[
   true ? 1 + 2 : 2
 ]]
 
+// TODO: Spoofax-core does not support {longest-match}?
 test short lambda [[
   (e) => e.type == type
 ]] parse to [[
   (e) => (e.type == type)
 ]]
 
+// TODO: Spoofax-core does not support {longest-match}?
 test safe precedence with short lambda [[
   foo + () => 1 + 2
 ]] parse to [[

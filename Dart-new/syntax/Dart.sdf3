@@ -25,6 +25,7 @@ context-free start-symbols
   
   // For testing
   ID
+  NUMBER
   Qualified
   Arguments
   Class

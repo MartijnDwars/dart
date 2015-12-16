@@ -1,0 +1,22 @@
+module if
+
+language Dart
+start symbol Program
+
+test if/else without parens separate scopes [[
+  main() {
+    if (true)
+      var x;
+    else
+      var x;
+  }
+]] 0 errors
+
+test if without parens scopes [[
+  main() {
+    if (true)
+      var x;
+    
+    var x;
+  }
+]] 0 errors

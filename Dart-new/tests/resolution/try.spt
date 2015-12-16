@@ -1,0 +1,23 @@
+module try
+
+language Dart
+start symbol Start
+
+test catch clause parameters same name [[
+  main() {
+    try {
+      throw "foo";
+    } catch (e, e) {
+    }
+  }
+]] 1 errors
+
+test resolve catch clause parameter [[
+  main() {
+    try {
+      throw "foo";
+    } catch ([[e]]) {
+      print([[e]]);
+    }
+  }
+]] resolve #2 to #1

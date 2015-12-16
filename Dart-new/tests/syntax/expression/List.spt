@@ -26,3 +26,7 @@ test list with trailing comma [[
 test typed list [[
   <int>[1, 2, 3]
 ]] parse succeeds
+
+test typed list trailing comma [[
+  <int>[1, 2, 3, ]
+]] parse succeeds

@@ -8,6 +8,7 @@ binding rules // Top level "stuff"
   
   File(name, _):
     defines File name
+    imports Global from File "core.dart"
     scopes Global
   
   Import(String(name), _):
@@ -39,10 +40,11 @@ binding rules // Fields
   FieldDeclaration(_, t, name):
     defines Global name
     of type t
-  
-  Field(exp, name):
-    refers to Global name in Global e
-    where exp has type Type(e)
+
+// Dart has dynamic semantics; we cannot use the `type of exp` to resolve `name`
+// Field(exp, name):
+//   refers to Global name in Global e
+//   where exp has type Type(e)
 
 binding rules // Method
 
@@ -67,7 +69,7 @@ binding rules // Parameters
 
   SimpleParameter(_, _, t, name):
     defines Global name
-    of type Type(t)
+    of type t
   
   SimpleParameter(_, name):
     defines Global name
@@ -130,7 +132,7 @@ binding rules // Statements
   SwitchDefault(_):
     scopes Global
   
-  // TODO: Type(name): refers to Global name (but: built-in types?)
+//   TODO: Type(name): refers to Global name (but: built-in types?)
   
 binding rules // Expressions
   

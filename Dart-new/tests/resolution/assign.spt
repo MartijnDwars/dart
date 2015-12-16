@@ -1,0 +1,19 @@
+module assign
+
+language Dart
+start symbol Program
+
+test assignment resolution [[
+  int main() {
+    var [[x]];
+    [[x]] = 1;
+  }
+]] resolve #2 to #1
+
+test multiple assignment resolution [[
+  int main() {
+    var x;
+    x = 1;
+    x = 1;
+  }
+]] 0 errors
