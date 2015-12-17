@@ -8,22 +8,18 @@ imports
   expressions/Primary
 
 context-free syntax
-
-  Expression = UnaryExpression
   
   // Unary postfix
-  UnaryExpression.PostInc = <<AssignableExpression>++>
-  UnaryExpression.PostDec = <<AssignableExpression>-->
+  Expression.PostInc = <<AssignableExpression>++>
+  Expression.PostDec = <<AssignableExpression>-->
   
   // Unary prefix
-  UnaryExpression.Min = <-<UnaryExpression>>
-  UnaryExpression.Neg = <!<UnaryExpression>>
-  UnaryExpression.BitNot = <~<UnaryExpression>>
-  UnaryExpression = Primary
+  Expression.Min = <-<Expression>>
+  Expression.Neg = <!<Expression>>
+  Expression.BitNot = <~<Expression>>
+  Expression.Await = <await <Expression>>
+  Expression = Primary
   
-  UnaryExpression.PreInc = <++<AssignableExpression>>
-  UnaryExpression.PreDec = <--<AssignableExpression>>
-
-  // Await expression
-  UnaryExpression.Await = <await <UnaryExpression>>
-  
+  // Increment assignable expression
+  Expression.PreInc = <++<AssignableExpression>>
+  Expression.PreDec = <--<AssignableExpression>>
