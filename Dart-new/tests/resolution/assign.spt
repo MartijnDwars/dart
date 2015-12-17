@@ -1,7 +1,7 @@
 module assign
 
 language Dart
-start symbol Program
+start symbol Start
 
 test assignment resolution [[
   int main() {

@@ -10,8 +10,6 @@ imports
 	Enum
 	Export
 	Expression
-	expressions/Primary
-	expressions/Unary
   Function
   Import
   Metadata
@@ -33,7 +31,6 @@ context-free start-symbols
   Enum
   Expression
   Parameters
-  Primary
   Function
   Import
   Metadata

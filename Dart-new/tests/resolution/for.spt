@@ -1,7 +1,7 @@
 module for
 
 language Dart
-start symbol Program
+start symbol Start
 
 test resolve condition to initializer [[
   for (var [[i]] = 0; [[i]] < 10; i++) {

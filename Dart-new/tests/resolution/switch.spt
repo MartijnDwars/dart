@@ -1,7 +1,7 @@
 module switch
 
 language Dart
-start symbol Program
+start symbol Start
 
 test switch case scopes [[
   main() {

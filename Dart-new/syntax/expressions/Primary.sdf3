@@ -14,42 +14,40 @@ imports
   
 context-free syntax
   
-  Expression = Primary
+  Expression = IndexAccess
   
-  Primary = IndexAccess
+  Expression = FieldAccess
   
-  Primary = FieldAccess
+  Expression = VarRef
   
-  Primary = VarRef
+  Expression = Function
   
-  Primary.This = <this>
+  Expression = Literal
   
-  Primary = Function
-  
-  Primary = Literal
+  Expression.This = <this>
   
   // Since <Type> may contain '.', these two are ambiguous
-  Primary.NewObject = <new <Type>(<Arguments>)>
+  Expression.NewObject = <new <Type>(<Arguments>)>
   
-  Primary.NewObject = <new <Type>.<ID>(<Arguments>)> {prefer}
+  Expression.NewObject = <new <Type>.<ID>(<Arguments>)> {prefer}
   
-  Primary.Closurization = <new <Type>#>
+  Expression.Closurization = <new <Type>#>
   
-  Primary.Closurization = <new <Type>#.<ID>>
+  Expression.Closurization = <new <Type>#.<ID>>
   
   // Since <Type> may contain '.', these two are ambiguous
-  Primary.ConstObject = <const <Type>(<Arguments>)>
+  Expression.ConstObject = <const <Type>(<Arguments>)>
   
-  Primary.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}
+  Expression.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}
   
-  Primary.Lambda = <<Parameters> <FunctionModifier?> {
+  Expression.Lambda = <<Parameters> <FunctionModifier?> {
     <Statement*>
   }>
   
   // NOTE: {longest-match} is used because SDF lacks safe precedence, see e.g. http://dx.doi.org/10.1007/978-3-319-02654-1_8. {longest-match} is not supported in core?
-  Primary.ShortLambda = <<Parameters> <ASYNC?> =\> <Expression>> {longest-match}
+  Expression.ShortLambda = <<Parameters> <ASYNC?> =\> <Expression>> {longest-match}
   
-  Primary.Call = <<Primary>(<Arguments>)>
+  Expression.Call = <<Expression>(<Arguments>)>
   
 template options
 

@@ -1,7 +1,7 @@
 module if
 
 language Dart
-start symbol Program
+start symbol Start
 
 test if/else without parens separate scopes [[
   main() {
