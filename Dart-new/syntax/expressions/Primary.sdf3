@@ -9,13 +9,20 @@ imports
   Parameters
   Expression
   expressions/Literals
+  expressions/AssignableExpression
   Statement
   
 context-free syntax
-
-  Primary.This = <this>
   
-  Primary.VarRef = ID
+  Expression = Primary
+  
+  Primary = IndexAccess
+  
+  Primary = FieldAccess
+  
+  Primary = VarRef
+  
+  Primary.This = <this>
   
   Primary = Function
   
@@ -35,22 +42,12 @@ context-free syntax
   
   Primary.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}
   
-  Primary.SuperIndex = <super[<Expression>]>
-  
-  Primary.SuperField = <super.<ID>>
-  
   Primary.Lambda = <<Parameters> <FunctionModifier?> {
     <Statement*>
   }>
   
   // NOTE: {longest-match} is used because SDF lacks safe precedence, see e.g. http://dx.doi.org/10.1007/978-3-319-02654-1_8. {longest-match} is not supported in core?
   Primary.ShortLambda = <<Parameters> <ASYNC?> =\> <Expression>> {longest-match}
-  
-  Primary.Field = <<Primary>.<ID>> {left}
-  
-  Primary.SafeField = <<Primary>?.<ID>> {left}
-  
-  Primary.Index = <<Primary>[<Expression>]>
   
   Primary.Call = <<Primary>(<Arguments>)>
   

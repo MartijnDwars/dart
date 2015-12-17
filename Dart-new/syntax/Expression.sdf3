@@ -29,7 +29,7 @@ context-free syntax
 context-free priorities
   
   // Unary postfix
-  {Expression.PostInc Expression.PostDec /*Expression.Index Expression.Call Expression.ConditionalProperty Primary.Field*/}
+  {Expression.PostInc Expression.PostDec FieldAccess.Field /*Expression.Index Expression.Call Expression.ConditionalProperty*/}
   // Unary prefix
 > {Expression.Min Expression.Neg Expression.BitNot Expression.PreInc Expression.PreDec Expression.Await}
   // Multiplicative

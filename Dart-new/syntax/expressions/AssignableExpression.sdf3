@@ -4,22 +4,21 @@ imports
   
   Common
   Expression
-  expressions/Primary
   
 context-free syntax
+
+  AssignableExpression = FieldAccess
+  AssignableExpression = IndexAccess
+  AssignableExpression = VarRef
+
+  FieldAccess.SuperField = <super.<ID>>
+  FieldAccess.Field = <<Expression>.<ID>>
+  FieldAccess.ConditionalField = <<Expression>?.<ID>>
+
+  IndexAccess.Index = <<Expression>[<Expression>]>
+  IndexAccess.SuperIndex = <super[<Expression>]>
   
-  // TODO: these 3 should also allow arguments (see spec)
-  AssignableExpression.ConditionalField = <<PrimaryOrAssignableExpression>?.<ID>>
-  AssignableExpression.Field = <<PrimaryOrAssignableExpression>.<ID>>
-  AssignableExpression.Index = <<PrimaryOrAssignableExpression>[<Expression>]>
-  
-  AssignableExpression.SuperField = <super.<ID>>
-  AssignableExpression.SuperIndex = <super[<Expression>]>
-  
-  PrimaryOrAssignableExpression = AssignableExpression
-  PrimaryOrAssignableExpression = Primary
-  
-  AssignableExpression.VarRef = ID
+  VarRef.VarRef = ID
 
 template options
 

@@ -5,7 +5,6 @@ imports
   Arguments
   Common
   expressions/AssignableExpression
-  expressions/Primary
 
 context-free syntax
   
@@ -18,7 +17,6 @@ context-free syntax
   Expression.Neg = <!<Expression>>
   Expression.BitNot = <~<Expression>>
   Expression.Await = <await <Expression>>
-  Expression = Primary
   
   // Increment assignable expression
   Expression.PreInc = <++<AssignableExpression>>
