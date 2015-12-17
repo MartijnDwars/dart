@@ -32,7 +32,7 @@ context-free syntax // Type parameters
   
 context-free syntax // Type alias
 
-  TypeAlias.Typealias = <<Metadata> typedef <DynType> <ID> <TypeParameters?> <Parameters>;>
+  TypeAlias.Typealias = <<Metadata> typedef <ReturnType> <ID> <TypeParameters?> <Parameters>;>
   
 template options
 
