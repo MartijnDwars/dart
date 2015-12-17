@@ -22,7 +22,7 @@ context-free syntax
   Statement.Nop = <;>
   
   // "foo() {};" can be read as "[Function(..), Nop()]" or as "ExprStmt(Function(..))"
-  Statement.ExprStmt = <<Expression>;> {avoid}
+  Statement.ExprStmt = <<Expression>;>
   
   Statement.VarDeclStmt = <<VarDecl>;>
   
@@ -55,6 +55,11 @@ context-free syntax
   
   Statement = Function
 
+context-free restrictions
+  
+  // Disambiguate `f() {};` which can be `[Fn(), Nop()]` or `ExprStmt(Fn())` 
+  Statement -/- [\;]
+  
 template options
 
 	tokenize : ";("
