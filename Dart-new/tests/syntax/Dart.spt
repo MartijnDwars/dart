@@ -131,3 +131,9 @@ test parsable [[
     }
   }
 ]] parse succeeds
+
+test non-ambiguous call [[
+  main() {
+    return b1.toString()+b2.toString(); 
+  }
+]] parse succeeds
