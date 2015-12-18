@@ -68,6 +68,9 @@ binding rules // Functions
     defines Global name
     of type (p*, t)
   
+  FunctionDeclaration(_, FunctionSignature(_, _, name, _)):
+    defines Global name
+  
 binding rules // Parameters
 
   SimpleParameter(_, _, t, name):
@@ -134,6 +137,19 @@ binding rules // Statements
   
   SwitchDefault(_):
     scopes Global
+  
+  Catch(_, _):
+    scopes Global
+  
+  OnCatch(_, _, _):
+    scopes Global
+  
+  CatchParam(name):
+    defines Global name
+    
+  CatchParams(n, m):
+    defines Global n
+    defines Global m
   
 //   TODO: Type(name): refers to Global name (but: built-in types?)
   

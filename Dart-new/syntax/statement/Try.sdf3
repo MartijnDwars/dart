@@ -25,9 +25,9 @@ context-free syntax
   CatchClause.OnCatch = <on <Type> catch(<CatchParams>) <Block>>
   
   // Catch parameters
-  CatchParams.Param = ID
+  CatchParams.CatchParam = ID
   
-  CatchParams.Param = <<ID>, <ID>>
+  CatchParams.CatchParams = <<ID>, <ID>>
   
 template options
 
