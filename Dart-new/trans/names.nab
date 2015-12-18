@@ -35,6 +35,9 @@ binding rules // Classes
     of type Type(name)
     imports Global, imported Global from Global parent
   
+  MixinApplication(_, _, name, _, _, _, _):
+    defines Global name
+  
 binding rules // Fields
 
   FieldDeclaration(_, t, name):
