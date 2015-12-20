@@ -49,6 +49,11 @@ rules // Remove superfluous quotes in imports
     Import(String(name), args) -> Import(String(<unquote(id)> name), args)
     where
       <is-quoted> name
+      
+  desugar:
+    AliasedImport(String(name), alias, combinators) -> AliasedImport(String(<unquote(id)> name), alias, combinators)
+    where
+      <is-quoted> name
   
 rules // Add blocks to If's to fix scoping
 

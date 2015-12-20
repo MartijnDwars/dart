@@ -8,11 +8,15 @@ binding rules // Top level "stuff"
   
   File(name, _):
     defines File name
-    imports Global from File "core.dart"
+    imports Global from File name
     scopes Global
   
-  Import(String(name), _):
-    imports Global from File name
+  Import(String(file), _):
+    imports Global from File file
+  
+  AliasedImport(String(file), alias, _):
+    defines Global alias
+    imports Global from File file
 
   Typealias(_, t, name, _, p*):
     scopes Global
