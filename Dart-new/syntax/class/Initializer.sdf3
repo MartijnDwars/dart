@@ -9,7 +9,12 @@ imports
 context-free syntax
 
   // TODO: <Expression> should be <ConditionalExpression> and there should be <CascadeSelection*> after <Expression>
-  SuperCallOrFieldInitializer = <super<Arguments>>
-  SuperCallOrFieldInitializer = <super.<ID><Arguments>>
+  SuperCallOrFieldInitializer = <super(<Arguments>)>
+  SuperCallOrFieldInitializer = <super.<ID>(<Arguments>)>
   SuperCallOrFieldInitializer = <<ID> = <Expression>>
   SuperCallOrFieldInitializer = <this.<ID> = <Expression>>
+  
+template options
+
+  tokenize : ".("
+  

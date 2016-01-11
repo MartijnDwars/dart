@@ -12,10 +12,9 @@ imports
   Expression
   
 context-free syntax // Class member declarations
-
-  ClassMember.ConstantConstructorDeclaration = <const <Qualified><Parameters> <RedirectionOrInitializers?>;>
   
-  ClassMember.ConstructorDeclaration = <<Qualified><Parameters> <RedirectionOrInitializers>;>
+  // {prefer} to disambiguate with potentially overlapping ClassMember.FunctionDeclaration
+  ClassMember.ConstructorDeclaration = <<CONST?> <Qualified><Parameters> <RedirectionOrInitializers?>;> {prefer}
   
   ClassMember.OperatorDeclaration = <<EXTERNAL?> <ReturnType> operator <Operator><Parameters>;>
   
@@ -25,14 +24,18 @@ context-free syntax // Class member declarations
   
   ClassMember.FieldDeclaration = <<STATIC?> <VarOrType> <{InitializedIdentifier ", "}+>;>
   
+  ClassMember.GetterDeclaration = <<FunctionModifier?> <ReturnType> get <ID>;>
+  
+  ClassMember.SetterDeclaration = <<FunctionModifier?> <ReturnType> set <ID><Parameters>;>
+  
   ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
   
   FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
   
 context-free syntax // Helpers
 
-  RedirectionOrInitializers.Redirection = <: this<Arguments>>
-  RedirectionOrInitializers.RedirectionMethod = <: this.<ID><Arguments>>
+  RedirectionOrInitializers.Redirection = <: this(<Arguments>)>
+  RedirectionOrInitializers.RedirectionMethod = <: this.<ID>(<Arguments>)>
   RedirectionOrInitializers.Initializer = <: <{SuperCallOrFieldInitializer ", "}+>>
   
   StaticFinalDeclaration = <<ID> = <Expression>>
@@ -45,3 +48,8 @@ context-free syntax // Helpers
   
   VarOrType = "var"
   VarOrType = Type
+  
+template options
+
+  tokenize : ".("
+  

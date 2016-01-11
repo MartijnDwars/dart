@@ -155,6 +155,11 @@ test labeled statement [[
   }
 ]] parse succeeds
 
+test recurisvely labeled statement [[
+  loopa: loopb: for (int i = 0; ; ) {
+  }
+]] parse fails
+
 test recursively labeled statement [[
   a: b: c: for (int i = 0; ; ) {
   }

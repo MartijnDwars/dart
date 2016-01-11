@@ -143,3 +143,39 @@ test factory [[
     factory F(x, [String y]) = C;
   }
 ]] parse succeeds
+
+test whitespace initializer this [[
+  class A {
+    const A(): this . anotherConstructor();
+  }
+]] parse succeeds
+
+test whitespace initializer super [[
+  class A {
+    const A(): super . anotherConstructor();
+  }
+]] parse succeeds
+
+test named constructor redirection [[
+  class B {
+    B.anotherConstructor(): this.oneMoreConstructor();
+  }
+]] parse succeeds
+
+test named constructor [[
+  class B {
+    B.oneMoreConstructor() {}
+  }
+]] parse succeeds
+
+test class member metadata [[
+  class A {
+    @A() const A():_x=0;
+  }
+]] parse succeeds
+
+test class setter declaration [[
+  class A {
+    get val;
+  }
+]] parse succeeds

@@ -4,13 +4,16 @@ imports
   
   class/Initializer
   Common
-  Parameters
   Function
+  Metadata
+  Parameters
   Type
   lexical/Operator
 
 context-free syntax
-
+  
+  ClassMemberDefinition.ClassMemberDefinition = <<Metadata> <ClassMember>>
+  
   ClassMember.InitializedConstructor = <<Qualified><Parameters> : <{SuperCallOrFieldInitializer ", "}+> <FunctionBody>>
   
   ClassMember.FactoryMethod = <factory <Qualified><Parameters> <FunctionBody>>
@@ -21,6 +24,8 @@ context-free syntax
   ClassMember.OperatorMethod = <<ReturnType> operator <Operator><Parameters> <FunctionBody>>
   
   ClassMember.Method = <<STATIC?> <FunctionSignature> <FunctionBody>>
+  
+  ClassMember.NamedConstructor = <<STATIC?> <Metadata> <ReturnType> <ID>.<ID><Parameters> <FunctionBody>>
   
   ClassMember.Getter = <<STATIC?> <ReturnType> get <ID><FunctionBody>>
   

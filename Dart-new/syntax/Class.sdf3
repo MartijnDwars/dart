@@ -14,12 +14,11 @@ imports
   Statement
   Parameters
   Function
-  Arguments
   
 context-free syntax
   
   Class.Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Parent?> <Mixins?> <Interfaces?> {
-    <{ClassMember "\n"}*>
+    <{ClassMemberDefinition "\n"}*>
   }>
   
   Class.MixinApplication = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> =
@@ -35,7 +34,7 @@ context-free syntax // Rejections
   
   // Reject classes that have a mixin without parent
   Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
-    <{ClassMember "\n"}*>
+    <{ClassMemberDefinition "\n"}*>
   }> {reject}
   
 template options
