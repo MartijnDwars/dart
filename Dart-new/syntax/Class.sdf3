@@ -21,6 +21,11 @@ context-free syntax
     <{ClassMemberDefinition "\n"}*>
   }>
   
+  // Reject classes with a mixin and without a parent
+  Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
+    <{ClassMemberDefinition "\n"}*>
+  }> {reject}
+  
   Class.MixinApplication = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> =
   	<Type> with <{Type ", "}+> <Interfaces?>;>
   
@@ -29,13 +34,6 @@ context-free syntax
   Mixins.Mixins = <with <{Type ", "}+>>
   
   Interfaces.Interfaces = <implements <{Type ", "}+>>
-  
-context-free syntax // Rejections
-  
-  // Reject classes that have a mixin without parent
-  Class = <<Metadata> <ABSTRACT?> class <ID> <TypeParameters?> <Mixins> <Interfaces?> {
-    <{ClassMemberDefinition "\n"}*>
-  }> {reject}
   
 template options
 

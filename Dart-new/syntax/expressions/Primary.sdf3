@@ -26,7 +26,7 @@ context-free syntax
   
   Expression.This = <this>
   
-  // Since <Type> may contain '.', these two are ambiguous
+  // TODO: Since <Type> may contain '.', these two are ambiguous
   Expression.NewObject = <new <Type>(<Arguments>)>
   
   Expression.NewObject = <new <Type>.<ID>(<Arguments>)> {prefer}
@@ -35,7 +35,7 @@ context-free syntax
   
   Expression.Closurization = <new <Type>#.<ID>>
   
-  // Since <Type> may contain '.', these two are ambiguous
+  // TODO: Since <Type> may contain '.', these two are ambiguous
   Expression.ConstObject = <const <Type>(<Arguments>)>
   
   Expression.ConstObject = <const <Type>.<ID>(<Arguments>)> {prefer}

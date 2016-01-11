@@ -174,8 +174,14 @@ test class member metadata [[
   }
 ]] parse succeeds
 
-test class setter declaration [[
+test class getter declaration [[
   class A {
     get val;
+  }
+]] parse succeeds
+
+test class setter declaration [[
+  class A {
+    set val();
   }
 ]] parse succeeds

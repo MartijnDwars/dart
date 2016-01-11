@@ -16,6 +16,8 @@ context-free syntax // Class member declarations
   // {prefer} to disambiguate with potentially overlapping ClassMember.FunctionDeclaration
   ClassMember.ConstructorDeclaration = <<CONST?> <Qualified><Parameters> <RedirectionOrInitializers?>;> {prefer}
   
+  ClassMember.ExternalConstructorDeclaration = <external <CONST?> <Qualified><Parameters>;>
+  
   ClassMember.OperatorDeclaration = <<EXTERNAL?> <ReturnType> operator <Operator><Parameters>;>
   
   ClassMember.StaticFinalDeclaration = <static <FinalOrConst> <DynType> <{StaticFinalDeclaration ", "}+>;>
@@ -30,9 +32,9 @@ context-free syntax // Class member declarations
   
   ClassMember.FunctionDeclaration = <<FunctionModifier?> <FunctionSignature>;>
   
-  FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
-  
 context-free syntax // Helpers
+
+  FunctionModifier.FunctionModifier = <<EXTERNAL> <STATIC?>>
 
   RedirectionOrInitializers.Redirection = <: this(<Arguments>)>
   RedirectionOrInitializers.RedirectionMethod = <: this.<ID>(<Arguments>)>
